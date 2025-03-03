@@ -1,0 +1,113 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class EthnicGroupSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $ethnic_groups = [
+            ['name' => 'Aari'],
+            ['name' => 'Afar'],
+            ['name' => 'Agaw-Awi'],
+            ['name' => 'Agaw-Hamyra'],
+            ['name' => 'Alaba'],
+            ['name' => 'Amhara'],
+            ['name' => 'Anuak'],
+            ['name' => 'Arbore'],
+            ['name' => 'Argobba'],
+            ['name' => 'Bacha (Kwego)'],
+            ['name' => 'Basketo'],
+            ['name' => 'Bench'],
+            ['name' => 'Berta'],
+            ['name' => 'Bodi'],
+            ['name' => 'Brayle'],
+            ['name' => 'Burji'],
+            ['name' => 'Bena'],
+            ['name' => 'Beta Israel'],
+            ['name' => 'Chara'],
+            ['name' => 'Daasanach'],
+            ['name' => 'Dawro'],
+            ['name' => 'Debase/ Gawwada'],
+            ['name' => 'Dirashe'],
+            ['name' => 'Dime'],
+            ['name' => 'Dizi'],
+            ['name' => 'Donga'],
+            ['name' => 'Fedashe'],
+            ['name' => 'Gamo'],
+            ['name' => 'Gebato'],
+            ['name' => 'Gedeo'],
+            ['name' => 'Gedicho'],
+            ['name' => 'Gidole'],
+            ['name' => 'Goffa'],
+            ['name' => 'Gumuz'],
+            ['name' => 'Gurage'],
+            ['name' => 'Hadiya'],
+            ['name' => 'Hamar'],
+            ['name' => 'Harari'],
+            ['name' => 'Irob'],
+            ['name' => 'Kafficho'],
+            ['name' => 'Kambaata'],
+            ['name' => 'Kebena'],
+            ['name' => 'Konta'],
+            ['name' => 'Komo'],
+            ['name' => 'Konso'],
+            ['name' => 'Koore'],
+            ['name' => 'Kontoma'],
+            ['name' => 'Kunama'],
+            ['name' => 'Karo'],
+            ['name' => 'Kusumie'],
+            ['name' => 'Kwegu'],
+            ['name' => 'Male'],
+            ['name' => 'Mao'],
+            ['name' => 'Mareqo'],
+            ['name' => 'Mashola'],
+            ['name' => 'Mere people'],
+            ['name' => 'Me\'en'],
+            ['name' => 'Messengo'],
+            ['name' => 'Majangir'],
+            ['name' => 'Mossiye'],
+            ['name' => 'Murle'],
+            ['name' => 'Mursi'],
+            ['name' => 'Nao'],
+            ['name' => 'Nuer'],
+            ['name' => 'Nyangatom'],
+            ['name' => 'Oromo'],
+            ['name' => 'Oyda'],
+            ['name' => 'Qechem'],
+            ['name' => 'Qewama'],
+            ['name' => 'She'],
+            ['name' => 'Shekecho'],
+            ['name' => 'Sheko'],
+            ['name' => 'Shinasha'],
+            ['name' => 'Shita/Upo'],
+            ['name' => 'Sidama'],
+            ['name' => 'Somali'],
+            ['name' => 'Surma'],
+            ['name' => 'Tigrayans'],
+            ['name' => 'Tembaro'],
+            ['name' => 'Tsamai'],
+            ['name' => 'Welayta'],
+            ['name' => 'Werji'],
+            ['name' => 'Yem'],
+            ['name' => 'Zeyese'],
+            ['name' => 'Zelmam'],
+            ['name' => 'Other/unknown'],
+            ['name' => 'Somali'],
+            ['name' => 'Sudanese'],
+            ['name' => 'Eritrean'],
+            ['name' => 'Kenyan'],
+            ['name' => 'Djiboutian'],
+            ['name' => 'Other foreigners'],
+        ];
+
+        DB::table('ethnic_groups')->insert($ethnic_groups);
+    }
+}
