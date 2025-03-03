@@ -17,7 +17,7 @@ class TownSeeder extends Seeder
         if ($town) return;
 
         $towns = [
-            [
+            
                 ["name" => "Addis Ababa"],
                 ["name" => "Adama"],
                 ["name" => "Dire Dawa"],
@@ -109,11 +109,7 @@ class TownSeeder extends Seeder
                 ["name" => "Ginir"],
                 ["name" => "Goba"]
 
-            ]
-
-
         ];
-
         Town::insert($towns);
     }
 }

@@ -20,7 +20,6 @@ class EducationalLevelController extends Controller
                 'educationalLevel'=>$education,
                 'message'=>'Success'
             ]);
-            
         }
         else{
             return response()->json([

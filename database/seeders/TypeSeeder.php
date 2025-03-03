@@ -14,7 +14,6 @@ class TypeSeeder extends Seeder
     public function run(): void
     {
         $type = [
-            [
                 [
                     "id"=> 1,
                     "type"=> "Mobile"
@@ -55,7 +54,6 @@ class TypeSeeder extends Seeder
                     "id"=> 10,
                     "type"=> "Smart Speaker"
                 ]
-            ]
                 ];
                 Type::insert($type);
         
