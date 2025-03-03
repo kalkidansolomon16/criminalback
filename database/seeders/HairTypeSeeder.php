@@ -14,7 +14,6 @@ class HairTypeSeeder extends Seeder
     public function run(): void
     {
         $haiirType = [
-            [
                 [
                     "id"=>1,
                     "name"=>"Straight"
@@ -47,7 +46,6 @@ class HairTypeSeeder extends Seeder
                     "id"=>8,
                     "name"=>"Thick"
                 ]
-            ]
                 ];
                 HairType::insert($haiirType);
                 }
