@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\EducationalLEvel;
+
+use App\Models\EducationalLevels;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,7 +15,7 @@ class EducationalLevelController extends Controller
      */
     public function index()
     {
-        $education = EducationalLEvel::all();
+        $education = EducationalLevels::all();
         if($education){
             return response()->json([
                 'educationalLevel'=>$education,
@@ -52,7 +53,7 @@ class EducationalLevelController extends Controller
             ]);
         }
         else{
-            $education = EducationalLEvel::new();
+            $education = EducationalLevels::new();
             $education->name = request('name');
             $education->save();
             return response()->json([
@@ -67,7 +68,7 @@ class EducationalLevelController extends Controller
      */
     public function show(string $id)
     {
-        $education = EducationalLEvel::find($id);
+        $education = EducationalLevels::find($id);
         if($education){
             return response()->json([
                 'educationalLevel'=>$education,
@@ -87,7 +88,7 @@ class EducationalLevelController extends Controller
      */
     public function edit(string $id)
     {
-        $education = EducationalLEvel::find($id);
+        $education = EducationalLevels::find($id);
         if($education){
             return response()->json([
                 'educationalLevel'=>$education,
@@ -124,7 +125,7 @@ class EducationalLevelController extends Controller
      */
     public function destroy(string $id)
     {
-        $education = EducationalLEvel::find($id);
+        $education = EducationalLevels::find($id);
         if($education){
             $education->delete();
             return response()->json([
