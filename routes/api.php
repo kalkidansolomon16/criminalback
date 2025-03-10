@@ -5,7 +5,9 @@ use App\Http\Controllers\CriminalController;
 use App\Http\Controllers\HairTypeController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SexController;
 use App\Http\Controllers\TypeController;
+use App\Http\Controllers\UserController;
 use App\Models\CriminalInformation;
 use App\Models\EducationalLEvel;
 use App\Models\EducationalLevels;
@@ -33,10 +35,10 @@ Route::post('hair',[HairTypeController::class,'post']);
 Route::put('hair/{id}',[HairTypeController::class,'update']);
 Route::delete('hair/{id}',[HairTypeController::class,'destroy']);
 //criminal
-Route::get('hair',[CriminalController::class,'index']);
-Route::post('hair',[CriminalController::class,'post']);
-Route::put('hair/{id}',[CriminalController::class,'update']);
-Route::delete('hair/{id}',[CriminalController::class,'destroy']);
+Route::get('criminal',[CriminalController::class,'index']);
+Route::post('criminal',[CriminalController::class,'post']);
+Route::put('criminal/{id}',[CriminalController::class,'update']);
+Route::delete('criminal/{id}',[CriminalController::class,'destroy']);
 //criminalInformation
 Route::get('criminalInfo',[CriminalInformation::class,'index']);
 Route::post('criminalInfo',[CriminalInformation::class,'post']);
@@ -57,3 +59,13 @@ Route::get('role',[RoleController::class,'index']);
 Route::post('role',[RoleController::class,'post']);
 Route::put('role/{id}',[RoleController::class,'update']);
 Route::delete('role/{id}',[RoleController::class,'destroy']);
+//
+Route::get('sex',[SexController::class,'index']);
+Route::post('sex',[SexController::class,'post']);
+Route::put('sex/{id}',[SexController::class,'update']);
+Route::delete('sex/{id}',[SexController::class,'destroy']);
+//
+Route::get('user',[UserController::class,'index']);
+Route::post('user',[UserController::class,'post']);
+Route::put('user/{id}',[UserController::class,'update']);
+Route::delete('user/{id}',[UserController::class,'destroy']);

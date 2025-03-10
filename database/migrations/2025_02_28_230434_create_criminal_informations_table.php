@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('lip');
             $table->string('ear');
             $table->string('Unique_appearance');
+            $table->string('citizenship');
 
             $table->timestamps();
         });
