@@ -3,145 +3,66 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
 
     public function index()
     {
-        $user = User::all();
-        return response()->json([
-            'user'=>$user,
-            'message'=>'Success'
-        ]);
+        return User::all();
     }
 
 
     public function store(Request $request)
     {
-        $validation = Validator::make($request->all(),[
+        $fields = $request->validate([
             'full_name' => 'required|max:255',
-            'sex_id' => 'required',
+            'sex' => 'required',
             'age' => 'required',
             'password' => 'required|min:8',
             'user_name' => 'required|user_name|unique:users',
             'address' => 'required',
             'phone_number' => 'required',
-            // 'criminal_id' => 'required',
+            'criminal_id' => 'required',
             'role_id' => 'required',
         ]);
-        if($validation->fails()){
-            return response()->json([
-                'status'=>422,
-                'message'=>$validation->messages()
-            ]);
-        }
-        else{
-            $user = user::new();
-            $user->full_name = request('full_name');
-            $user->sex_id = request('sex_id');
-            $user->age = request('age');
-            $user->password = request('password');
-            $user->user_name = request('user_name');
-            $user->address = request('address');
-            $user->phone_number = request('phone_number');
-            $user->role_id = request('role_id');
-            $user->save();
-            return response()->json([
-                'message'=>"criminalal Level added Successfully"
-            ]);
-    }
-    }
-    public function show(string $id)
-    {
-        $User = User::find($id);
-        if($User){
-            return response()->json([
-                'User'=>$User,
-                'message'=>'Success'
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>422,
-                'message'=>'Useral Level Not Found'
-            ]);
-        }
-    }
-    public function edit(string $id)
-    {
-        $User = User::find($id);
-        if($User){
-            return response()->json([
-                'Criminal'=>$User,
-                'message'=>'Success'
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>422,
-                'message'=>'criminalal status not found'
+    
 
-            ]);
-        }
+        $user = User::create($fields);
+
+        return response()->json(['user' => $user], 201);
     }
+
+    public function show(User $user)
+    {
+        return ['data' => $user];
+    }
+
 
     public function update(Request $request, User $user)
     {
-        $validation = Validator::make($request->all(),[
+        $fields = $request->validate([
             'full_name' => 'required|max:255',
-            'sex_id' => 'required',
+            'sex' => 'required',
             'age' => 'required',
             'password' => 'required|min:8',
             'user_name' => 'required|user_name|unique:users',
             'address' => 'required',
             'phone_number' => 'required',
-            // 'criminal_id' => 'required',
+            'criminal_id' => 'required',
             'role_id' => 'required',
             
         ]);
-        if($validation->fails()){
-            return response()->json([
-                'status'=>422,
-                'message'=>$validation->messages()
-            ]);
-        }
-        else{
-            $user = user::new();
-            $user->full_name = request('full_name');
-            $user->sex_id = request('sex_id');
-            $user->age = request('age');
-            $user->password = request('password');
-            $user->user_name = request('user_name');
-            $user->address = request('address');
-            $user->phone_number = request('phone_number');
-            $user->role_id = request('role_id');
-            $user->update();
-            return response()->json([
-                'user'=>$user,
-                'message'=>'Success'
-            ]);
-            return $user;
-    }
+        $user->update($fields);
+        return $user;
     }
 
 
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        $user = User::find($id);
-        if($user){
-            $user->delete();
-            return response()->json([
-                'message'=>'useral Level Deleted Successfully'
-            ]);
-        }
-        else{
-            return response()->json([
-                'message'=>'useral level with this id not foud'
-            ]);
-        }
+        $user->delete();
+        return ['message' =>'user deleted successfully!'];
     }
 }
