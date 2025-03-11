@@ -13,8 +13,8 @@ class SexSeeder extends Seeder
     public function run(): void
     {
         $sex_options = [
-            ['gender' => 'male'],
-            ['gender' => 'female'],
+            ['gender' => 'ወንድ'],
+            ['gender' => 'ሴት'],
         ];
 
         DB::table('sexes')->insert($sex_options);

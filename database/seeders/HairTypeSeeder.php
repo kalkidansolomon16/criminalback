@@ -16,35 +16,35 @@ class HairTypeSeeder extends Seeder
         $haiirType = [
                 [
                     "id"=>1,
-                    "name"=>"Straight"
+                    "name"=>"ቀጥ ያለያለ"
                 ],
                 [
                     "id"=>2,
-                    "name"=>"Wavy"
+                    "name"=>"የተጠቀለለ "
                 ],
                 [
                     "id"=>3,
-                    "name"=>"Curly"
+                    "name"=>"ፍሪዝ "
                 ],
                 [
                     "id"=>4,
-                    "name"=>"Coily"
+                    "name"=>"ጥቁርጥቁር"
                 ],
                 [
                     "id"=>5,
-                    "name"=>"Kinky"
+                    "name"=>"ቡኒቡኒ"
                 ],
                 [
                     "id"=>6,
-                    "name"=>"Textured"
+                    "name"=>"ነጭ "
                 ],
                 [
                     "id"=>7,
-                    "name"=>"Fine"
+                    "name"=>"ቀጭን"
                 ],
                 [
                     "id"=>8,
-                    "name"=>"Thick"
+                    "name"=>"ወፍራም "
                 ]
                 ];
                 HairType::insert($haiirType);

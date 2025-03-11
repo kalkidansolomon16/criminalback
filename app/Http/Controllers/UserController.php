@@ -27,11 +27,12 @@ class UserController extends Controller
             'sex_id' => 'required',
             'age' => 'required',
             'password' => 'required|min:8',
-            'user_name' => 'required|user_name|unique:users',
+            'user_name' => 'required',
             'address' => 'required',
             'phone_number' => 'required',
             // 'criminal_id' => 'required',
             'role_id' => 'required',
+            'photo' => 'sometimes|image|mimes:jpg,png,jpeg,gif,avif|max:2048',
         ]);
         if($validation->fails()){
             return response()->json([
@@ -40,7 +41,7 @@ class UserController extends Controller
             ]);
         }
         else{
-            $user = user::new();
+            $user = new User();
             $user->full_name = request('full_name');
             $user->sex_id = request('sex_id');
             $user->age = request('age');
@@ -49,9 +50,15 @@ class UserController extends Controller
             $user->address = request('address');
             $user->phone_number = request('phone_number');
             $user->role_id = request('role_id');
+            if ($request->hasFile('photo')) {
+                $photo = $request->file('photo');
+                $photoName = 'ka_l' . time() . '_' . $photo->getClientOriginalName();
+                $photo->move(public_path('img'), $photoName);
+                $user->photo = 'img/' . $photoName;
+            }
             $user->save();
             return response()->json([
-                'message'=>"criminalal Level added Successfully"
+                'message'=>"user Successfully"
             ]);
     }
     }
