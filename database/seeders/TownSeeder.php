@@ -13,9 +13,7 @@ class TownSeeder extends Seeder
      */
     public function run(): void
     {
-        $town = Town::exists();
-        if ($town) return;
-
+    
         $towns = [
             
             ["name" => "አዲስ አበባ"],
