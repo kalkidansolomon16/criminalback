@@ -19,51 +19,51 @@ class ReligionSeeder extends Seeder
 
         $religions = [
             [
-                "name" => "Ethiopian Orthodox Christianity",
+                "name" => " የ ኢትዮጵያ ኦርቶዶክስ ክርስቲያን ",
                 "code" => 1
             ],
             [
-                "name" => "Protestant Christianity",
+                "name" => "ፕሮቴስታንት  ክርስቲያን",
                 "code" => 2
             ],
             [
-                "name" => "Catholic Christianity",
+                "name" => "ካቶሊክ  ክርስቲያን",
                 "code" => 3
             ],
             [
-                "name" => "Islam",
+                "name" => "እስላም ",
                 "code" => 4
             ],
             [
-                "name" => "Traditional African Religions",
+                "name" => "ባህላዊ የአፍሪካ እምነቶችእምነቶች",
                 "code" => 5
             ],
             [
-                "name" => "Judaism",
+                "name" => "ጁዲህዝም ",
                 "code" => 6
             ],
             [
-                "name" => "Bahá'í Faith",
+                "name" => "የባሂ እምነትእምነት",
                 "code" => 7
             ],
             [
-                "name" => "Hinduism",
+                "name" => "ህንዱይዝምህንዱይዝም",
                 "code" => 8
             ],
             [
-                "name" => "Buddhism",
+                "name" => "ቡድሂዝም ",
                 "code" => 9
             ],
             [
-                "name" => "Animism",
+                "name" => "አኒሚዝም ",
                 "code" => 10
             ],
             [
-                "name" => "Agnosticism",
+                "name" => "አግኖስቲዝምኖስቲዝም",
                 "code" => 11
             ],
             [
-                "name" => "Atheism",
+                "name" => "አቴዝምአቴዝም",
                 "code" => 12
             ]
 

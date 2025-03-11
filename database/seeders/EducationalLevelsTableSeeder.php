@@ -16,31 +16,31 @@ class EducationalLevelsTableSeeder extends Seeder
         $educationLevel = [
            [
                 "id"=> 1,
-                "name"=> "No Formal Education"
+                "name"=> "የመጀመሪያ ደረጃ ትምህርት"
            ],
            [
                 "id"=> 2,
-                "name"=> "Primary Education"
+                "name"=> ""
            ],
            [
                 "id"=> 3,
-                "name"=> "Secondary Education"
-           ],
+                "name"=> "ሁለተኛ ደረጃ ትምህርት"
+           ], 
            [
                 "id"=> 4,
-                "name"=> "Higher Secondary Education"
+                "name"=> "ከፍተኛ ሁለተኛ ደረጃ ትምህርት"
            ],
            [
                 "id"=> 5,
-                "name"=> "Bachelor's Degree"
+                "name"=> "የባችለር ዲግሪ"
            ],
            [
                 "id"=> 6,
-                "name"=> "Master's Degree"
+                "name"=> "የማስተርስ ዲግሪ"
            ],
            [
                 "id"=> 7,
-                "name"=> "Doctorate Degree"
+                "name"=> "የዶክትሬትትሬት ዲግሪ"
            ]
            ];
            EducationalLevels::insert($educationLevel);

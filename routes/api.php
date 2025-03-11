@@ -66,6 +66,6 @@ Route::put('sex/{id}',[SexController::class,'update']);
 Route::delete('sex/{id}',[SexController::class,'destroy']);
 //
 Route::get('user',[UserController::class,'index']);
-Route::post('user',[UserController::class,'post']);
+Route::post('user',[UserController::class,'store']);
 Route::put('user/{id}',[UserController::class,'update']);
 Route::delete('user/{id}',[UserController::class,'destroy']);

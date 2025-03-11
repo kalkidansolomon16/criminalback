@@ -16,44 +16,32 @@ class TypeSeeder extends Seeder
         $type = [
                 [
                     "id"=> 1,
-                    "type"=> "Mobile"
+                    "type"=> "ሞባይይል"
                 ],
                 [
                     "id"=> 2,
-                    "type"=> "Laptop"
+                    "type"=> "ላፕቶትላፕቶት"
                 ],
                 [
                     "id"=> 3,
-                    "type"=> "Tablet"
+                    "type"=> "ታብሌትታብሌት"
                 ],
                 [
                     "id"=> 4,
-                    "type"=> "Desktop"
+                    "type"=> "ዴድክቶፕዴድክቶፕ"
                 ],
                 [
                     "id"=> 5,
-                    "type"=> "Money"
+                    "type"=> "ገንዘብገንዘብ"
                 ],
                 [
                     "id"=> 6,
-                    "type"=> "Watch"
+                    "type"=> "ሰአትሰአት"
                 ],
                 [
                     "id"=> 7,
-                    "type"=> "Camera"
+                    "type"=> "ካሜራካሜራ"
                 ],
-                [
-                    "id"=> 8,
-                    "type"=> "Headphones"
-                ],
-                [
-                    "id"=> 9,
-                    "type"=> "Television"
-                ],
-                [
-                    "id"=> 10,
-                    "type"=> "Smart Speaker"
-                ]
                 ];
                 Type::insert($type);
         

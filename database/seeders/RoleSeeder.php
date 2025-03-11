@@ -17,19 +17,19 @@ class RoleSeeder extends Seeder
         if($roles) return;
         $roles =[
             [
-                'name'=>'admin',
+                'name'=>'አስተዳዳሪ ',
                 'type' => 1
             ],
             [
-                'name'=>'police',
+                'name'=>'ፖሊስ',
                 'type' => 2
             ],
             [
-                'name'=>'guard',
+                'name'=>'ጥበቃ ',
                 'type' => 2
             ],
             [
-                'name'=>'Doctor',
+                'name'=>'ዶክተር',
                 'type' => 2
             ],
 
