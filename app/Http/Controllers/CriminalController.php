@@ -125,7 +125,7 @@ class CriminalController extends Controller
             $criminal->educational_level_id = request('educational_level_id');
             $criminal->job = request('job');
             $criminal->ethnic_group_id = request('ethnic_group_id');
-            $criminal->religion_id = request('religion_id');
+            // $criminal->religion_id = request('religion_id');
             $criminal->photo = request('photo');
             $criminal->Closest_respondent = request('Closest_respondent');
             $criminal->region_id_3 = request('region_id_3');
@@ -157,7 +157,22 @@ class CriminalController extends Controller
             $criminal->dateof_mercy_release = request('dateof_mercy_release');
             $criminal->writ = request('writ');
             // $criminal->status = request('status');
-            
+            if ($request->hasFile('photo')) {
+                $photoPath = $request->file('photo')->store('photos', 'public');
+                $criminal->photo = $photoPath;
+            }
+    
+            // Handle registral signature upload
+            if ($request->hasFile('registral_signature')) {
+                $registralSignaturePath = $request->file('registral_signature')->store('signatures', 'public');
+                $criminal->registral_signature = $registralSignaturePath;
+            }
+    
+            // Handle additional file uploads
+            if ($request->hasFile('writ')) {
+                $additionalFile1Path = $request->file('writ')->store('uploads', 'public');
+                $criminal->writ = $additionalFile1Path; // Ensure your model has this field
+            }
             $criminal->save();
             return response()->json([
                 'message'=>"criminalal Level added Successfully"

@@ -10,39 +10,41 @@ class EthnicGroupController extends Controller
 {
     public function index()
     {
-        return EthnicGroup::all();
+        $ethnicgroups = EthnicGroup::all(); // Fixed typo from $towm to $religion
+        return response()->json([
+            'message' => 'Success',
+            'data' => $ethnicgroups
+        ]);
     }
-
 
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'name' =>'required',
+            'name' => 'required|string|max:255', // Added validation for string and max length
         ]);
-        $ethnic =EthnicGroup::create($fields);
-        return $ethnic;
+
+        $ethnicgroup = EthnicGroup::create($fields);
+        return response()->json($ethnicgroup, 201); // Return the created ethnicgroup with a 201 status
     }
 
-
-    public function show(EthnicGroup $ethnic)
+    public function show(EthnicGroup $ethnicgroup)
     {
-        return $ethnic;
+        return response()->json($ethnicgroup); // Return the ethnicgroup as a JSON response
     }
 
-
-    public function update(Request $request, EthnicGroup $ethnic)
+    public function update(Request $request, EthnicGroup $ethnicgroup)
     {
         $fields = $request->validate([
-            'name' =>'required',
+            'name' => 'required|string|max:255',
         ]);
-        $ethnic->update($fields);
-        return $ethnic;
+
+        $ethnicgroup->update($fields);
+        return response()->json($ethnicgroup); // Return the updated ethnicgroup
     }
 
-
-    public function destroy(EthnicGroup $ethnic)
+    public function destroy(EthnicGroup $ethnicgroup)
     {
-        $ethnic->delete();
-        return ['message' =>'ethnic deleted successully!'];
+        $ethnicgroup->delete();
+        return response()->json(['message' => 'ethnicgroup deleted successfully!']); // Corrected message
     }
 }
