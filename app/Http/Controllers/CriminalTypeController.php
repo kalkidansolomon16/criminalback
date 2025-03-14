@@ -10,9 +10,20 @@ class CriminalTypeController extends Controller
 {
     public function index()
     {
-        return CriminalType::all();
+        $criminalType = CriminalType::all();
+        if($criminalType){
+            return response()->json([
+                'message'=>'Sucess',
+                'data'=>$criminalType
+            ]);
+        }
+        else{
+            return response()->json([
+                'status'=>404,
+                'message'=>'Hair type not found'
+            ]);
+        }
     }
-
 
     public function store(Request $request)
     {

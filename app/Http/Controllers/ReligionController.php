@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Region;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Religion;
+use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\Validator;
-
-class RegionController extends Controller
+class ReligionController extends Controller
 {
     public function index()
     {
-        $religions = Region::all(); // Fixed typo from $towm to $religion
+        $religions = Religion::all(); // Fixed typo from $towm to $religion
         return response()->json([
             'message' => 'Success',
             'data' => $religions
@@ -25,16 +23,16 @@ class RegionController extends Controller
             'name' => 'required|string|max:255', // Added validation for string and max length
         ]);
 
-        $religion = Region::create($fields);
+        $religion = Religion::create($fields);
         return response()->json($religion, 201); // Return the created religion with a 201 status
     }
 
-    public function show(Region $religion)
+    public function show(Religion $religion)
     {
         return response()->json($religion); // Return the religion as a JSON response
     }
 
-    public function update(Request $request, Region $religion)
+    public function update(Request $request, Religion $religion)
     {
         $fields = $request->validate([
             'name' => 'required|string|max:255',
@@ -44,7 +42,7 @@ class RegionController extends Controller
         return response()->json($religion); // Return the updated religion
     }
 
-    public function destroy(Region $religion)
+    public function destroy(Religion $religion)
     {
         $religion->delete();
         return response()->json(['message' => 'religion deleted successfully!']); // Corrected message

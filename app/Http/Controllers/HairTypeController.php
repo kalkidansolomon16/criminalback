@@ -9,16 +9,13 @@ use Illuminate\Support\Facades\Validator;
 
 class HairTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $hair = HairType::all();
         if($hair){
             return response()->json([
                 'message'=>'Sucess',
-                'hair'=>$hair
+                'data'=>$hair
             ]);
         }
         else{
@@ -29,122 +26,35 @@ class HairTypeController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $validation = Validator::make($request->all(),[
-            'type'=>'required'
+        $fields = $request->validate([
+            'name' =>'required',
         ]);
-        if($validation->fails()){
-        return response()->json([
-        'status'=>422,
-        'message'=>$validation->messages()
+        $type =HairType::create($fields);
+        return $type;
+    }
+
+
+    public function show(HairType $type)
+    {
+        return $type;
+    }
+
+
+    public function update(Request $request, HairType $type)
+    {
+        $fields = $request->validate([
+            'name' =>'required',
         ]);
-        }
-        else{
-$hair = new HairType();
-$hair->type = request('type');
-$hair->save();
-return response()->json([
-    'status'=>200,
-    'message'=>'Hair Type added successfully'
-]);
-    }}
-    
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $hair = HairType::find($id);
-        if($hair){
-            return response()->json([
-                'status'=>200,
-                'hair'=>$hair
-            ]);
-        }
-
-        else{
-            return response()->json([
-                'status'=>500,
-                'message'=>'Hair Type Not Found'
-            ]);
-        }
+        $type->update($fields);
+        return $type;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $hair = HairType::find($id);
-        if($hair){
-            return response()->json([
-                'status'=>200,
-                'hair'=>$hair
-            ]);
-        }
-        
-        else{
-            return response()->json([
-                'status'=>500,
-                'message'=>'Hair Type Not Found'
-            ]);
-        }
-    }
-    
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(HairType $type)
     {
-        $validation = Validator::make($request->all(),[
-            'name'=>'required'
-            ]);
-            if($validation->fails()){
-            return response()->json([
-            'status'=>422,
-            'message'=>$validation->messages()
-            ]);
-            }
-            else{
-            $hair = new HairType();
-            $hair->name = request('name');
-            $hair->update();
-            return response()->json([
-            'message'=>'hairType updated successfully'
-            ]);
-            }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        $hair = HairType::find($id);
-        if($hair){
-            $hair->delete();
-            return response()->json([
-                'message'=>'hairal Level Deleted Successfully'
-            ]);
-        }
-        else{
-            return response()->json([
-                'message'=>'hairal level with this id not foud'
-            ]);
-        }
+        $type->delete();
+        return ['message' =>'type deleted successully!'];
     }
 }

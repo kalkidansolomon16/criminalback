@@ -12,10 +12,12 @@ class CriminalTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        $criminal_types = [
-            ['name' => 'gize qetero'],
-            ['name' => 'medebegna qetero'],
-            ['name' => 'firdegna'],
+        $criminal_types = 
+            [
+                ['name' => 'ጊዜ ቀጠጠሮ'], // gize qetero
+                ['name' => 'መደበኛ ቀጠሮ'], // medebegna qetero
+                ['name' => 'ፍርደኛኛ'], // firdegna
+            
         ];
 
         DB::table('criminal_types')->insert($criminal_types);

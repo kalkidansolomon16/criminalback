@@ -10,7 +10,19 @@ class CrimeController extends Controller
 {
     public function index()
     {
-        return Crime::all();
+        $crime = Crime::all();
+        if($crime){
+            return response()->json([
+                'message'=>'Sucess',
+                'data'=>$crime
+            ]);
+        }
+        else{
+            return response()->json([
+                'status'=>404,
+                'message'=>'Hair type not found'
+            ]);
+        }
     }
 
 
