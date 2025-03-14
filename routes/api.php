@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\CaseHistoryController;
+use App\Http\Controllers\CriminalCashController;
 use App\Http\Controllers\CriminalController;
+use App\Http\Controllers\CriminalPropertyController;
 use App\Http\Controllers\HairTypeController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
@@ -69,3 +71,13 @@ Route::get('user',[UserController::class,'index']);
 Route::post('user',[UserController::class,'store']);
 Route::put('user/{id}',[UserController::class,'update']);
 Route::delete('user/{id}',[UserController::class,'destroy']);
+//criminalProperty
+Route::get('criminalProperty',[CriminalPropertyController::class,'index']);
+Route::post('criminalProperty',[CriminalPropertyController::class,'post']);
+Route::put('criminalProperty/{id}',[CriminalPropertyController::class,'update']);
+Route::delete('criminalProperty/{id}',[CriminalPropertyController::class,'destroy']);
+//criminalCash
+Route::get('criminalCash',[CriminalCashController::class,'index']);
+Route::post('criminalCash',[CriminalCashController::class,'post']);
+Route::put('criminalCash/{id}',[CriminalCashController::class,'update']);
+Route::delete('criminalCash/{id}',[CriminalCashController::class,'destroy']);
