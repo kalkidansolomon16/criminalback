@@ -10,39 +10,41 @@ class SexController extends Controller
 {
     public function index()
     {
-        return Sex::all();
+        $genders = Sex::all(); // Fixed typo from $towm to $religion
+        return response()->json([
+            'message' => 'Success',
+            'data' => $genders
+        ]);
     }
-
 
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'gender' =>'required',
+            'name' => 'required|string|max:255', // Added validation for string and max length
         ]);
-        $sexgender =Sex::create($fields);
-        return $sexgender;
+
+        $gender = Sex::create($fields);
+        return response()->json($gender, 201); // Return the created gender with a 201 status
     }
 
-
-    public function show(Sex $sexgender)
+    public function show(Sex $gender)
     {
-        return $sexgender;
+        return response()->json($gender); // Return the gender as a JSON response
     }
 
-
-    public function update(Request $request, Sex $sexgender)
+    public function update(Request $request, Sex $gender)
     {
         $fields = $request->validate([
-            'gender' =>'required',
+            'name' => 'required|string|max:255',
         ]);
-        $sexgender->update($fields);
-        return $sexgender;
+
+        $gender->update($fields);
+        return response()->json($gender); // Return the updated gender
     }
 
-
-    public function destroy(Sex $sexgender)
+    public function destroy(Sex $gender)
     {
-        $sexgender->delete();
-        return ['message' =>'sexgender deleted successully!'];
+        $gender->delete();
+        return response()->json(['message' => 'gender deleted successfully!']); // Corrected message
     }
 }

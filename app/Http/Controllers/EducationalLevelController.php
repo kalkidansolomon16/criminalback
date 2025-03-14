@@ -4,138 +4,49 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\EducationalLevels;
+use App\Models\EducationalLevel;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class EducationalLevelController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $education = EducationalLevels::all();
-        if($education){
-            return response()->json([
-                'educationalLevel'=>$education,
-                'message'=>'Success'
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>404,
-                'message'=>'EducationalLevel not found'
-            ]);
-        }
+        $educations = EducationalLevel::all(); // Fixed typo from $towm to $education
+        return response()->json([
+            'message' => 'Success',
+            'data' => $educations
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $validation = Validator::make($request->all(),[
-            'name'=>'required'
+        $fields = $request->validate([
+            'name' => 'required|string|max:255', // Added validation for string and max length
         ]);
-        if($validation->fails()){
-            return response()->json([
-                'status'=>422,
-                'message'=>$validation->messages()
-            ]);
-        }
-        else{
-            $education = EducationalLevels::new();
-            $education->name = request('name');
-            $education->save();
-            return response()->json([
-                'message'=>"educational Level added Successfully"
-            ]);
-        }
-        
+
+        $education = EducationalLevel::create($fields);
+        return response()->json($education, 201); // Return the created education with a 201 status
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(EducationalLevel $education)
     {
-        $education = EducationalLevels::find($id);
-        if($education){
-            return response()->json([
-                'educationalLevel'=>$education,
-                'message'=>'Success'
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>422,
-                'message'=>'Educational Level Not Found'
-            ]);
-        }
+        return response()->json($education); // Return the education as a JSON response
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, EducationalLevel $education)
     {
-        $education = EducationalLevels::find($id);
-        if($education){
-            return response()->json([
-                'educationalLevel'=>$education,
-                'message'=>'Success'
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>422,
-                'message'=>'Educational status not found'
-
-            ]);
-        }
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        $validation = Validator::make($request->all(),[
-            'name'=>'required',
+        $fields = $request->validate([
+            'name' => 'required|string|max:255',
         ]);
-        if($validation->fails()){
-            return response()->json([
-                'status'=>422,
-                'message'=>$validation->messages()
-            ]);
-        }
+
+        $education->update($fields);
+        return response()->json($education); // Return the updated education
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(EducationalLevel $education)
     {
-        $education = EducationalLevels::find($id);
-        if($education){
-            $education->delete();
-            return response()->json([
-                'message'=>'Educational Level Deleted Successfully'
-            ]);
-        }
-        else{
-            return response()->json([
-                'message'=>'Educational level with this id not foud'
-            ]);
-        }
+        $education->delete();
+        return response()->json(['message' => 'education deleted successfully!']); // Corrected message
     }
 }

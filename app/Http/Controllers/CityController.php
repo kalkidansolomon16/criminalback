@@ -10,7 +10,20 @@ class CityController extends Controller
 {
     public function index()
     {
-        return City::all();
+    
+        $city = City::all();
+        if($city){
+            return response()->json([
+                'message'=>'Sucess',
+                'data'=>$city
+            ]);
+        }
+        else{
+            return response()->json([
+                'status'=>404,
+                'message'=>'Hair type not found'
+            ]);
+        }
     }
 
 
