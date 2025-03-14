@@ -1,13 +1,19 @@
 <?php
 
+
+use App\Models\Role;
+use App\Models\Region;
 use Illuminate\Http\Request;
 use App\Models\CriminalGuard;
 
 use App\Models\EducationalLEvel;
+use App\Models\MedicalHistory;
+
 use App\Models\EducationalLevels;
 use App\Models\CriminalInformation;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SexController;
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\RoleController;
@@ -90,7 +96,7 @@ Route::put('ethincgroup/{id}',[EthnicGroupController::class,'update']);
 Route::delete('ethincgroup/{id}',[EthnicGroupController::class,'destroy']);
 //criminal
 Route::get('criminal', [CriminalController::class, 'index']);
-Route::post('criminal', [CriminalController::class, 'store']); // Change 'post' to 'store'
+Route::post('criminal', [CriminalController::class, 'store']); 
 Route::put('criminal/{id}', [CriminalController::class, 'update']);
 Route::delete('criminal/{id}', [CriminalController::class, 'destroy']);
 //crime

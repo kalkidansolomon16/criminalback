@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class CourtSeeder extends Seeder
 {
@@ -23,5 +24,6 @@ class CourtSeeder extends Seeder
                 'name'=>' ባቲ ፍርድ ቤት'
             ],
         ];
+        DB::table('courts')->insert($court);
     }
 }
