@@ -1,11 +1,14 @@
 <?php
 
+
 use App\Models\Role;
 use App\Models\Region;
 use Illuminate\Http\Request;
 use App\Models\CriminalGuard;
+
+use App\Models\EducationalLEvel;
 use App\Models\MedicalHistory;
-use App\Models\EducationalLevel;
+
 use App\Models\EducationalLevels;
 use App\Models\CriminalInformation;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +17,7 @@ use App\Http\Controllers\SexController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\RoleController;
+
 use App\Http\Controllers\TownController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
@@ -76,16 +80,10 @@ Route::get('town/{id}',[TownController::class,'show']);
 Route::put('town/{id}',[TownController::class,'update']);
 Route::delete('town/{id}',[TownController::class,'destroy']);
 //educational Level
-
 Route::get('education',[EducationalLevelController::class,'index']);
 Route::post('education',[EducationalLevelController::class,'post']);
 Route::put('education/{id}',[EducationalLevelController::class,'update']);
 Route::delete('education/{id}',[EducationalLevelController::class,'destroy']);
-Route::get('education',[EducationalLevel::class,'index']);
-Route::post('education',[EducationalLevel::class,'store']);
-Route::put('education/{id}',[EducationalLevel::class,'update']);
-Route::delete('education/{id}',[EducationalLevel::class,'destroy']);
-
 //hairType
 Route::get('hair',[HairTypeController::class,'index']);
 Route::post('hair',[HairTypeController::class,'store']);
@@ -97,7 +95,6 @@ Route::post('ethincgroup',[EthnicGroupController::class,'post']);
 Route::put('ethincgroup/{id}',[EthnicGroupController::class,'update']);
 Route::delete('ethincgroup/{id}',[EthnicGroupController::class,'destroy']);
 //criminal
-
 Route::get('criminal', [CriminalController::class, 'index']);
 Route::post('criminal', [CriminalController::class, 'store']); 
 Route::put('criminal/{id}', [CriminalController::class, 'update']);
@@ -114,12 +111,6 @@ Route::get('criminalType',[CriminalTypeController::class,'index']);
 Route::post('criminalType',[CriminalTypeController::class,'post']);
 Route::put('criminalType/{id}',[CriminalTypeController::class,'update']);
 Route::delete('criminalType/{id}',[CriminalTypeController::class,'destroy']);
-
-
-Route::post('criminal',[CriminalController::class,'store']);
-Route::put('criminal/{id}',[CriminalController::class,'update']);
-Route::delete('criminal/{id}',[CriminalController::class,'destroy']);
-
 //criminalInformation
 Route::get('criminalInfo',[CriminalInformation::class,'index']);
 Route::post('criminalInfo',[CriminalInformation::class,'store']);
