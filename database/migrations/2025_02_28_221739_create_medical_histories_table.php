@@ -14,16 +14,18 @@ return new class extends Migration
         Schema::create('medical_histories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('criminal_id')->references('id')->on('criminals')->onDelete('cascade');
+            $table->foreignId('disease_type_id')->references('id')->on('disease_types')->onDelete('cascade');
             $table->string('hospital_name');
             $table->string('doctor_name');
-            $table->unsignedBigInteger('criminal_id');
-            $table->unsignedBigInteger('disease_type');
+            // $table->unsignedBigInteger('criminal_id');
+            // $table->unsignedBigInteger('disease_type');
             $table->date('date');
             $table->string('doctor_address');
             $table->float('medical_expense');
-            $table->json('guards');
-            $table->foreign('criminal_id')->references('id')->on('criminals')->onDelete('cascade');
-            $table->foreign('disease_type')->references('id')->on('disease_types')->onDelete('cascade');
+            // $table->json('guards');
+            // $table->foreign('criminal_id')->references('id')->on('criminals')->onDelete('cascade');
+            // $table->foreign('disease_type_id')->references('id')->on('disease_types')->onDelete('cascade');
 
             $table->timestamps();
         });
