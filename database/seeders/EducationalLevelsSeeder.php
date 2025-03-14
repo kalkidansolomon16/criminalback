@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\EducationalLevels;
+use App\Models\EducationalLevel;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -33,6 +33,6 @@ class EducationalLevelsSeeder extends Seeder
                "name" => "የዶክትሬት ዲግሪ"
            ]
            ];
-           EducationalLevels::insert($educationLevel);
+           EducationalLevel::insert($educationLevel);
            }
 }
