@@ -28,6 +28,9 @@ use App\Http\Controllers\HairTypeController;
 use App\Http\Controllers\ReligionController;
 use App\Http\Controllers\CriminalInformationController;
 use App\Http\Controllers\CaseHistoryController;
+use App\Http\Controllers\CriminalCashController;
+use App\Http\Controllers\CriminalGuardController;
+use App\Http\Controllers\CriminalPropertyController;
 use App\Http\Controllers\DiseaseTypeController;
 use App\Http\Controllers\EthnicGroupController;
 use App\Http\Controllers\CriminalTypeController;
@@ -146,10 +149,21 @@ Route::delete('user/{id}',[UserController::class,'destroy']);
 
 
 //criminalGuard
-Route::get('criminalGuard',[CriminalGuard::class,'index']);
-Route::post('criminalGuard',[CriminalGuard::class,'store']);
-Route::put('criminalGuard/{id}',[CriminalGuard::class,'update']);
-Route::delete('criminalGuard/{id}',[CriminalGuard::class,'destroy']);
+Route::get('criminalGuard',[CriminalGuardController::class,'index']);
+Route::post('criminalGuard',[CriminalGuardController::class,'store']);
+Route::put('criminalGuard/{id}',[CriminalGuardController::class,'update']);
+Route::delete('criminalGuard/{id}',[CriminalGuardController::class,'destroy']);
 
 //login
 Route::post('login',[AuthController::class,'login']);
+//
+//crimonalProperty
+Route::get('criminalProperty',[CriminalPropertyController::class,'index']);
+Route::post('criminalProperty',[CriminalPropertyController::class,'store']);
+Route::put('criminalProperty/{id}',[CriminalPropertyController::class,'update']);
+Route::delete('criminalPropert/{id}',[CriminalPropertyController::class,'destroy']);
+//criminal cash
+Route::get('criminalCash',[CriminalCashController::class,'index']);
+Route::post('criminalCash',[CriminalCashController::class,'store']);
+Route::put('criminalCash/{id}',[CriminalCashController::class,'update']);
+Route::delete('criminalCash/{id}',[CriminalCashController::class,'destroy']);

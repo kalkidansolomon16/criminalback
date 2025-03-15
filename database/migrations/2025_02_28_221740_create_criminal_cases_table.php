@@ -10,11 +10,11 @@ return new class extends Migration
     {
         Schema::create('criminal_cashes', function (Blueprint $table) {
             $table->id(); 
-            $table->foreignId('criminal_id')->constrained()->onDelete('cascade');
+            $table->foreignId('criminal_id')->references('id')->on('criminals')->onDelete('cascade');
             $table->integer('amount'); 
-            $table->date('deposit_date'); 
-            $table->date('withdrawal_date'); 
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
+            $table->date('deposit_date')->nullable(); 
+            $table->date('withdrawal_date')->nullable(); 
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade'); 
             $table->timestamps(); 
         });
     }
