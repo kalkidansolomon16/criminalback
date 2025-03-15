@@ -35,7 +35,7 @@ class CriminalPropertyController extends Controller
     {
         $validation = Validator::make($request->all(),[
             'criminal_id'=>'required',
-            'type'=>'required',
+            'type_id'=>'required',
             'amount'=>'required',
             'user_id'=>'required'
         ]);
@@ -48,13 +48,13 @@ class CriminalPropertyController extends Controller
         else{
 $property = new CriminalProperty();
 $property->criminal_id = request('criminal_id');
-$property->type = request('type');
+$property->type_id = request('type_id');
 $property->amount = request('amount');
 $property->user_id = request('user_id');
 $property->save();
 return response()->json([
     'status'=>200,
-    'message'=>'property Type added successfully'
+    'message'=>'Criminal Property added successfully'
 ]);
     }
 }
@@ -76,7 +76,7 @@ return response()->json([
         else{
             return response()->json([
                 'status'=>500,
-                'message'=>'property Type Not Found'
+                'message'=>'criminal property Not Found'
             ]);
         }
     }
@@ -97,7 +97,7 @@ return response()->json([
         else{
             return response()->json([
                 'status'=>500,
-                'message'=>'property Type Not Found'
+                'message'=>'criminal property Not Found'
             ]);
         }
     }
@@ -128,7 +128,7 @@ $property->amount = request('amount');
 $property->user_id = request('user_id');
             $property->update();
             return response()->json([
-            'message'=>'CriminalProperty updated successfully'
+            'message'=>'Criminal Property updated successfully'
             ]);
             }
     }
@@ -142,12 +142,12 @@ $property->user_id = request('user_id');
         if($property){
             $property->delete();
             return response()->json([
-                'message'=>'propertyal Level Deleted Successfully'
+                'message'=>'criminalproerty Deleted Successfully'
             ]);
         }
         else{
             return response()->json([
-                'message'=>'propertyal level with this id not foud'
+                'message'=>'criminalproerty with this id not foud'
             ]);
         }
     }

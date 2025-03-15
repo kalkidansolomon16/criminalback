@@ -119,7 +119,7 @@ class TypeController extends Controller
     {
         $type = Type::find($id);
         if($type){
-        $atype->delete();
+        $type->delete();
         return response()->json([
         'message'=>'type deleted successfully'
         ]);
