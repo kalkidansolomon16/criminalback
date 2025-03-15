@@ -26,6 +26,7 @@ use App\Http\Controllers\RegionController;
 use App\Http\Controllers\CriminalController;
 use App\Http\Controllers\HairTypeController;
 use App\Http\Controllers\ReligionController;
+use App\Http\Controllers\CriminalInformationController;
 use App\Http\Controllers\CaseHistoryController;
 use App\Http\Controllers\DiseaseTypeController;
 use App\Http\Controllers\EthnicGroupController;
@@ -112,10 +113,10 @@ Route::post('criminalType',[CriminalTypeController::class,'post']);
 Route::put('criminalType/{id}',[CriminalTypeController::class,'update']);
 Route::delete('criminalType/{id}',[CriminalTypeController::class,'destroy']);
 //criminalInformation
-Route::get('criminalInfo',[CriminalInformation::class,'index']);
-Route::post('criminalInfo',[CriminalInformation::class,'store']);
-Route::put('criminalInfo/{id}',[CriminalInformation::class,'update']);
-Route::delete('criminalInfo/{id}',[CriminalInformation::class,'destroy']);
+Route::get('criminalInfo',[CriminalInformationController::class,'index']);
+Route::post('criminalInfo',[CriminalInformationController::class,'store']);
+Route::put('criminalInfo/{id}',[CriminalInformationController::class,'update']);
+Route::delete('criminalInfo/{id}',[CriminalInformationController::class,'destroy']);
 //caseHistory
 Route::get('case',[CaseHistoryController::class,'index']);
 Route::post('case',[CaseHistoryController::class,'store']);

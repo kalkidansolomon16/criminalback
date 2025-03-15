@@ -20,7 +20,7 @@ class CriminalTypeController extends Controller
         else{
             return response()->json([
                 'status'=>404,
-                'message'=>'Hair type not found'
+                'message'=>'criminal type not found'
             ]);
         }
     }
