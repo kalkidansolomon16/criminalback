@@ -93,7 +93,8 @@ class CriminalController extends Controller
             'end_dateof_arrest'=>'required',
             'date_of_release'=>'required',
             'release_reason'=>'required',
-            'dateof_mercy_release'=>'required'
+            'dateof_mercy_release'=>'required',
+            'status' => "required"
             
         ]);
         if($validation->fails()){
@@ -103,7 +104,7 @@ class CriminalController extends Controller
             ]);
         }
         else{
-            $criminal = Criminal::new();
+            $criminal = new Criminal();
             $criminal->criminal_unique_number = request('criminal_unique_number');
             $criminal->prison_unique_number = request('prison_unique_number');
             $criminal->criminalSell_unique_number = request('criminalSell_unique_number');
@@ -155,6 +156,7 @@ class CriminalController extends Controller
             $criminal->date_of_release = request('date_of_release');
             $criminal->release_reason = request('release_reason');
             $criminal->dateof_mercy_release = request('dateof_mercy_release');
+            $criminal->status = request('status');
             // $criminal->writ = request('writ');
             // $criminal->status = request('status');
             if ($request->hasFile('photo')) {
@@ -175,8 +177,10 @@ class CriminalController extends Controller
             }
             $criminal->save();
             return response()->json([
-                'message'=>"criminalal Level added Successfully"
+                'message'=>"criminalal Level added Successfully",
+                'data' => $criminal
             ]);
+            
         }
         
     }

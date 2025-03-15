@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\criminalInformation;
+use App\Models\Criminal_information;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
-class criminalInformationInformationController extends Controller
+class CriminalInformationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $criminalInformation = criminalInformation::all();
+        $criminalInformation = Criminal_information::all();
         if($criminalInformation){
             return response()->json([
                 'criminalInformation'=>$criminalInformation,
@@ -47,15 +47,16 @@ class criminalInformationInformationController extends Controller
         $validation = Validator::make($request->all(),[
             'criminal_id'=>'required',
             'height'=>'required',
-            'Hair_id'=>'required',
+            'hair_type_id'=>'required',
             'face'=>'required',
-            'Forehead '=>'required',
+            'Forehead'=>'required',
             'nose'=>'required',
             'Eye_color'=>'required',
             'teeth'=>'required',
             'lip'=>'required',
             'ear'=>'required',
             'Unique_appearance'=>'required',
+            'citizenship' =>'required'
             
             
         ]);
@@ -66,18 +67,19 @@ class criminalInformationInformationController extends Controller
             ]);
         }
         else{
-            $criminalInformation = criminalInformation::new();
+            $criminalInformation = new Criminal_information();
             $criminalInformation->criminal_id = request('criminal_id');
             $criminalInformation->height = request('height');
-            $criminalInformation->Hair_id = request('Hair_id');
+            $criminalInformation->hair_type_id = request('hair_type_id');
             $criminalInformation->face = request('face');
-            $criminalInformation->Forehead  = request('Forehead ');
+            $criminalInformation->Forehead  = request('Forehead');
             $criminalInformation->nose = request('nose');
             $criminalInformation->Eye_color = request('Eye_color');
             $criminalInformation->teeth = request('teeth');
             $criminalInformation->lip = request('lip');
             $criminalInformation->ear = request('ear');
             $criminalInformation->Unique_appearance = request('Unique_appearance');
+            $criminalInformation->citizenship = request('citizenship');
             
             
             $criminalInformation->save();
@@ -93,7 +95,7 @@ class criminalInformationInformationController extends Controller
      */
     public function show(string $id)
     {
-        $criminalInformation = criminalInformation::find($id);
+        $criminalInformation = Criminal_information::find($id);
         if($criminalInformation){
             return response()->json([
                 'criminalInformation'=>$criminalInformation,
@@ -113,7 +115,7 @@ class criminalInformationInformationController extends Controller
      */
     public function edit(string $id)
     {
-        $criminalInformation = criminalInformation::find($id);
+        $criminalInformation = Criminal_information::find($id);
         if($criminalInformation){
             return response()->json([
                 'criminalInformation'=>$criminalInformation,
@@ -137,7 +139,7 @@ class criminalInformationInformationController extends Controller
         $validation = Validator::make($request->all(),[
             'criminal_id'=>'required',
             'height'=>'required',
-            'Hair_id'=>'required',
+            'hair_type_id'=>'required',
             'face'=>'required',
             'Forehead '=>'required',
             'nose'=>'required',
@@ -155,10 +157,10 @@ class criminalInformationInformationController extends Controller
         }
 
         else{
-            $criminalInformation = criminalInformation::new();
+            $criminalInformation = new Criminal_information();
             $criminalInformation->criminal_id = request('criminal_id');
             $criminalInformation->height = request('height');
-            $criminalInformation->Hair_id = request('Hair_id');
+            $criminalInformation->hair_type_id = request('hair_type_id');
             $criminalInformation->face = request('face');
             $criminalInformation->Forehead  = request('Forehead ');
             $criminalInformation->nose = request('nose');
@@ -176,7 +178,7 @@ class criminalInformationInformationController extends Controller
      */
     public function destroy(string $id)
     {
-        $criminalInformation = criminalInformation::find($id);
+        $criminalInformation = Criminal_information::find($id);
         if($criminalInformation){
             $criminalInformation->delete();
             return response()->json([
