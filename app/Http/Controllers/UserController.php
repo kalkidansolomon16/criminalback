@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Settings\Constants;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
 
     public function index()
     {
-        $user = User::all();
+        $user = Auth::user();
+        // $user = User::all();
         return response()->json([
             'user'=>$user,
             'message'=>'Success'
@@ -78,6 +81,24 @@ class UserController extends Controller
                 'message'=>'Useral Level Not Found'
             ]);
         }
+    }
+    public function showPolice(){
+$user = Auth::user()->load('sex','role');
+if($user->role_id!== Constants::POLIC){
+    return response()->json([
+        'message'=>'unauthorized'
+    ],401);
+}
+else{
+    return response()->json([
+        'data'=>[
+            'police'=>$user,
+            'photo'=>asset($user->photo),
+            'sex'=>$user->sex,
+            'role'=>$user->role,
+        ]
+        ],200);
+}
     }
     public function edit(string $id)
     {

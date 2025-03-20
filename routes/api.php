@@ -58,6 +58,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('disease/{id}',[DiseaseTypeController::class,'destroy']);
     //criminal
     Route::get('criminal',[CriminalController::class,'index']);
+    //user
+    Route::put('user/{id}',[UserController::class,'update']);
+    Route::delete('user/{id}',[UserController::class,'destroy']);
+    Route::get('showPolice',[UserController::class,'showPolice']);
 
 
     Route::post('user',[UserController::class,'store']);
@@ -72,6 +76,7 @@ Route::put('criminal/{id}', [CriminalController::class, 'update']);
 Route::delete('criminal/{id}', [CriminalController::class, 'destroy']);
 Route::middleware('auth:sanctum')->get('/medicalInfo', [CriminalController::class, 'medicalInfo']);
     });
+    
 //region
 Route::get('region',[RegionController::class,'index']);
 Route::post('region',[RegionController::class,'store']);
@@ -152,6 +157,8 @@ Route::put('sex/{id}',[SexController::class,'update']);
 Route::delete('sex/{id}',[SexController::class,'destroy']);
 //user
 
+
+Route::post('user',[UserController::class,'store']);
 
 //medical History
 

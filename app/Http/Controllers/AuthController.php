@@ -6,10 +6,11 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Settings\Constants;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-
+use PHPUnit\TextUI\Configuration\Constant;
 
 class AuthController extends Controller
 {
@@ -47,12 +48,26 @@ class AuthController extends Controller
 
         $randomStr = Str::random(40);
 
-  
+  $roleType = 'user';
+  if($user->role_id == Constants::ADMIN){
+    $roleType = 'admin';
+  }
+  elseif($user->role_id == Constants::POLIC){
+    $roleType = 'police';
+  }
+  elseif($user->role_id == Constants::GUARD){
+    $roleType = 'guard';
+  }
+  elseif($user->role_id == Constants::DOCTOR){
+    $roleType = 'doctor';
+  }
+
         $token = $user->createToken($randomStr)->plainTextToken;
-$userID =$user->id;
+         $userID =$user->id;
         return response()->json([
             'token' => $token,
-            'user_id'=>$userID
+            'user_id'=>$userID,
+            'role'=>$roleType
              
         ], 200);
       
