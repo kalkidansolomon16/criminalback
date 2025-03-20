@@ -370,4 +370,29 @@ class CriminalController extends Controller
             ]);
         }
     }
+    public function medicalInfo(Request $request)
+    {
+     
+        $criminals = Criminal::all();
+    
+        if ($criminals->isNotEmpty()) {
+        
+            $criminalNames = $criminals->map(function($criminal) {
+                return [
+                    'first_name' => $criminal->first_name,
+                    'middle_name' => $criminal->middle_name,
+                    'last_name' => $criminal->last_name,
+                ];
+            });
+    
+            return response()->json([
+                'criminals' => $criminalNames,
+                'message' => 'Criminal names retrieved successfully'
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'No criminals found'
+            ], 404);
+        }
+    }
 }

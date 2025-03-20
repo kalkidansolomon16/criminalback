@@ -2,32 +2,63 @@
 
 namespace App\Http\Controllers;
 
+// use App\Models\User;
+// use Faker\Provider\Medical;
 use Illuminate\Http\Request;
+use App\Models\CriminalGuard;
 use App\Models\MedicalHistory;
 use App\Http\Controllers\Controller;
-use App\Models\CriminalGuard;
-use Faker\Provider\Medical;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class MedicalHistoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $medicalHostory = MedicalHistory::all();
-        if($medicalHostory){
 
+    public function index(Request $request)
+    {
+
+        $user = Auth::user();
+    
+        if (!$user) {
             return response()->json([
-                'medicalHistory'=>$medicalHostory,
-                'message'=>'Success'
+                'status' => 401,
+                'message' => 'Unauthorized'
             ]);
         }
-        else{
+    
+     
+        $criminalId = $request->input('criminal_id'); 
+        $diseaseTypeId = $request->input('disease_type_id'); 
+        $sexId =$request->input('sex_id');
+  
+        $query = MedicalHistory::with(['user', 'criminal','criminal.sex', 'diseaseType'])
+            ->where('user_id', $user->id);
+    
+
+        if ($criminalId) {
+            $query->where('criminal_id', $criminalId);
+        }
+    
+        if ($diseaseTypeId) {
+            $query->where('disease_type_id', $diseaseTypeId);
+        }
+        if($sexId){
+            $query->where('sex_id',$sexId);
+        }
+
+    
+
+        $medicalHistory = $query->get();
+    
+        if ($medicalHistory->isNotEmpty()) {
             return response()->json([
-                'status'=>422,
-                'message'=>'Medical History Not Found'
+                'data' => $medicalHistory,
+                'message' => 'Success'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 422,
+                'message' => 'Medical History Not Found'
             ]);
         }
     }
@@ -52,7 +83,7 @@ class MedicalHistoryController extends Controller
         ]);
         }
         else{
-    // Create a new MedicalHistory instance
+
     $medicalHistory = new MedicalHistory();
     $medicalHistory->user_id = $request->user_id;
     $medicalHistory->criminal_id = $request->criminal_id;
@@ -64,7 +95,7 @@ class MedicalHistoryController extends Controller
     $medicalHistory->medical_expense = $request->medical_expense;
     // $medicalHistory->guards = $request->guards;
 
-    // Save the Medical History first
+
     $medicalHistory->save();
 
     $guards = explode(',',$request->input('guard_id'));
@@ -76,12 +107,7 @@ $criminalGuard->save();
 
     }
 
-    // Attach guards to the medical history
-    // Assuming guards are being sent as an array from the front-end
-    // if ($request->has('guards')) {
-    //     $guardIds = $request->input('guards');
-    //     $medicalHistory->guards()->attach($guardIds);
-    // }
+
 
     return response()->json([
         'status' => 200,
