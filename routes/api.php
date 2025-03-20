@@ -58,6 +58,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('disease/{id}',[DiseaseTypeController::class,'destroy']);
     //criminal
     Route::get('criminal',[CriminalController::class,'index']);
+
+
+    Route::post('user',[UserController::class,'store']);
+Route::put('user/{id}',[UserController::class,'update']);
+Route::delete('user/{id}',[UserController::class,'destroy']);
+Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getUserInfo']);
+
+
+Route::get('criminal', [CriminalController::class, 'index']);
+Route::post('criminal', [CriminalController::class, 'store']); 
+Route::put('criminal/{id}', [CriminalController::class, 'update']);
+Route::delete('criminal/{id}', [CriminalController::class, 'destroy']);
+Route::middleware('auth:sanctum')->get('/medicalInfo', [CriminalController::class, 'medicalInfo']);
     });
 //region
 Route::get('region',[RegionController::class,'index']);
@@ -99,10 +112,7 @@ Route::post('ethincgroup',[EthnicGroupController::class,'post']);
 Route::put('ethincgroup/{id}',[EthnicGroupController::class,'update']);
 Route::delete('ethincgroup/{id}',[EthnicGroupController::class,'destroy']);
 //criminal
-Route::get('criminal', [CriminalController::class, 'index']);
-Route::post('criminal', [CriminalController::class, 'store']); 
-Route::put('criminal/{id}', [CriminalController::class, 'update']);
-Route::delete('criminal/{id}', [CriminalController::class, 'destroy']);
+
 //crime
 Route::get('crime',[CrimeController::class,'index']);
 Route::post('crime',[CrimeController::class,'post']);
@@ -142,9 +152,7 @@ Route::put('sex/{id}',[SexController::class,'update']);
 Route::delete('sex/{id}',[SexController::class,'destroy']);
 //user
 
-Route::post('user',[UserController::class,'store']);
-Route::put('user/{id}',[UserController::class,'update']);
-Route::delete('user/{id}',[UserController::class,'destroy']);
+
 //medical History
 
 

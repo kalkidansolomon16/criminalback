@@ -53,7 +53,7 @@ class UserController extends Controller
             $user->role_id = request('role_id');
             if ($request->hasFile('photo')) {
                 $photo = $request->file('photo');
-                $photoName = 'ka_l' . time() . '_' . $photo->getClientOriginalName();
+                $photoName = 'use_r' . time() . '_' . $photo->getClientOriginalName();
                 $photo->move(public_path('img'), $photoName);
                 $user->photo = 'img/' . $photoName;
             }
@@ -152,4 +152,16 @@ class UserController extends Controller
             ]);
         }
     }
+    public function getUserInfo(Request $request){
+        $userId = $request->user()->id;
+        $user = User::with('role')
+                      ->where('id', $userId)
+                      ->where('role_id', 4)
+                      ->first();
+            if($user){
+                return response()->json(['data'=>$user]);
+            }
+            return response()->json(['message'=>'user not'], 404);
+    }
+    
 }
