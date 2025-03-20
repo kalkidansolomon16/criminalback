@@ -99,6 +99,21 @@ else{
         ]
         ],200);
 }
+
+    }
+    public function showDoctor(){
+        $user = Auth::user()->load('role');
+        if($user->role_id == Constants::DOCTOR){
+            return response()->json([
+                'message'=>'unauthorized'
+            ],401);
+        }
+        else{
+            return response()->json([
+                'doctor' => $user,
+                'role' =>$user->role
+            ],200);
+        }
     }
     public function edit(string $id)
     {

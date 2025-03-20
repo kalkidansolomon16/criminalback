@@ -19,7 +19,7 @@ class CourtController extends Controller
         $court = Court::all();
         if($court){
             return response()->json([
-                'court'=>$court,
+                'data'=>$court,
                 'message'=>'Success'
             ]);
         }
@@ -30,6 +30,9 @@ class CourtController extends Controller
             ]);
         }
     }
+
+
+    
 
     /**
      * Show the form for creating a new resource.

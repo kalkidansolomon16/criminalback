@@ -28,6 +28,7 @@ use App\Http\Controllers\HairTypeController;
 use App\Http\Controllers\ReligionController;
 use App\Http\Controllers\CriminalInformationController;
 use App\Http\Controllers\CaseHistoryController;
+use App\Http\Controllers\CourtController;
 use App\Http\Controllers\CriminalCashController;
 use App\Http\Controllers\CriminalGuardController;
 use App\Http\Controllers\CriminalPropertyController;
@@ -68,15 +69,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::put('user/{id}',[UserController::class,'update']);
 Route::delete('user/{id}',[UserController::class,'destroy']);
 Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getUserInfo']);
+Route::middleware('auth:sanctum')->get('/showDoctor', [UserController::class, 'showDoctor']);
 
+
+});
 
 Route::get('criminal', [CriminalController::class, 'index']);
 Route::post('criminal', [CriminalController::class, 'store']); 
 Route::put('criminal/{id}', [CriminalController::class, 'update']);
 Route::delete('criminal/{id}', [CriminalController::class, 'destroy']);
 Route::middleware('auth:sanctum')->get('/medicalInfo', [CriminalController::class, 'medicalInfo']);
-    });
-    
 //region
 Route::get('region',[RegionController::class,'index']);
 Route::post('region',[RegionController::class,'store']);
@@ -182,3 +184,8 @@ Route::get('criminalCash',[CriminalCashController::class,'index']);
 Route::post('criminalCash',[CriminalCashController::class,'store']);
 Route::put('criminalCash/{id}',[CriminalCashController::class,'update']);
 Route::delete('criminalCash/{id}',[CriminalCashController::class,'destroy']);
+
+Route::get('court',[CourtController::class,'index']);
+Route::post('court',[CourtController::class,'store']);
+Route::put('court/{id}',[CourtController::class,'update']);
+Route::delete('court/{id}',[CourtController::class,'destroy']);
