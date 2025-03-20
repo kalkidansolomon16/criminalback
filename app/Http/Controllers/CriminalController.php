@@ -15,7 +15,28 @@ class CriminalController extends Controller
      */
     public function index()
     {
-        $criminal = Criminal::with('sex','region','town','city','educational_level','ethnic_group','religion','crime','criminal_type','court','user')->get();
+        $criminal = Criminal::with([
+           'medicalHistories',
+            'sex',
+            'birthRegion',
+            'birthTown',  
+            'birthCity',  
+            'currentRegion', 
+            'currentTown',  
+            'currentCity',  
+            'educationalLevel',
+            'ethnicGroup',
+            'religion',
+            'closestRespondentRegion',
+            'closestRespondentTown',
+            'closestRespondentCity',
+            'crime',
+            'criminalType', 
+            'arrestCourt',  
+            'verdictCourt', 
+            'updatedVerdictCourt', 
+            'user'
+        ])->get();
         if($criminal){
             return response()->json([
                 'Criminal'=>$criminal,
@@ -161,20 +182,27 @@ class CriminalController extends Controller
             // $criminal->writ = request('writ');
             // $criminal->status = request('status');
             if ($request->hasFile('photo')) {
-                $photoPath = $request->file('photo')->store('photos', 'public');
-                $criminal->photo = $photoPath;
+                $photoPath = $request->file('photo');
+                $photoName = 'use_r' . time() . '_' . $photoPath->getClientOriginalName();
+                $photoPath->move(public_path('img'), $photoName);
+                $criminal->photo = 'img/' . $photoName;
+              
             }
     
             // Handle registral signature upload
             if ($request->hasFile('registral_signature')) {
-                $registralSignaturePath = $request->file('registral_signature')->store('signatures', 'public');
-                $criminal->registral_signature = $registralSignaturePath;
+                $registralSignaturePath = $request->file('registral_signature');
+                $photoName = 'use_r' . time() . '_' . $registralSignaturePath->getClientOriginalName();
+                $registralSignaturePath->move(public_path('img'), $photoName);
+                $criminal->registral_signature = 'img/' . $photoName;
             }
     
             // Handle additional file uploads
             if ($request->hasFile('writ')) {
-                $additionalFile1Path = $request->file('writ')->store('uploads', 'public');
-                $criminal->writ = $additionalFile1Path; // Ensure your model has this field
+                $additionalFile1Path = $request->file('writ');
+                $photoName = 'use_r' . time() . '_' . $additionalFile1Path->getClientOriginalName();
+                $additionalFile1Path->move(public_path('img'), $photoName);
+                $criminal->writ = 'img/' . $photoName;
             }
             $criminal->save();
             return response()->json([

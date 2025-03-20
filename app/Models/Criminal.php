@@ -1,48 +1,109 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Criminal extends Model
 {
-    public function medicalHistories(){
+    public function medicalHistories(): HasMany
+    {
         return $this->hasMany(MedicalHistory::class);
     }
-    public function sex()
+
+    public function sex(): BelongsTo
     {
         return $this->belongsTo(Sex::class, 'sex_id');
     }
-  
-    public function region(){
-        return $this->belongsTo(Region::class,'id');
+
+    public function birthRegion(): BelongsTo
+    {
+        return $this->belongsTo(Region::class, 'birth_region_id');
     }
-    public function town(){
-        return $this->belongsTo(Town::class);
+
+    public function birthTown(): BelongsTo
+    {
+        return $this->belongsTo(Town::class, 'birth_town_id');
     }
-    public function city(){
-        return $this->belongsTo(City::class);
+
+    public function birthCity(): BelongsTo
+    {
+        return $this->belongsTo(City::class, 'birth_city_id');
     }
-    public function educational_level(){
-        return $this->belongsTo(EducationalLevel::class);
+
+    public function currentRegion(): BelongsTo
+    {
+        return $this->belongsTo(Region::class, 'current_region_id');
     }
-    public function ethnic_group(){
-        return $this->belongsTo(EthnicGroup::class);
-    } 
-    public function religion(){
-        return $this->belongsTo(Religion::class);
+
+    public function currentTown(): BelongsTo
+    {
+        return $this->belongsTo(Town::class, 'current_town_id');
     }
-    public function crime(){
-        return $this->belongsTo(Crime::class);
+
+    public function currentCity(): BelongsTo
+    {
+        return $this->belongsTo(City::class, 'current_city_id');
     }
-    public function criminal_type(){
-        return $this->belongsTo(CriminalType::class);
+
+    public function educationalLevel(): BelongsTo
+    {
+        return $this->belongsTo(EducationalLevel::class, 'educational_level_id');
     }
-    public function court(){
-        return $this->belongsTo(Court::class);
+
+    public function ethnicGroup(): BelongsTo
+    {
+        return $this->belongsTo(EthnicGroup::class, 'ethnic_group_id');
     }
-    public function user(){
-        return $this->belongsTo(User::class);
+
+    public function religion(): BelongsTo
+    {
+        return $this->belongsTo(Religion::class, 'religion_id');
+    }
+
+    public function closestRespondentRegion(): BelongsTo
+    {
+        return $this->belongsTo(Region::class, 'Closest_respondent_region_id');
+    }
+
+    public function closestRespondentTown(): BelongsTo
+    {
+        return $this->belongsTo(Town::class, 'Closest_respondent_town_id');
+    }
+
+    public function closestRespondentCity(): BelongsTo
+    {
+        return $this->belongsTo(City::class, 'Closest_respondent_city_id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function crime(): BelongsTo
+    {
+        return $this->belongsTo(Crime::class, 'crime_id');
+    }
+
+    public function criminalType(): BelongsTo
+    {
+        return $this->belongsTo(CriminalType::class, 'criminal_type_id');
+    }
+
+    public function arrestCourt(): BelongsTo
+    {
+        return $this->belongsTo(Court::class, 'arrest_court_id');
+    }
+
+    public function verdictCourt(): BelongsTo
+    {
+        return $this->belongsTo(Court::class, 'verdict_court_id');
+    }
+
+    public function updatedVerdictCourt(): BelongsTo
+    {
+        return $this->belongsTo(Court::class, 'updated_verdict_court_id');
     }
 }

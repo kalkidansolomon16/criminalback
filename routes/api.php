@@ -58,7 +58,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('disease/{id}',[DiseaseTypeController::class,'update']);
     Route::delete('disease/{id}',[DiseaseTypeController::class,'destroy']);
     //criminal
-    Route::get('criminal',[CriminalController::class,'index']);
+   
     //user
     Route::put('user/{id}',[UserController::class,'update']);
     Route::delete('user/{id}',[UserController::class,'destroy']);
@@ -183,6 +183,8 @@ Route::delete('criminalPropert/{id}',[CriminalPropertyController::class,'destroy
 Route::get('criminalCash',[CriminalCashController::class,'index']);
 Route::post('criminalCash',[CriminalCashController::class,'store']);
 Route::put('criminalCash/{id}',[CriminalCashController::class,'update']);
+Route::delete('criminalCash/{id}',[CriminalCashController::class,'destroy']); 
+Route::get('criminal',[CriminalController::class,'index']);
 Route::delete('criminalCash/{id}',[CriminalCashController::class,'destroy']);
 
 Route::get('court',[CourtController::class,'index']);

@@ -26,11 +26,11 @@ class RoleSeeder extends Seeder
             ],
             [
                 'name'=>'ጥበቃ ',
-                'type' => 2
+                'type' => 3
             ],
             [
                 'name'=>'ዶክተር',
-                'type' => 2
+                'type' => 4
             ],
 
         ];

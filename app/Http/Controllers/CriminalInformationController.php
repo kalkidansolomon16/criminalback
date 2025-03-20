@@ -15,7 +15,7 @@ class CriminalInformationController extends Controller
      */
     public function index()
     {
-        $criminalInformation = Criminal_information::all();
+        $criminalInformation = Criminal_information::with('criminal','hair_type')->get();
         if($criminalInformation){
             return response()->json([
                 'criminalInformation'=>$criminalInformation,
