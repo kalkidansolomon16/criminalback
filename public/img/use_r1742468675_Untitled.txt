@@ -1,0 +1,703 @@
+
+<!--<template>
+  <DefaultLayout2>
+    <BreadcrumbDefault pageTitle="Post" />
+    <header>
+      <div class="flex justify-between shadow-md pb-2 pt-2 pl-2 pr-2 -ml-5 -mr-5 mb-10">
+        <router-link to="#" class="text-3xl text-cyan-600 font-semibold">Workdiator</router-link>
+        <h1></h1>
+        <ficon :icon="['fas', 'circle-user']" class="text-4xl" @click="handleClick" />
+      </div>
+    </header>
+    <div class="font-serif" ref="scrollableDiv">
+       <navbar-component></navbar-component>
+      <main>
+        <div
+          class="relative pt-16 pb-32 flex content-center items-center justify-center"
+          style="min-height: 75vh"
+        >
+          <div
+            class="absolute top-0 w-full h-full bg-center bg-cover"
+            style="background-image: url('\postingJob.jpg')"
+          >
+            <span id="blackOverlay" class="w-full h-full absolute opacity-75 bg-black"></span>
+          </div>
+          <div class="container relative mx-auto">
+            <div class="items-center flex flex-wrap">
+              <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
+                <div class="pr-12">
+                  <h1 class="text-white font-semibold text-5xl">Manage your posts</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden"
+            style="height: 70px"
+          >
+            <svg
+              class="absolute bottom-0 overflow-hidden"
+              xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="none"
+              version="1.1"
+              viewBox="0 0 2560 100"
+              x="0"
+              y="0"
+            >
+              <polygon class="text-gray-300 fill-current" points="2560 0 2560 100 0 100"></polygon>
+            </svg>
+          </div>
+        </div>
+        <section class="pb-20 bg-gray-300 -mt-24">
+          <div class="container mx-auto px-4">
+            <div class="flex flex-wrap">
+              <div class="w-full md:w-4/12 px-4 text-center ml-96">
+                <div
+                  class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg"
+                >
+                  <div class="px-4 py-5 flex-auto">
+                    <div
+                      class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-blue-400"
+                    >
+                      <i class="fas fa-retweet"></i>
+                    </div>
+                    <h6 class="text-xl font-semibold"></h6>
+                    <div>
+                      <p>{{ full_name }}</p>
+                      <p>{{ email }}</p>
+                      <p>{{ phone_number }}</p>
+                      <p>{{ address }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="relative py-20">
+          <div
+            class="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20"
+            style="height: 80px"
+          >
+            <svg
+              class="absolute bottom-0 overflow-hidden"
+              xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="none"
+              version="1.1"
+              viewBox="0 0 2560 100"
+              x="0"
+              y="0"
+            >
+              <polygon class="text-white fill-current" points="2560 0 2560 100 0 100"></polygon>
+            </svg>
+          </div>
+          <div
+            v-for="project in projects"
+            :key="project"
+            class="container mx-auto px-4 py-10 shadow-sm"
+          >
+            <div class="flex flex-wrap">
+              <div class="w-full md:w-4/12 ml-auto mr-auto px-4">
+                <img
+                  alt="..."
+                  class="max-w-full rounded-lg shadow-lg h-96 ml-20"
+                  src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=634&amp;q=80"
+                />
+              </div>
+              <div class="w-full md:w-5/12 ml-auto mr-auto px-4">
+                <div class="md:pr-12">
+                  <div
+                    class="text-cyan-600 p-3 inline-flex w-16 h-16 mb-6 shadow-lg rounded-full ml-8 bg-blue-400"
+                  >
+                    <i class="fas fa-rocket text-xl"></i>
+                  </div>
+                  <h3 class="text-3xl font-semibold">{{ project.title }}</h3>
+                  <p class="mt-4 text-lg leading-relaxed text-gray-600">
+                    {{ project.description }}
+                  </p>
+                  <p class="mt-4 text-lg leading-relaxed text-gray-600">
+                    {{ project.attached_file }}
+                  </p>
+                  <p class="mt-4 text-lg leading-relaxed text-gray-600">
+                    {{ project.price }}
+                  </p>
+                  <h4 class="text-gray-600">Required skills</h4>
+                  <ul class="list-none mt-6">
+                    <li
+                      v-for="skill in getSkillsForProject(project.id)"
+                      :key="skill.id"
+                      class="py-2"
+                    >
+                      <div class="flex items-center">
+                        <div>
+                          <span
+                            class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-pink-600 bg-pink-200 mr-3"
+                            ><i class="fas fa-fingerprint"></i
+                          ></span>
+                        </div>
+                        <div>
+                          <h4 class="text-gray-600">
+                            {{ skill.skill_name }}
+                          </h4>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <button
+                    @click="startEdit(project)"
+                    class="bg-gray-900 active:bg-gray-700 text-sm font-semibold px-6 py-3 rounded shadow text-black hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                    type="button"
+                    style="transition: all 0.15s ease 0s"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    @click="deleteProject(project.id)"
+                    class="bg-gray-900 active:bg-gray-700 text-sm font-semibold px-6 py-3 rounded shadow text-black hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                    type="button"
+                    style="transition: all 0.15s ease 0s"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+            <section class="relative block py-24 lg:pt-0 bg-gray-900 mt-64">
+              <div class="container mx-auto px-4">
+                <div class="flex flex-wrap justify-center lg:-mt-64 -mt-48">
+                  <div class="w-full lg:w-6/12 px-4">
+                    <div
+                      v-if="showEdit && selectedProject == project.id"
+                      class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300"
+                    >
+                      <div class="flex-auto p-5 lg:p-10">
+                        <h4 class="text-2xl font-semibold">lets update {{ project.title }}</h4>
+
+                        TIGI, [9/19/2024 3:20 PM]
+                        <div class="relative w-full mb-3 mt-8">
+                          <label
+                            class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                            for="full-name"
+                            >Full Title</label
+                          ><input
+                            type="text"
+                            v-model="title"
+                            class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
+                            style="transition: all 0.15s ease 0s"
+                          />
+                        </div>
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                            >attached_file</label
+                          ><input
+                            type="attached_file"
+                            v-model="attached_file"
+                            class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
+                            style="transition: all 0.15s ease 0s"
+                          />
+                        </div>
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                            >description</label
+                          ><textarea
+                            rows="4"
+                            cols="80"
+                            v-model="description"
+                            class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
+                          ></textarea>
+                        </div>
+                        <div class="relative w-full mb-3">
+                          <label class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                            >price</label
+                          ><input
+                            type="price"
+                            v-model="price"
+                            class="border-0 px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
+                            style="transition: all 0.15s ease 0s"
+                          />
+                        </div>
+                        <div class="relative w-full mb-3">
+                          <div class="">
+                            <label for="" class="font-serif text-md">Skills:</label><br />
+                            <span class="text-sm -mt-10"
+                              >select the skills much with your project.</span
+                            ><br />
+                            <select
+                              name=""
+                              v-model="selectedProjectSkills"
+                              multiple
+                              class="mt-3 w-52 lg:w-80 border-gray-200 mb-10 focus:outline-none h-40 rounded-md bg-white"
+                            >
+                              <option value="">Select Skills:</option>
+                              <option
+                                v-for="skill in projectSkills"
+                                :key="skill.id"
+                                :value="skill.id"
+                              >
+                                {{ skill.skill.skill_name }}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="text-center mt-6">
+                          <button
+                            @click="handleEdit"
+                            class="bg-cyan-600 text-white active:bg-gray-700 text-sm font-semibold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                            type="button"
+                            style="transition: all 0.15s ease 0s"
+                          >
+                            Edit
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div v-if="dropDown" class="right-2 top-32 absolute">
+      <p class="-ml-5 text-black">{{ user.full_name }}</p>
+      <router-link to="/ClientProfile" class="text-blue-500 -ml-5">Profile</router-link><br />
+      <button class="text-red -ml-5" @click="logoutUser">Logout</button>
+    </div>
+  </DefaultLayout2>
+</template>-->
+
+
+<template>
+<DefaultLayout>
+<BreadcrumbDefault pageTitle="Post" />
+<div
+    class="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+  >
+
+    <!-- <div v-if="!profileLoaded">
+      <h1 class="text-2x1 font-bold justify-center text-blue-800 mt-10 ml-40">
+        LOADING PROFILE ...
+      </h1>
+    </div> -->
+
+    <div>
+     
+            <div class="flex justify-center">
+              <div>
+                <label for="" class="font-medium text-black text-lg">Title:</label><br />
+                <input
+                  type="text"
+                  name="full_name"
+                  class="border-2 mt-3 lg:w-80 w-52 border-gray-200 focus:outline-none h-12 rounded-md lg:mr-10 bg-white"
+                  required
+                  v-model="model.project.title"
+                /><br />
+              </div>
+              <div>
+                <label for="" class="font-medium text-black text-lg">Description:</label><br />
+                <input
+                  type="text"
+                  name="full_name"
+                  class="border-2 mt-3 lg:w-80 w-52 border-gray-200 focus:outline-none h-12 rounded-md lg:mr-10 bg-white"
+                  required
+                  v-model="model.project.description"
+                /><br />
+              </div>
+            </div>
+            <div class="flex justify-center">
+              <div>
+                <label for="" class="font-medium text-black text-lg">Price:</label><br />
+                <input
+                  type="number"
+                  name="phone_number"
+                  class="border-2 mt-3 mb-3 lg:w-80 w-52 border-gray-200 focus:outline-none h-12 rounded-md lg:mr-10 bg-white"
+                  required
+                  v-model="model.project.price"
+                /><br />
+              </div>
+             
+              <div>
+                <label for="" class="font-medium text-black text-lg">Attached File:</label><br />
+                <input
+                  type="file"
+                  @change="handlePhoto"
+                  name="attached_file"
+                  class="border-2 mt-3 w-52 lg:w-80 border-gray-200 mb-3 focus:outline-none h-12 rounded-md lg:mr-10 bg-white"
+                /><br />
+              </div>
+            </div>
+            <div class="flex justify-center">
+              <div>
+                <label for="" class="font-medium text-black text-lg">Skills:</label><br />
+                <select
+                  name=""
+                  required
+                  v-model="projectSkillModel.skill_lists_id"
+                  multiple
+                  class="border-2 mt-3 w-52 lg:w-80 border-gray-200 mb-3 focus:outline-none h-20 rounded-md lg:mr-10 bg-white"
+                >
+                  <option :value="null" disabled>Your Skills:</option>
+                  <option v-for="skill in skills" :key="skill.id" :value="skill.id">
+                    {{ skill.skill_name }}
+                  </option>
+                </select>
+              </div>
+            
+            </div>
+    </div>
+         
+            <button
+              @click="updateProject"
+              class="btn bg-blue-900 hover:bg-slate-600 text-white border-2 mt-10 w-52 lg:w-80 border-gray-200 mb-3 focus:outline-none h-14 rounded-md lg:mr-10"
+            >
+              Save Project
+            </button>
+          </div>
+
+       
+ </DefaultLayout>
+  <!-- ====== Profile Section End -->
+</template>
+
+
+
+
+<script>
+import axios from 'axios'
+import DefaultLayout2 from '@/layouts/DefaultLayout2.vue'
+import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue'
+export default {
+  components: {
+    DefaultLayout2,
+    BreadcrumbDefault
+  },
+  data() {
+    return {
+      infoUrl: 'http://127.0.0.1:8000/api/projectShow',
+
+      model: {
+        project: {
+          title: '',
+          attached_file: '',
+          description: '',
+          price: ''
+        }
+      },
+      projectSkillModel: {
+        skill_lists_id: []
+      },
+      user: '',
+      dropDown: false,
+      showEdit: false,
+      selectedProject: null,
+      selectedProjectSkills: [],
+      title: '',
+      description: '',
+      attached_file: '',
+      price: '',
+
+      token: '',
+      full_name: '',
+      email: '',
+      photo: '',
+      phone_number: '',
+      address: '',
+      role_id: '',
+      country_id: '',
+      id: '',
+      projects: [],
+      projectId: '',
+      projectSkills: [],
+      projectSkillID: '',
+      skill_name: [],
+      skills: []
+    }
+  },
+  mounted() {
+    const token = localStorage.getItem('wtoken')
+
+    if (token) {
+      axios.defaults.withCredentials = true
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+      this.loadProfile()
+    } else {
+      this.$router.push({ name: 'Login' })
+    }
+    this.getProjects()
+    this.fetchSkills()
+    //this.getProjectSkills()
+    this.userId = this.$route.params.id
+this.fetchProfessionalData()
+    this.handleLogin()
+    this.getToken()
+    const userID = localStorage.getItem('user_id')
+    console.log(userID)
+  },
+  methods: {
+    fetchProfessionalData() {
+      //this.profileLoaded = false
+      axios
+        .get(this.infoUrl) // Replace with your actual API endpoint
+        .then((response) => {
+          this.profileLoaded = true
+          this.professionalData = response.data.data
+
+          this.model.project.title = response.data.data.projectdata.title
+          this.model.project.attached_file = response.data.data.projectdata.attached_file
+          this.model.project.description = response.data.data.projectdata.description
+          this.model.project.price = response.data.data.projectdata.price
+          this.projectSkillModel.skill_lists_id = response.data.data.projectdata.skill_lists_id
+        })
+        .catch((error) => {
+          console.error('Error fetching professional data:', error)
+          this.errorMessage = 'Failed to load profile data.'
+        })
+    },
+    fetchSkills() {
+      axios
+        .get('http://127.0.0.1:8000/api/skills')
+        .then((res) => {
+          console.log('response data', res.data)
+          if (res.data && res.data[0] && Array.isArray(res.data[0])) {
+            this.skills = res.data[0]
+            this.skillId = this.skills.map((skill) => skill.id)
+          } else {
+            console.error('Invalid response data structure:', res.data)
+          }
+        })
+        .catch((error) => {
+          console.error('error featching roles:', error)
+        })
+    },
+    handlephoto(event) {
+      const file = event.target.files[0]
+      if (file) {
+        this.model.user.photo = file
+      }
+    },
+    logoutUser() {
+      localStorage.removeItem('wtoken', 'type', 'roleId')
+      alert(Logout)
+      this.$router.push('/Login')
+    },
+    handleClick() {
+      this.dropDown = !this.dropDown
+    },
+    navigateToProfileBLd() {
+      this.$router.push('/ProfileBLd')
+    },
+    loadProfile() {
+      axios
+        .get('http://127.0.0.1:8000/api/profile')
+        .then((response) => {
+          this.user = response.data.data
+        })
+        .catch((error) => {
+          console.error('Error fetching user data:', error)
+        })
+    },
+    getProjects() {
+      axios.get('http://127.0.0.1:8000/api/projects').then((res) => {
+        console.log(res.data)
+        this.projects = res.data.data
+        console.log(this.projects)
+        this.filterUserProjects()
+      })
+    },
+    // getProjectSkills() {
+    //   axios.get('http://127.0.0.1:8000/api/projectSkill').then((res) => {
+    //     this.projectSkills = res.data.data
+    //     console.log(this.projectSkills)
+    //   })
+    // },
+    startEdit(project) {
+      this.showEdit = true
+      this.selectedProject = project.id
+      this.projectId = project.id
+      // this.projectSkillID = skill.id;
+      let selSkills = this.getSkillsForProject(project.id)
+      this.selectedProjectSkills = []
+      selSkills.forEach((s) => {
+        this.selectedProjectSkills.push(s.id)
+      })
+
+      // this.selectedProjectSkills = ;
+      this.title = project.title
+      this.description = project.description
+      this.attached_file = project.attached_file
+      this.price = project.price
+      // this.skill_name = skill.skill_name
+      const div = this.$refs.scrollableDiv
+      div.scrollTo({
+        bottom: 0,
+        behavior: 'smooth'
+      })
+    },
+    
+    updateProject() {
+      const formData = new FormData()
+      formData.append('title', this.model.project.title)
+      formData.append('attached_file', this.model.project.attached_file)
+      formData.append('description', this.model.project.description)
+      formData.append('price', this.model.project.price)
+    
+      formData.append('skill_lists_id', this.projectSkillModel.project.skill_lists_id)
+
+
+      axios
+        .post('http://127.0.0.1:8000/api/updateProject', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then((response) => {
+          console.log('Profile updated successfully:', response.data)
+          // Handle successful update (e.g., show success message)
+        })
+        .catch((error) => {
+          console.error('Error updating profile:', error)
+          this.errorMessage = 'Failed to update profile.'
+        })
+    }
+    // handleEdit() {
+    //   this.errorMessage = null
+    //   const updatePost = {
+    //     title: this.title,
+    //     description: this.description,
+    //     attached_file: this.attached_file,
+    //     price: this.price,
+    //     skill_name: this.selectedProjectSkills
+    //   }
+
+    //   axios
+    //     .post(`http://127.0.0.1:8000/api/projects/${this.projectId}`, updatePost)
+    //     .then((res) => {
+    //       console.log('post updated successfully', res.data)
+    //       this.title = ''
+    //       this.description = ''
+    //       this.attached_file = ''
+    //       this.price = ''
+    //       this.showEdit = false
+    //     })
+    //     .catch((error) => {
+    //       this.errorMessage = error.response.data.message
+    //     })
+    //   axios
+    //     .post(`http://127.0.0.1:8000/api/projects/${this.projectSkillID}`, updatePost)
+    //     .then((res) => {
+    //       console.log('post updated successfully', res.data)
+    //       this.skill_name = ''
+
+    //       alert(`Post Update Successfully`)
+    //       this.$router.push('/ClientDashboard')
+    //     })
+    //     .catch((error) => {
+    //       this.errorMessage = error.response.data.message
+    //     })
+    // },
+    // getSkillsForProject(projectId) {
+    //   const skillIds = this.projectSkills
+    //     .filter((skill) => skill.project_id === projectId)
+    //     .map((skill) => skill.skill_list_id)
+
+    //   return this.skills.filter((skill) => skillIds.includes(skill.id))
+    // },
+
+    // filterUserProjects() {
+    //   const userId = localStorage.getItem('user_id')
+    //   this.projects = this.projects.filter((project) => project.user_id === parseInt(userId))
+    // },
+
+    // deleteProject(projectId) {
+    //   if (confirm('Are you sure, you want to delete thiss data?')) {
+    //     axios
+    //       .delete(`http://127.0.0.1:8000/api/projects/${projectId}`)
+    //       .then((res) => {
+    //         alert('project delated Successfully')
+    //       })
+    //       .catch((error) => {
+    //         this.errorMessage = error.response
+    //           ? error.response.data.message
+    //           : 'An error occurred. Please try again.'
+    //         console.error('Error creating user:', this.errorMessage)
+    //         if (error.res.status == 404) {
+    //           this.errorMessage = error.response.data.message
+    //         }
+    //       })
+    //   }
+    // },
+    ,
+    handleClick() {
+      this.dropDown = !this.dropDown
+    },
+    async handleLogin() {
+      this.logging = true
+      this.errorMessage = ''
+      console.log(this.email, this.password)
+
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/wlogin', {
+          email: this.email,
+          password: this.password
+        })
+        this.token = response.data.token
+        localStorage.setItem('wtoken', this.token)
+        localStorage.setItem('type', roleType)
+        localStorage.setItem('roleId', roleID)
+        alert('Sucessfully Login')
+      } catch (err) {
+        console.log('eror', err)
+        this.logging = false
+        this.errorMessage = err.response?.data?.message || 'An error occurred'
+
+        setTimeout(() => {
+          this.errorMessage = ''
+        }, 2000)
+      }
+      this.getUser()
+    },
+    getToken() {
+      axios.get('http://127.0.0.1:8000/' + 'sanctum/csrf-cookie').then((response) => {})
+    },
+    getUser() {
+      axios
+        .get('http://127.0.0.1:8000/api/user', {
+          headers: {
+            Authorization: `Bearer ${this.token}`
+          }
+        })
+        .then((res) => {
+          this.users = res.data
+          console.log(this.users)
+
+          this.full_name = res.data.full_name
+          this.email = res.data.email
+          this.photo = res.data.photo
+          this.phone_number = res.data.phone_number
+          this.address = res.data.address
+          this.role_id = res.data.role_id
+          this.country_id = res.data.country_id
+          this.id = res.data.id
+
+          localStorage.setItem('user_id', res.data.id)
+        })
+    },
+
+    logoutUser() {
+      localStorage.removeItem('wtoken', 'type', 'roleId')
+      alert(Logout)
+      this.$router.push('/')
+    }
+  },
+
+  created() {
+    this.token = localStorage.getItem('wtoken')
+    if (this.token) {
+      console.log('token', this.token)
+      axios.defaults.withCredentials = true
+      axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
+    }
+  }
+}
+</script>
