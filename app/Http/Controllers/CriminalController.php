@@ -15,12 +15,13 @@ class CriminalController extends Controller
      */
     public function index()
     {
-        $criminal = Criminal::all();
+        $criminal = Criminal::with('sex','region','town','city','educational_level','ethnic_group','religion','crime','criminal_type','court','user')->get();
         if($criminal){
             return response()->json([
                 'Criminal'=>$criminal,
                 'message'=>'Success'
             ]);
+            
             
         }
         else{

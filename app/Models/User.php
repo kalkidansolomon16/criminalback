@@ -6,6 +6,7 @@ namespace App\Models;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -45,9 +46,13 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function sex(){
+        return $this->belongsTo(Sex::class);
+    }
     public function role(){
         return $this->belongsTo(Role::class);
     }
+  
     public function medicalHistories(){
         return $this->hasMany(MedicalHistory::class);
     }
