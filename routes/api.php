@@ -26,6 +26,7 @@ use App\Http\Controllers\EthnicGroupController;
 use App\Http\Controllers\CriminalTypeController;
 use App\Http\Controllers\MedicalHistoryController;
 use App\Http\Controllers\EducationalLevelController;
+use App\Http\Controllers\PublicController;
 
 Route::get('/', function () {
     return 'Hello';
@@ -33,7 +34,11 @@ Route::get('/', function () {
 Route::middleware('auth:sanctum')->get('user', function (Request $request) {
     return $request->user();
 });
+
 Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('sexes',[PublicController::class,'sexes']);
+    Route::get('roles',[PublicController::class,'roles']);
+    
     //medical history
     Route::get('medical',[MedicalHistoryController::class,'index']);
     Route::post('medical',[MedicalHistoryController::class,'store']);
@@ -42,37 +47,38 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //user
     Route::get('user',[UserController::class,'index']);
     //DeasesTypeRoute
-    Route::get('disease',[DiseaseTypeController::class,'index']);
-    Route::post('disease',[DiseaseTypeController::class,'store']);
-    Route::put('disease/{id}',[DiseaseTypeController::class,'update']);
-    Route::delete('disease/{id}',[DiseaseTypeController::class,'destroy']);
+    Route::get('disease-type',[DiseaseTypeController::class,'index']);
+    Route::post('disease-type',[DiseaseTypeController::class,'store']);
+    Route::put('disease-type/{diseaseType}',[DiseaseTypeController::class,'update']);
+    Route::delete('disease-type/{diseaseType}',[DiseaseTypeController::class,'destroy']);
     //criminal
     Route::get('criminal',[CriminalController::class,'index']);
-    });
-//region
-Route::get('region',[RegionController::class,'index']);
-Route::post('region',[RegionController::class,'store']);
-Route::get('region/{id}',[RegionController::class,'show']);
-Route::put('region/{id}',[RegionController::class,'update']);
-Route::delete('region/{id}',[RegionController::class,'destroy']);
-//
-Route::get('religion',[ReligionController::class,'index']);
-Route::post('religion',[ReligionController::class,'store']);
-Route::get('religion/{id}',[ReligionController::class,'show']);
-Route::put('religion/{id}',[ReligionController::class,'update']);
-Route::delete('religion/{id}',[ReligionController::class,'destroy']);
-//city
-Route::get('city',[CityController::class,'index']);
-Route::post('city',[CityController::class,'store']);
-Route::get('city/{id}',[CityController::class,'show']);
-Route::put('city/{id}',[CityController::class,'update']);
-Route::delete('city/{id}',[CityController::class,'destroy']);
-//town
-Route::get('town',[TownController::class,'index']);
-Route::post('town',[TownController::class,'store']);
-Route::get('town/{id}',[TownController::class,'show']);
-Route::put('town/{id}',[TownController::class,'update']);
-Route::delete('town/{id}',[TownController::class,'destroy']);
+    //region
+    Route::get('region',[RegionController::class,'index']);
+    Route::post('region',[RegionController::class,'store']);
+    Route::get('region/{region}',[RegionController::class,'show']);
+    Route::put('region/{region}',[RegionController::class,'update']);
+    Route::delete('region/{region}',[RegionController::class,'destroy']);
+    //
+    Route::get('religion',[ReligionController::class,'index']);
+    Route::post('religion',[ReligionController::class,'store']);
+    Route::get('religion/{religion}',[ReligionController::class,'show']);
+    Route::put('religion/{religion}',[ReligionController::class,'update']);
+    Route::delete('religion/{religion}',[ReligionController::class,'destroy']);
+    //city
+    Route::get('city',[CityController::class,'index']);
+    Route::post('city',[CityController::class,'store']);
+    Route::get('city/{city}',[CityController::class,'show']);
+    Route::put('city/{city}',[CityController::class,'update']);
+    Route::delete('city/{city}',[CityController::class,'destroy']);
+    //town
+    Route::get('town',[TownController::class,'index']);
+    Route::post('town',[TownController::class,'store']);
+    Route::get('town/{town}',[TownController::class,'show']);
+    Route::put('town/{town}',[TownController::class,'update']);
+    Route::delete('town/{town}',[TownController::class,'destroy']);
+});
+
 //educational Level
 Route::get('education',[EducationalLevelController::class,'index']);
 Route::post('education',[EducationalLevelController::class,'post']);

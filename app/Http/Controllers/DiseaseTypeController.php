@@ -2,148 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DiseaseType;
 use Illuminate\Http\Request;
 
-use App\Models\DiseaseType;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+class DiseaseTypeController extends Controller {
 
-class DiseaseTypeController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $deasesType = DiseaseType::all();
-        if($deasesType){
-            return response()->json([
-                'deasesType'=>$deasesType,
-                'message'=>'Success'
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>404,
-                'message'=>'deasesTypealLevel not found'
-            ]);
-        }
-    }
+    public function index() {
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        $diseaseTypes = DiseaseType::all();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $validation = Validator::make($request->all(),[
-            'name'=>'required'
+        return response()->json([
+            'data' => $diseaseTypes
         ]);
-        if($validation->fails()){
-            return response()->json([
-                'status'=>422,
-                'message'=>$validation->messages()
-            ]);
-        }
-        else{
-            $deasesType = DiseaseType::new();
-            $deasesType->name = request('name');
-            $deasesType->save();
-            return response()->json([
-                'message'=>"deasesTypeal Level added Successfully"
-            ]);
-        }
+    }
+
+    public function store(Request $request) {
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $diseaseType = new DiseaseType();
+        $diseaseType->name = $request->name;
+        $diseaseType->save();
+
+        return response()->json([
+            'message' => 'Disease Type Successfully Created',
+        ], 201);
+    }
+
+    public function show(DiseaseType $diseaseType) {
         
+        return response()->json([
+            'data' => $diseaseType
+        ]); 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $deasesType = DiseaseType::find($id);
-        if($deasesType){
-            return response()->json([
-                'deasesType'=>$deasesType,
-                'message'=>'Success'
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>422,
-                'message'=>'deasesTypeal Level Not Found'
-            ]);
-        }
-    }
+    public function update(Request $request, DiseaseType $diseaseType) {
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $deasesType = DiseaseType::find($id);
-        if($deasesType){
-            return response()->json([
-                'deasesTypealLevel'=>$deasesType,
-                'message'=>'Success'
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>422,
-                'message'=>'Educational status not found'
-
-            ]);
-        }
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        $validation = Validator::make($request->all(),[
-            'name'=>'required',
+        $request->validate([
+            'name' => 'required|string|max:255',
         ]);
-        if($validation->fails()){
-            return response()->json([
-                'status'=>422,
-                'message'=>$validation->messages()
-            ]);
-        }
-        else{
-            $deasesType = DiseaseType::new();
-            $deasesType->name = request('name');
-            $deasesType->update();
-            return response()->json([
-                'message'=>"deasesTypeal Level added Successfully"
-            ]); 
-        }
+
+        $diseaseType->name = $request->name;
+        $diseaseType->save();
+
+        return response()->json([
+            'message' => 'Disease Type Updated Successfully',
+        ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        $education = DiseaseType::find($id);
-        if($education){
-            $education->delete();
-            return response()->json([
-                'message'=>'Educational Level Deleted Successfully'
-            ]);
-        }
-        else{
-            return response()->json([
-                'message'=>'Educational level with this id not foud'
-            ]);
-        }
+    public function destroy(DiseaseType $diseaseType) {
+        $diseaseType->delete();
+        return response()->json(['message' => 'Disease Type deleted successfully!']);
     }
 }
