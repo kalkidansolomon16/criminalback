@@ -26,6 +26,7 @@ use App\Http\Controllers\EthnicGroupController;
 use App\Http\Controllers\CriminalTypeController;
 use App\Http\Controllers\MedicalHistoryController;
 use App\Http\Controllers\EducationalLevelController;
+use App\Http\Controllers\PrisionersController;
 use App\Http\Controllers\PublicController;
 
 Route::get('/', function () {
@@ -152,3 +153,9 @@ Route::delete('criminalGuard/{id}',[CriminalGuard::class,'destroy']);
 
 //login
 Route::post('login',[AuthController::class,'login']);
+
+Route::get('prisioner',[PrisionersController::class,'index']);
+Route::post('prisioner',[PrisionersController::class,'store']);
+Route::get('prisioner/{id}',[PrisionersController::class,'show']);
+Route::put('prisioner/{id}',[PrisionersController::class,'update']);
+Route::get('prisioner/{id}',[PrisionersController::class,'destroy']);
