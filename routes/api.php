@@ -26,6 +26,7 @@ use App\Http\Controllers\EthnicGroupController;
 use App\Http\Controllers\CriminalTypeController;
 use App\Http\Controllers\MedicalHistoryController;
 use App\Http\Controllers\EducationalLevelController;
+use App\Http\Controllers\PublicController;
 
 Route::get('/', function () {
     return 'Hello';
@@ -35,6 +36,9 @@ Route::middleware('auth:sanctum')->get('user', function (Request $request) {
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('sexes',[PublicController::class,'sexes']);
+    Route::get('roles',[PublicController::class,'roles']);
+    
     //medical history
     Route::get('medical',[MedicalHistoryController::class,'index']);
     Route::post('medical',[MedicalHistoryController::class,'store']);
