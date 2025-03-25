@@ -11,63 +11,101 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('criminals', function (Blueprint $table) {
+        Schema::create('prision_cells', function (Blueprint $table) {
             $table->id();
-            $table->string('criminal_unique_number');
-            $table->string('prison_unique_number');
-            $table->string('criminalSell_unique_number');
+            $table->string('name');
+            $table->timestamps();
+        });
+
+        Schema::create('prisioners', function (Blueprint $table) {
+            $table->id();
+            $table->string('prisioner_unique_number');
             $table->string('first_name');
             $table->string('middle_name');
             $table->string('last_name');
             $table->date('date_of_birth');
             $table->string('mother_name');
-            $table->foreignId('sex_id')->references('id')->on('sexes')->onDelete('cascade');
-            // $table->string('birth_place');
-            $table->foreignId('birth_region_id')->references('id')->on('regions')->onDelete('cascade');
-            $table->foreignId('birth_town_id')->references('id')->on('towns')->onDelete('cascade');
-            $table->foreignId('birth_city_id')->references('id')->on('cities')->onDelete('cascade');
+            $table->integer('sex');
             $table->string('birth_district');
-            $table->foreignId('current_region_id')->references('id')->on('regions')->onDelete('cascade');
-            $table->foreignId('current_town_id')->references('id')->on('towns')->onDelete('cascade');
-            $table->foreignId('current_city_id')->references('id')->on('cities')->onDelete('cascade');
-            $table->string('current_district');
-            $table->foreignId('educational_level_id')->references('id')->on('educational_levels')->onDelete('cascade');
-            $table->string('job');
+            $table->foreignId('birth_town_id')->references('id')->on('towns')->onDelete('cascade');
             $table->foreignId('ethnic_group_id')->references('id')->on('ethnic_groups')->onDelete('cascade');
-            $table->foreignId('religion_id')->references('id')->on('religions')->onDelete('cascade');
-            $table->string('Closest_respondent');
-            $table->foreignId('Closest_respondent_region_id')->references('id')->on('regions')->onDelete('cascade');
-            $table->foreignId('Closest_respondent_town_id')->references('id')->on('towns')->onDelete('cascade');
-            $table->foreignId('Closest_respondent_city_id')->references('id')->on('cities')->onDelete('cascade');
-            $table->string('Closest_respondent_district');
-            $table->string('phone_number');
-            $table->string('mobile_number');
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('registral_signature');
-            $table->foreignId('crime_id')->references('id')->on('crimes')->onDelete('cascade');
-            $table->string('crime_description');
-            $table->foreignId('criminal_type_id')->references('id')->on('criminal_types')->onDelete('cascade');
-            $table->string('arrest_court_id')->references('id')->on('courts')->onDelete('cascade');
-            $table->date('date_enterd');
-            $table->string('time_enterd');
-            $table->date('verdict_date');
-            $table->date('appointment_date');
-            $table->string('prisoner');
-            $table->string('updated_verdict');
-            $table->string('verdict_court_id')->references('id')->on('courts')->onDelete('cascade');
-            $table->string('updated_verdict_court_id')->references('id')->on('courts')->onDelete('cascade');
-            $table->date('start_dateof_arrest');
-            $table->date('end_dateof_arrest');
-            $table->date('date_of_release');
-            $table->string('release_reason');
-            $table->date('dateof_mercy_release');
-            $table->string('photo');
-            $table->string('writ');
-            
-            $table->tinyInteger('status');
-
             $table->timestamps();
         });
+
+        Schema::create('prision_histories', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('prisioner_id')->references('id')->on('prisioners')->onDelete('cascade');
+            $table->string('photo');
+            $table->foreignId('prision_cell_id')->references('id')->on('prision_cells')->onDelete('cascade');
+            $table->foreignId('criminal_type_id')->references('id')->on('criminal_types')->onDelete('cascade');
+            $table->foreignId('current_city_id')->references('id')->on('cities')->onDelete('cascade');
+            $table->foreignId('educational_level_id')->references('id')->on('educational_levels')->onDelete('cascade');
+            $table->foreignId('religion_id')->references('id')->on('religions')->onDelete('cascade');
+
+            $table->string('closest_respondent');
+            $table->foreignId('closest_respondent_town_id')->references('id')->on('towns')->onDelete('cascade');
+
+            $table->string('current_district');
+            $table->string('closest_respondent_district');
+
+            $table->string('job');
+            $table->string('phone_number');
+            $table->string('mobile_number');
+
+            $table->dateTime('date_time_entered');
+            $table->dateTime('end_date_of_arrest');
+            $table->dateTime('date_of_release');
+            $table->string('release_reason');
+            $table->dateTime('date_of_mercy_release');
+
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
+        Schema::create('prisioner_appearance', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('prision_history_id')->references('id')->on('prision_histories')->onDelete('cascade');
+            $table->foreignId('hair_type_id')->references('id')->on('hair_types')->onDelete('cascade');
+            $table->float('height');
+            $table->string('face');
+            $table->string('forehead');
+            $table->string('nose');
+            $table->string('eye_color');
+            $table->string('teeth');
+            $table->string('lip');
+            $table->string('ear');
+            $table->string('unique_appearance');
+            $table->string('citizenship');
+        });
+
+        Schema::create('prisioner_properties', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('prision_history_id')->references('id')->on('prision_histories')->onDelete('cascade');
+            $table->foreignId('type_id')->references('id')->on('types')->onDelete('cascade'); // cash, phone
+            $table->integer('amount');
+            $table->string('description');
+            $table->dateTime('date_received');
+            $table->dateTime('date_returned');
+
+        });
+
+        Schema::create('prisioner_crimes', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('prision_history_id')->references('id')->on('prision_histories')->onDelete('cascade');
+            $table->foreignId('crime_id')->references('id')->on('crimes')->onDelete('cascade');
+            
+            $table->string('crime_description');
+            $table->integer('status'); // 1 -> accused, 2 -> found guilty
+        });
+
+        Schema::create('prisioner_court_stories', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('prision_history_id')->references('id')->on('prision_histories')->onDelete('cascade');
+            $table->string('court_id')->references('id')->on('courts')->onDelete('cascade');
+            $table->date('appointment_date');
+            $table->date('verdict_date');
+            $table->integer('status'); // 1 -> pending, 2 -> final verdict
+        });
+        
     }
 
     /**
@@ -75,6 +113,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('criminals');
+        Schema::dropIfExists('prision_cells');
+        Schema::dropIfExists('prisioners');
+        Schema::dropIfExists('prision_histories');
+        Schema::dropIfExists('prisioner_crimes');
+        Schema::dropIfExists('prisioner_court_stories');
     }
 };
