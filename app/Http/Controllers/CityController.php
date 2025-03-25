@@ -2,60 +2,62 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\City;
 use Illuminate\Http\Request;
 
-class CityController extends Controller
-{
-    public function index()
-    {
-    
-        $city = City::all();
-        if($city){
-            return response()->json([
-                'message'=>'Sucess',
-                'data'=>$city
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>404,
-                'message'=>'Hair type not found'
-            ]);
-        }
-    }
+class CityController extends Controller {
 
+    public function index() {
 
-    public function store(Request $request)
-    {
-        $fields = $request->validate([
-            'name' =>'required',
+        $cities = City::with('region')->get();
+
+        return response()->json([
+            'data' => $cities
         ]);
-        $city =City::create($fields);
-        return $city;
     }
 
+    public function store(Request $request) {
 
-    public function show(City $city)
-    {
-        return $city;
-    }
-
-
-    public function update(Request $request, City $city)
-    {
-        $fields = $request->validate([
-            'name' =>'required',
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'region_id' => 'required',
         ]);
-        $city->update($fields);
-        return $city;
+
+        $city = new City();
+        $city->name = $request->name;
+        $city->region_id = $request->region_id;
+        $city->save();
+
+        return response()->json([
+            'message' => 'City Successfully Created',
+        ], 201);
     }
 
+    public function show(City $city) {
+        
+        return response()->json([
+            'data' => $city
+        ]); 
+    }
 
-    public function destroy(City $city)
-    {
+    public function update(Request $request, City $city) {
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'region_id' => 'required',
+        ]);
+
+        $city->name = $request->name;
+        $city->region_id = $request->region_id;
+        $city->save();
+
+        return response()->json([
+            'message' => 'City Updated Successfully',
+        ]);
+    }
+
+    public function destroy(City $city) {
         $city->delete();
-        return ['message' =>'city deleted successully!'];
+        return response()->json(['message' => 'City deleted successfully!']);
     }
 }
