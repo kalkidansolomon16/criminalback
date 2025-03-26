@@ -153,7 +153,7 @@ Route::delete('criminalGuard/{id}',[CriminalGuard::class,'destroy']);
 
 //login
 Route::post('login',[AuthController::class,'login']);
-
+//prisioner
 Route::get('prisioner',[PrisionersController::class,'index']);
 Route::post('prisioner',[PrisionersController::class,'store']);
 Route::get('prisioner/{id}',[PrisionersController::class,'show']);

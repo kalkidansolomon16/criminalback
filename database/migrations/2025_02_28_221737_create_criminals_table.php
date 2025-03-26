@@ -20,6 +20,7 @@ return new class extends Migration
         Schema::create('prisioners', function (Blueprint $table) {
             $table->id();
             $table->string('prisioner_unique_number');
+            $table->string('prision_unique_number');
             $table->string('first_name');
             $table->string('middle_name');
             $table->string('last_name');
@@ -49,10 +50,10 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('mobile_number');
             $table->dateTime('date_time_entered');
-            $table->dateTime('end_date_of_arrest');
-            $table->dateTime('date_of_release');
-            $table->string('release_reason');
-            $table->dateTime('date_of_mercy_release');
+            $table->string('end_date_of_arrest');
+            $table->string('date_of_release');
+            $table->string('release_reason')->nullable();
+            $table->dateTime('date_of_mercy_release')->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
@@ -80,8 +81,8 @@ return new class extends Migration
             $table->foreignId('type_id')->references('id')->on('types')->onDelete('cascade'); // cash, phone
             $table->integer('amount');
             $table->string('description');
-            $table->dateTime('date_received');
-            $table->dateTime('date_returned');
+            $table->dateTime('date_received')->nullable();
+            $table->dateTime('date_returned')->nullable();
             $table->timestamps();
         });
 
@@ -90,7 +91,7 @@ return new class extends Migration
             $table->foreignId('prision_history_id')->references('id')->on('prision_histories')->onDelete('cascade');
             $table->dateTime('date');
             $table->integer('amount');
-            $table->integer('type'); // 1 -> deposit 2 -> withdraw
+            $table->integer('type')->nullable(); // 1 -> deposit 2 -> withdraw
             $table->timestamps();
 
         });
@@ -110,8 +111,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('prision_history_id')->references('id')->on('prision_histories')->onDelete('cascade');
             $table->string('court_id')->references('id')->on('courts')->onDelete('cascade');
-            $table->date('appointment_date');
-            $table->date('verdict_date');
+            $table->string('appointment_date');
+            $table->date('verdict_date')->nullable();
             $table->string('verdict_description');
             $table->integer('status'); // 1 -> pending, 2 -> final verdict
             $table->integer('criminal_status'); // 1 -> not criminal, 2 -> criminal

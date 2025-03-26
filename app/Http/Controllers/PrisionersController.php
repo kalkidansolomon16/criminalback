@@ -47,6 +47,7 @@ class PrisionersController extends Controller
     {
         $validation = Validator::make($request->all(),[
             'prisioner_unique_number'=>'required',
+            'prision_unique_number'=>'required',
             'first_name'=>'required',
             'middle_name'=>'required',
             'last_name'=>'required',
@@ -67,6 +68,7 @@ class PrisionersController extends Controller
         else{
             $Prisioner = Prisioner::new();
             $Prisioner->prisioner_unique_number = request('prisioner_unique_number');
+            $Prisioner->prision_unique_number = request('prision_unique_number');
             $Prisioner->first_name = request('first_name');
             $Prisioner->middle_name = request('middle_name');
             $Prisioner->last_name = request('last_name');
@@ -135,6 +137,7 @@ class PrisionersController extends Controller
     {
         $validation = Validator::make($request->all(),[
            'prisioner_unique_number'=>'required',
+           'prision_unique_number'=>'required',
             'first_name'=>'required',
             'middle_name'=>'required',
             'last_name'=>'required',
@@ -154,6 +157,7 @@ class PrisionersController extends Controller
         else{
             $Prisioner = Prisioner::new();
             $Prisioner->prisioner_unique_number = request('prisioner_unique_number');
+            $Prisioner->prision_unique_number = request('prision_unique_number');
             $Prisioner->first_name = request('first_name');
             $Prisioner->middle_name = request('middle_name');
             $Prisioner->last_name = request('last_name');
