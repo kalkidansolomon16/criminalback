@@ -108,6 +108,7 @@ class TownSeeder extends Seeder
             ["name" => "ጎባ"]
 
         ];
-        Town::insert($towns);
+
+
     }
 }
