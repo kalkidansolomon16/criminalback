@@ -27,6 +27,7 @@ use App\Http\Controllers\CriminalTypeController;
 use App\Http\Controllers\MedicalHistoryController;
 use App\Http\Controllers\EducationalLevelController;
 use App\Http\Controllers\PrisionersController;
+use App\Http\Controllers\PrisionHistoryController;
 use App\Http\Controllers\PublicController;
 
 Route::get('/', function () {
@@ -78,6 +79,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('town/{town}',[TownController::class,'show']);
     Route::put('town/{town}',[TownController::class,'update']);
     Route::delete('town/{town}',[TownController::class,'destroy']);
+
+
+    Route::get('prision-history',[PrisionHistoryController::class,'index']);
+    Route::post('prision-history',[PrisionHistoryController::class,'store']);
+    Route::get('prision-history/{prision-history}',[PrisionHistoryController::class,'show']);
+    Route::put('prision-history/{prision-history}',[PrisionHistoryController::class,'update']);
+    Route::delete('prision-history/{prision-history}',[PrisionHistoryController::class,'destroy']);
 });
 
 //educational Level

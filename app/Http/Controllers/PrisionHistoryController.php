@@ -47,22 +47,24 @@ class PrisionHistoryController extends Controller
         $prisionHistory = new PrisionHistory();
         $prisionHistory->prisioner_id = $request->prisioner_id;
         $prisionHistory->photo = $request->photo;
-        $prisionHistory->name = $request->name;
-        $prisionHistory->name = $request->name;
-        $prisionHistory->name = $request->name;
-        $prisionHistory->name = $request->name;
-        $prisionHistory->name = $request->name;
-        $prisionHistory->name = $request->name;
-        $prisionHistory->name = $request->name;
-        $prisionHistory->name = $request->name;
-        $prisionHistory->name = $request->name;
-        $prisionHistory->name = $request->name;
-        $prisionHistory->name = $request->name;
-        $prisionHistory->name = $request->name;
-        $prisionHistory->name = $request->name;
-        $prisionHistory->name = $request->name;
-        $prisionHistory->name = $request->name;
-        $prisionHistory->name = $request->name;
+        $prisionHistory->prision_cell_id = $request->prision_cell_id;
+        $prisionHistory->criminal_type_id = $request->criminal_type_id;
+        $prisionHistory->current_city_id = $request->current_city_id;
+        $prisionHistory->educational_level_id = $request->educational_level_id;
+        $prisionHistory->religion_id = $request->religion_id;
+        $prisionHistory->closest_respondent = $request->closest_respondent;
+        $prisionHistory->closest_respondent_town_id = $request->closest_respondent_town_id;
+        $prisionHistory->current_district = $request->current_district;
+        $prisionHistory->closest_respondent_district = $request->closest_respondent_district;
+        $prisionHistory->job = $request->job;
+        $prisionHistory->phone_number = $request->phone_number;
+        $prisionHistory->mobile_number = $request->mobile_number;
+        $prisionHistory->date_time_entered = $request->date_time_entered;
+        $prisionHistory->end_date_of_arrest = $request->end_date_of_arrest;
+        $prisionHistory->date_of_release = $request->date_of_release;
+        $prisionHistory->release_reason = $request->release_reason;
+        $prisionHistory->date_of_mercy_release = $request->date_of_mercy_release;
+        $prisionHistory->user_id = $request->user_id;
         $prisionHistory->save();
     
         return response()->json([
@@ -80,10 +82,48 @@ class PrisionHistoryController extends Controller
     public function update(Request $request, PrisionHistory $prisionHistory) {
     
         $request->validate([
-            'name' => 'required|string|max:255',
+            'prisioner_id' =>'required',
+            'photo' => 'required',
+            'prision_cell_id' => 'required',
+            'criminal_type_id' => 'required',
+            'current_city_id' => 'required',
+            'educational_level_id' => 'required',
+            'religion_id' => 'required',
+            'closest_respondent' => 'required',
+            'closest_respondent_town_id' => 'required',
+            'current_district' => 'required',
+            'closest_respondent_district' => 'required',
+            'job' => 'required',
+            'phone_number' => 'required',
+            'mobile_number' => 'required',
+            'date_time_entered' => 'required',
+            'end_date_of_arrest' => 'required',
+            'date_of_release' => 'required',
+            'release_reason' => 'required',
+            'date_of_mercy_release' => 'required',
+            'user_id' => 'required'
         ]);
     
-        $prisionHistory->name = $request->name;
+        $prisionHistory->prisioner_id = $request->prisioner_id;
+        $prisionHistory->photo = $request->photo;
+        $prisionHistory->prision_cell_id = $request->prision_cell_id;
+        $prisionHistory->criminal_type_id = $request->criminal_type_id;
+        $prisionHistory->current_city_id = $request->current_city_id;
+        $prisionHistory->educational_level_id = $request->educational_level_id;
+        $prisionHistory->religion_id = $request->religion_id;
+        $prisionHistory->closest_respondent = $request->closest_respondent;
+        $prisionHistory->closest_respondent_town_id = $request->closest_respondent_town_id;
+        $prisionHistory->current_district = $request->current_district;
+        $prisionHistory->closest_respondent_district = $request->closest_respondent_district;
+        $prisionHistory->job = $request->job;
+        $prisionHistory->phone_number = $request->phone_number;
+        $prisionHistory->mobile_number = $request->mobile_number;
+        $prisionHistory->date_time_entered = $request->date_time_entered;
+        $prisionHistory->end_date_of_arrest = $request->end_date_of_arrest;
+        $prisionHistory->date_of_release = $request->date_of_release;
+        $prisionHistory->release_reason = $request->release_reason;
+        $prisionHistory->date_of_mercy_release = $request->date_of_mercy_release;
+        $prisionHistory->user_id = $request->user_id;
         $prisionHistory->save();
     
         return response()->json([
