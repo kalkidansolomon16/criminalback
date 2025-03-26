@@ -11,7 +11,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-class RegionsTableSeeder extends Seeder
+class RegionsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
