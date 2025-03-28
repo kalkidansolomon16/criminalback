@@ -37,9 +37,11 @@ class AuthController extends Controller
 
         $randomStr = Str::random(40);
         $token = $user->createToken($randomStr)->plainTextToken;
+        $user_id = $user->id;
 
         return response()->json([
             'token' => $token,
+            'user_id'=>$user_id
         ], 200);
       
     }
