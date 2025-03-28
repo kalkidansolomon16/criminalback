@@ -68,6 +68,7 @@ class PrisionHistoryController extends Controller
         $prisionHistory->save();
     
         return response()->json([
+            'data' =>$prisionHistory,
             'message' => 'PrisionHistory Successfully Created',
         ], 201);
     }

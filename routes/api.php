@@ -30,6 +30,8 @@ use App\Http\Controllers\PrisionerApperanceController;
 use App\Http\Controllers\PrisionerPropertyController;
 use App\Http\Controllers\PrisionersController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\PrisionHistoryController;
+use App\Http\Controllers\PrisonercellController;
 use App\Models\PrisionerApperance;
 
 Route::get('/', function () {
@@ -81,6 +83,20 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('town/{town}',[TownController::class,'show']);
     Route::put('town/{town}',[TownController::class,'update']);
     Route::delete('town/{town}',[TownController::class,'destroy']);
+
+
+    Route::get('prision-history',[PrisionHistoryController::class,'index']);
+    Route::post('prision-history',[PrisionHistoryController::class,'store']);
+    Route::get('prision-history/{prision-history}',[PrisionHistoryController::class,'show']);
+    Route::put('prision-history/{prision-history}',[PrisionHistoryController::class,'update']);
+    Route::delete('prision-history/{prision-history}',[PrisionHistoryController::class,'destroy']);
+
+
+    Route::get('prisoner-cell',[PrisonercellController::class,'index']);
+    Route::post('prisoner-cell',[PrisonercellController::class,'store']);
+    Route::get('prisoner-cell/{prisoner-cell}',[PrisonercellController::class,'show']);
+    Route::put('prisoner-cell/{prisoner-cell}',[PrisonercellController::class,'update']);
+    Route::delete('prisoner-cell/{prisoner-cell}',[PrisonercellController::class,'destroy']);
 });
 
 //educational Level
