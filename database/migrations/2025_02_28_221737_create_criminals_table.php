@@ -58,7 +58,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('prisioner_appearance', function (Blueprint $table) {
+        Schema::create('prisioner_appearances', function (Blueprint $table) {
             $table->id();
             $table->foreignId('prision_history_id')->references('id')->on('prision_histories')->onDelete('cascade');
             $table->foreignId('hair_type_id')->references('id')->on('hair_types')->onDelete('cascade');
@@ -86,7 +86,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('prisioners_cash', function (Blueprint $table) {
+        Schema::create('prisioners_cashes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('prision_history_id')->references('id')->on('prision_histories')->onDelete('cascade');
             $table->dateTime('date');
