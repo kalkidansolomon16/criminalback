@@ -190,3 +190,9 @@ Route::post('prisionerProperty',[PrisionerPropertyController::class,'store']);
 Route::get('prisionerProperty/{id}',[PrisionerPropertyController::class,'show']);
 Route::put('prisionerProperty/{id}',[PrisionerPropertyController::class,'update']);
 Route::get('prisionerProperty/{id}',[PrisionerPropertyController::class,'destroy']);
+//type
+Route::get('type',[TypeController::class,'index']);
+Route::post('type',[TypeController::class,'store']);
+Route::get('type/{id}',[TypeController::class,'show']);
+Route::put('type/{id}',[TypeController::class,'update']);
+Route::get('type/{id}',[TypeController::class,'destroy']);
