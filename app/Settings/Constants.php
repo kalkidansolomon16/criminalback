@@ -10,4 +10,7 @@ class Constants{
 
     public const ወንድ  = 1;
     public const ሴት  = 2;
+
+    public const ገቢ = 1;
+    public const ወጪ = 2;
 }
