@@ -58,7 +58,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('prisioner_appearance', function (Blueprint $table) {
+        Schema::create('prisioner_appearances', function (Blueprint $table) {
             $table->id();
             $table->foreignId('prision_history_id')->references('id')->on('prision_histories')->onDelete('cascade');
             $table->foreignId('hair_type_id')->references('id')->on('hair_types')->onDelete('cascade');
@@ -86,7 +86,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('prisioners_cash', function (Blueprint $table) {
+        Schema::create('prisioners_cashes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('prision_history_id')->references('id')->on('prision_histories')->onDelete('cascade');
             $table->dateTime('date');
@@ -114,6 +114,7 @@ return new class extends Migration
             $table->string('appointment_date');
             $table->date('verdict_date')->nullable();
             $table->string('verdict_description');
+            // $table->string('updated_verdict');
             $table->integer('status'); // 1 -> pending, 2 -> final verdict
             $table->integer('criminal_status'); // 1 -> not criminal, 2 -> criminal
             $table->timestamps();

@@ -24,13 +24,13 @@ class RegionsSeeder extends Seeder
 
         $user = new User();
         $user->full_name = 'kal';
-        $user->sex = Constants::FEMALE;
+        $user->sex = Constants::ሴት;
         $user->age = 33;
         $user->password = Hash::make('123456789');
         $user->user_name = 'kal';
         $user->address = '';
         $user->phone_number = '0987654321';
-        $user->role = Constants::ADMIN;
+        $user->role = Constants::አስተዳዳሪ;
         $user->photo = '';
         $user->save();
 

@@ -26,9 +26,11 @@ use App\Http\Controllers\EthnicGroupController;
 use App\Http\Controllers\CriminalTypeController;
 use App\Http\Controllers\MedicalHistoryController;
 use App\Http\Controllers\EducationalLevelController;
+use App\Http\Controllers\PrisionerApperanceController;
+use App\Http\Controllers\PrisionerPropertyController;
 use App\Http\Controllers\PrisionersController;
-use App\Http\Controllers\PrisionHistoryController;
 use App\Http\Controllers\PublicController;
+use App\Models\PrisionerApperance;
 
 Route::get('/', function () {
     return 'Hello';
@@ -79,13 +81,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('town/{town}',[TownController::class,'show']);
     Route::put('town/{town}',[TownController::class,'update']);
     Route::delete('town/{town}',[TownController::class,'destroy']);
-
-
-    Route::get('prision-history',[PrisionHistoryController::class,'index']);
-    Route::post('prision-history',[PrisionHistoryController::class,'store']);
-    Route::get('prision-history/{prision-history}',[PrisionHistoryController::class,'show']);
-    Route::put('prision-history/{prision-history}',[PrisionHistoryController::class,'update']);
-    Route::delete('prision-history/{prision-history}',[PrisionHistoryController::class,'destroy']);
 });
 
 //educational Level
@@ -136,15 +131,15 @@ Route::post('type',[TypeController::class,'store']);
 Route::put('type/{id}',[TypeController::class,'update']);
 Route::delete('type/{id}',[TypeController::class,'destroy']);
 //role
-Route::get('role',[RoleController::class,'index']);
-Route::post('role',[RoleController::class,'store']);
-Route::put('role/{id}',[RoleController::class,'update']);
-Route::delete('role/{id}',[RoleController::class,'destroy']);
+// Route::get('role',[RoleController::class,'index']);
+// Route::post('role',[RoleController::class,'store']);
+// Route::put('role/{id}',[RoleController::class,'update']);
+// Route::delete('role/{id}',[RoleController::class,'destroy']);
 //sex
-Route::get('sex',[SexController::class,'index']);
-Route::post('sex',[SexController::class,'store']);
-Route::put('sex/{id}',[SexController::class,'update']);
-Route::delete('sex/{id}',[SexController::class,'destroy']);
+// Route::get('sex',[SexController::class,'index']);
+// Route::post('sex',[SexController::class,'store']);
+// Route::put('sex/{id}',[SexController::class,'update']);
+// Route::delete('sex/{id}',[SexController::class,'destroy']);
 //user
 
 Route::post('user',[UserController::class,'store']);
@@ -167,3 +162,15 @@ Route::post('prisioner',[PrisionersController::class,'store']);
 Route::get('prisioner/{id}',[PrisionersController::class,'show']);
 Route::put('prisioner/{id}',[PrisionersController::class,'update']);
 Route::get('prisioner/{id}',[PrisionersController::class,'destroy']);
+//prisionerApperance
+Route::get('prisionerapperance',[PrisionerApperanceController::class,'index']);
+Route::post('prisionerapperance',[PrisionerApperanceController::class,'store']);
+Route::get('prisionerapperance/{id}',[PrisionerApperanceController::class,'show']);
+Route::put('prisionerapperance/{id}',[PrisionerApperanceController::class,'update']);
+Route::get('prisionerapperance/{id}',[PrisionerApperanceController::class,'destroy']);
+//prisinerProperty
+Route::get('prisionerProperty',[PrisionerPropertyController::class,'index']);
+Route::post('prisionerProperty',[PrisionerPropertyController::class,'store']);
+Route::get('prisionerProperty/{id}',[PrisionerPropertyController::class,'show']);
+Route::put('prisionerProperty/{id}',[PrisionerPropertyController::class,'update']);
+Route::get('prisionerProperty/{id}',[PrisionerPropertyController::class,'destroy']);

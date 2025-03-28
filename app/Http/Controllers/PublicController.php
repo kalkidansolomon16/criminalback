@@ -11,10 +11,10 @@ class PublicController extends Controller
         
         return response()->json(
             [
-                [ 'id' => Constants::ADMIN , 'name' => 'Admin '],
-                [ 'id' => Constants::POLICE , 'name' => 'Police '],
-                [ 'id' => Constants::GUARD , 'name' => 'Guard '],
-                [ 'id' => Constants::DOCTOR , 'name' => 'Doctor '],
+                [ 'id' => Constants::አስተዳዳሪ , 'name' => 'አስተዳዳሪ '],
+                [ 'id' => Constants::ፖሊስ , 'name' => 'ፖሊስ '],
+                [ 'id' => Constants::ጥበቃ , 'name' => 'ጥበቃ '],
+                [ 'id' => Constants::ሀኪም , 'name' => 'ሀኪም '],
             ]
         );
     }
@@ -23,8 +23,8 @@ class PublicController extends Controller
         
         return response()->json(
             [
-                [ 'id' => Constants::MALE , 'name' => 'Male '],
-                [ 'id' => Constants::FEMALE , 'name' => 'Female '],
+                [ 'id' => Constants::ወንድ , 'name' => 'ወንድ '],
+                [ 'id' => Constants::ሴት , 'name' => 'ሴት '],
             ]
         );
     }
