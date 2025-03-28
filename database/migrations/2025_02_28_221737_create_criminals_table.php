@@ -114,6 +114,7 @@ return new class extends Migration
             $table->string('appointment_date');
             $table->date('verdict_date')->nullable();
             $table->string('verdict_description');
+            // $table->string('updated_verdict');
             $table->integer('status'); // 1 -> pending, 2 -> final verdict
             $table->integer('criminal_status'); // 1 -> not criminal, 2 -> criminal
             $table->timestamps();
