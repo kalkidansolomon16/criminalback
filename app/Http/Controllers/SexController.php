@@ -20,7 +20,7 @@ class SexController extends Controller
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'name' => 'required|string|max:255', // Added validation for string and max length
+            'name' => 'required|string|max:255', 
         ]);
 
         $gender = Sex::create($fields);

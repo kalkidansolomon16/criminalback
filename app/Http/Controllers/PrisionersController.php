@@ -66,15 +66,15 @@ class PrisionersController extends Controller
             ]);
         }
         else{
-            $Prisioner = Prisioner::new();
+            $Prisioner = new Prisioner();
             $Prisioner->prisioner_unique_number = request('prisioner_unique_number');
             $Prisioner->prision_unique_number = request('prision_unique_number');
             $Prisioner->first_name = request('first_name');
             $Prisioner->middle_name = request('middle_name');
             $Prisioner->last_name = request('last_name');
             $Prisioner->date_of_birth = request('date_of_birth');
-            $Prisioner->last_name = request('last_name');
-            $Prisioner->date_of_birth = request('date_of_birth');
+            // $Prisioner->last_name = request('last_name');
+            // $Prisioner->date_of_birth = request('date_of_birth');
             $Prisioner->mother_name = request('mother_name');
             $Prisioner->sex = request('sex');
             // $Prisioner->birth_place = request('birth_place');
@@ -83,7 +83,8 @@ class PrisionersController extends Controller
             $Prisioner->ethnic_group_id = request('ethnic_group_id');
                     $Prisioner->save();
             return response()->json([
-                'message'=>"Prisioner added Successfully"
+                'message'=>"Prisioner added Successfully",
+                'prisioner'=> $Prisioner
             ]);
         }
         
@@ -104,7 +105,7 @@ class PrisionersController extends Controller
         else{
             return response()->json([
                 'status'=>422,
-                'message'=>'Prisioneral Level Not Found'
+                'message'=>'Prisioner Not Found'
             ]);
         }
     }
@@ -124,7 +125,7 @@ class PrisionersController extends Controller
         else{
             return response()->json([
                 'status'=>422,
-                'message'=>'Prisioneral status not found'
+                'message'=>'Prisioner status not found'
 
             ]);
         }
@@ -155,7 +156,7 @@ class PrisionersController extends Controller
             ]);
         }
         else{
-            $Prisioner = Prisioner::new();
+            $Prisioner = new Prisioner();
             $Prisioner->prisioner_unique_number = request('prisioner_unique_number');
             $Prisioner->prision_unique_number = request('prision_unique_number');
             $Prisioner->first_name = request('first_name');
@@ -172,7 +173,7 @@ class PrisionersController extends Controller
             $Prisioner->ethnic_group_id = request('ethnic_group_id');
             $Prisioner->update();
             return response()->json([
-                'message'=>"Prisioneral Level added Successfully"
+                'message'=>"Prisioner updated Successfully"
             ]);
         }
     }
@@ -186,12 +187,12 @@ class PrisionersController extends Controller
         if($Prisioner){
             $Prisioner->delete();
             return response()->json([
-                'message'=>'Prisioneral Level Deleted Successfully'
+                'message'=>'Prisioner  Deleted Successfully'
             ]);
         }
         else{
             return response()->json([
-                'message'=>'Prisioneral level with this id not foud'
+                'message'=>'Prisioner with this id not foud'
             ]);
         }
     }
