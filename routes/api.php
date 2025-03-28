@@ -32,6 +32,7 @@ use App\Http\Controllers\PrisionersController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\PrisionHistoryController;
 use App\Http\Controllers\PrisonercellController;
+use App\Http\Controllers\prisioners_casheController;
 use App\Models\PrisionerApperance;
 
 Route::get('/', function () {
@@ -44,6 +45,7 @@ Route::middleware('auth:sanctum')->get('user', function (Request $request) {
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('sexes',[PublicController::class,'sexes']);
     Route::get('roles',[PublicController::class,'roles']);
+    Route::get('cash-type',[PublicController::class,'cashTypes']);
     
     //medical history
     Route::get('medical',[MedicalHistoryController::class,'index']);
@@ -83,6 +85,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('town/{town}',[TownController::class,'show']);
     Route::put('town/{town}',[TownController::class,'update']);
     Route::delete('town/{town}',[TownController::class,'destroy']);
+
+
+    Route::get('Prisioners_cashe',[prisioners_casheController::class,'index']);
+    Route::post('Prisioners_cashe',[prisioners_casheController::class,'store']);
+    Route::get('Prisioners_cashe/{Prisioners_cashe}',[prisioners_casheController::class,'show']);
+    Route::put('Prisioners_cashe/{Prisioners_cashe}',[prisioners_casheController::class,'update']);
+    Route::delete('Prisioners_cashe/{Prisioners_cashe}',[prisioners_casheController::class,'destroy']);
 
 
     Route::get('prision-history',[PrisionHistoryController::class,'index']);

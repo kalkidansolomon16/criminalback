@@ -28,4 +28,12 @@ class PublicController extends Controller
             ]
         );
     }
+    public function cashTypes(){
+        return response()->json(
+            [
+                ['id' => Constants::ገቢ, 'name' => 'ገቢ'],
+                ['id' => Constants::ወጪ, 'name' => 'ወጪ'],
+            ]
+            );
+    }
 }
