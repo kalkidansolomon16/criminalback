@@ -14,6 +14,8 @@ class Constants{
     public const ገቢ = 1;
     public const ወጪ = 2;
 
-    public const ተጠርጣሪ = 1;
-    public const ፍርደኛ = 2;
+    public const ቀጠሮ = 1;
+    public const የመጨረሻ_ዉሳኔ  = 2;
+
+
 }

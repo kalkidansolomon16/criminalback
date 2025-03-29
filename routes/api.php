@@ -21,12 +21,14 @@ use App\Http\Controllers\CriminalController;
 use App\Http\Controllers\HairTypeController;
 use App\Http\Controllers\ReligionController;
 use App\Http\Controllers\CaseHistoryController;
+use App\Http\Controllers\CourtController;
 use App\Http\Controllers\DiseaseTypeController;
 use App\Http\Controllers\EthnicGroupController;
 use App\Http\Controllers\CriminalTypeController;
 use App\Http\Controllers\MedicalHistoryController;
 use App\Http\Controllers\EducationalLevelController;
 use App\Http\Controllers\PrisionerApperanceController;
+use App\Http\Controllers\PrisionerCourtStoryController;
 use App\Http\Controllers\PrisionerPropertyController;
 use App\Http\Controllers\PrisionersController;
 use App\Http\Controllers\PublicController;
@@ -47,7 +49,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('sexes',[PublicController::class,'sexes']);
     Route::get('roles',[PublicController::class,'roles']);
     Route::get('cash-type',[PublicController::class,'cashTypes']);
-    Route::get('criminal-status',[PublicController::class,'criminal_status']);
+    Route::get('status',[PublicController::class,'status']);
+    // Route::get('criminalStatus',[PublicController::class,'criminal_status']);
     
     //medical history
     Route::get('medical',[MedicalHistoryController::class,'index']);
@@ -219,3 +222,18 @@ Route::post('type',[TypeController::class,'store']);
 Route::get('type/{id}',[TypeController::class,'show']);
 Route::put('type/{id}',[TypeController::class,'update']);
 Route::get('type/{id}',[TypeController::class,'destroy']);
+//prisoner court story
+
+Route::get('prisonerCourt',[PrisionerCourtStoryController::class,'index']);
+Route::post('prisonerCourt',[PrisionerCourtStoryController::class,'store']);
+Route::get('prisonerCourt/{id}',[PrisionerCourtStoryController::class,'show']);
+Route::put('prisonerCourt/{id}',[PrisionerCourtStoryController::class,'update']);
+Route::get('prisonerCourt/{id}',[PrisionerCourtStoryController::class,'destroy']);
+
+//court
+
+Route::get('court',[CourtController::class,'index']);
+Route::post('court',[CourtController::class,'store']);
+Route::get('court/{id}',[CourtController::class,'show']);
+Route::put('court/{id}',[CourtController::class,'update']);
+Route::get('court/{id}',[CourtController::class,'destroy']);

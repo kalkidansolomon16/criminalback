@@ -44,4 +44,13 @@ class PublicController extends Controller
             ]
             );
     }
+    public function verdict_status(){
+        return response()->json(
+            [
+                ['id' => Constants::ቀጠሮ, 'name' => 'ቀጠሮ'],
+                ['id' => Constants::የመጨረሻ_ዉሳኔ, 'name' => 'የመጨረሻ_ዉሳኔ'],
+            ]
+            );
+    }
+  
 }
