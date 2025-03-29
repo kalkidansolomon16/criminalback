@@ -36,4 +36,12 @@ class PublicController extends Controller
             ]
             );
     }
+    public function criminal_status(){
+        return response()->json(
+            [
+                ['id' => Constants::ተጠርጣሪ, 'name' => 'ተጠርጣሪ'],
+                ['id' => Constants::ፍርደኛ, 'name' => 'ፍርደኛ'],
+            ]
+            );
+    }
 }
