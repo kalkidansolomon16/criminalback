@@ -13,4 +13,7 @@ class Constants{
 
     public const ገቢ = 1;
     public const ወጪ = 2;
+
+    public const ተጠርጣሪ = 1;
+    public const ፍርደኛ = 2;
 }
