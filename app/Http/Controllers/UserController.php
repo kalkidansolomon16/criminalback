@@ -25,15 +25,16 @@ class UserController extends Controller
     {
         $validation = Validator::make($request->all(),[
             'full_name' => 'required|max:255',
-            'sex_id' => 'required',
+            'sex' => 'required',
             'age' => 'required',
             'password' => 'required|min:8',
             'user_name' => 'required',
             'address' => 'required',
             'phone_number' => 'required',
             // 'criminal_id' => 'required',
-            'role_id' => 'required',
-            'photo' => 'sometimes|image|mimes:jpg,png,jpeg,gif,avif|max:2048',
+            'role' => 'required',
+            'photo' => 'sometimes',
+            'signature' => 'sometimes',
         ]);
         if($validation->fails()){
             return response()->json([
@@ -44,21 +45,30 @@ class UserController extends Controller
         else{
             $user = new User();
             $user->full_name = request('full_name');
-            $user->sex_id = request('sex_id');
+            $user->sex = request('sex');
             $user->age = request('age');
             $user->password = (Hash::make(request('password')));
             $user->user_name = request('user_name');
             $user->address = request('address');
             $user->phone_number = request('phone_number');
-            $user->role_id = request('role_id');
+            $user->role = request('role');
             if ($request->hasFile('photo')) {
                 $photo = $request->file('photo');
                 $photoName = 'ka_l' . time() . '_' . $photo->getClientOriginalName();
                 $photo->move(public_path('img'), $photoName);
                 $user->photo = 'img/' . $photoName;
             }
+            if ($request->hasFile('signature')) {
+                $photo = $request->file('signature');
+                $photoName = 'ka_l' . time() . '_' . $photo->getClientOriginalName();
+                $photo->move(public_path('img'), $photoName);
+                $user->signature = 'img/' . $photoName;
+            }
+
+            
             $user->save();
             return response()->json([
+                'users'=>$user,
                 'message'=>"user Successfully"
             ]);
     }
@@ -127,6 +137,19 @@ class UserController extends Controller
             $user->address = request('address');
             $user->phone_number = request('phone_number');
             $user->role_id = request('role_id');
+            if ($request->hasFile('signature')) {
+                $photo = $request->file('signature');
+                $photoName = 'ka_l' . time() . '_' . $photo->getClientOriginalName();
+                $photo->move(public_path('img'), $photoName);
+                $user->signature = 'img/' . $photoName;
+            }
+            if ($request->hasFile('photo')) {
+                $photo = $request->file('photo');
+                $photoName = 'ka_l' . time() . '_' . $photo->getClientOriginalName();
+                $photo->move(public_path('img'), $photoName);
+                $user->photo = 'img/' . $photoName;
+            }
+
             $user->update();
             return response()->json([
                 'user'=>$user,

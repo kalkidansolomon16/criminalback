@@ -110,11 +110,12 @@ return new class extends Migration
         Schema::create('prisioner_court_stories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('prision_history_id')->references('id')->on('prision_histories')->onDelete('cascade');
-            $table->string('court_id')->references('id')->on('courts')->onDelete('cascade');
+            $table->foreignId('court_id')->references('id')->on('courts')->onDelete('cascade');
+            $table->foreignId('updated_verdict_court')->references('id')->on('courts')->onDelete('cascade');
             $table->string('appointment_date');
             $table->date('verdict_date')->nullable();
             $table->string('verdict_description');
-            // $table->string('updated_verdict');
+            $table->string('updated_verdict');
             $table->integer('status'); // 1 -> pending, 2 -> final verdict
             $table->integer('criminal_status'); // 1 -> not criminal, 2 -> criminal
             $table->timestamps();
