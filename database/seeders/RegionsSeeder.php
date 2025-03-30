@@ -32,6 +32,7 @@ class RegionsSeeder extends Seeder
         $user->phone_number = '0987654321';
         $user->role = Constants::አስተዳዳሪ;
         $user->photo = '';
+        $user->signature = '';
         $user->save();
 
         $regions = 

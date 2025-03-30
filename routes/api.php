@@ -49,8 +49,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('sexes',[PublicController::class,'sexes']);
     Route::get('roles',[PublicController::class,'roles']);
     Route::get('cash-type',[PublicController::class,'cashTypes']);
-    Route::get('status',[PublicController::class,'status']);
-    // Route::get('criminalStatus',[PublicController::class,'criminal_status']);
+    Route::get('status',[PublicController::class,'verdict_status']);
+     Route::get('criminal-status',[PublicController::class,'criminal_status']);
     
     //medical history
     Route::get('medical',[MedicalHistoryController::class,'index']);
