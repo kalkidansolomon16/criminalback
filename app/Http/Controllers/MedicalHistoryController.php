@@ -20,7 +20,7 @@ class MedicalHistoryController extends Controller
         if($medicalHostory){
 
             return response()->json([
-                'medicalHistory'=>$medicalHostory,
+                'data'=>$medicalHostory,
                 'message'=>'Success'
             ]);
         }
@@ -36,7 +36,7 @@ class MedicalHistoryController extends Controller
     {
         $validation = Validator::make($request->all(),[
             'user_id'=>'required',
-            'criminal_id'=>'required',
+            'prision_history_id'=>'required',
             'disease_type_id'=>'required',
             'hospital_name'=>'required',
             'doctor_name'=>'required',
@@ -55,7 +55,7 @@ class MedicalHistoryController extends Controller
     // Create a new MedicalHistory instance
     $medicalHistory = new MedicalHistory();
     $medicalHistory->user_id = $request->user_id;
-    $medicalHistory->criminal_id = $request->criminal_id;
+    $medicalHistory->prision_history_id = $request->prision_history_id;
     $medicalHistory->disease_type_id = $request->disease_type_id;
     $medicalHistory->hospital_name = $request->hospital_name;
     $medicalHistory->doctor_name = $request->doctor_name;
@@ -67,14 +67,14 @@ class MedicalHistoryController extends Controller
     // Save the Medical History first
     $medicalHistory->save();
 
-    $guards = explode(',',$request->input('guard_id'));
-    foreach($guards as $guard){
-$criminalGuard = new CriminalGuard();
-$criminalGuard->criminal_id =  $medicalHistory->criminal_id;
-$criminalGuard->guard_id =  $guard;
-$criminalGuard->save();
+//     $guards = explode(',',$request->input('guard_id'));
+//     foreach($guards as $guard){
+// $criminalGuard = new CriminalGuard();
+// $criminalGuard->prision_history_id =  $medicalHistory->prision_history_id;
+// $criminalGuard->guard_id =  $guard;
+// $criminalGuard->save();
 
-    }
+//     }
 
     // Attach guards to the medical history
     // Assuming guards are being sent as an array from the front-end
@@ -131,7 +131,7 @@ $criminalGuard->save();
     {
         $validation = Validator::make($request->all(),[
             'user_id'=>'required',
-            'criminal_id'=>'required',
+            'prision_history_id'=>'required',
             'disease_type_id'=>'required',
             'hospital_name'=>'required',
             'doctor_name'=>'required',
@@ -149,7 +149,7 @@ $criminalGuard->save();
         else{
 $medicalHostory = new MedicalHistory();
 $medicalHostory->user_id = request('user_id');
-$medicalHostory->criminal_id = request('criminal_id');
+$medicalHostory->prision_history_id = request('prision_history_id');
 $medicalHostory->disease_type_id = request('disease_type_id');
 $medicalHostory->hospital_name = request('hospital_name');
 $medicalHostory->doctor_name = request('doctor_name');
