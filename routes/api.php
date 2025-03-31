@@ -58,7 +58,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('medical/{id}',[MedicalHistoryController::class,'update']);
     Route::delete('medical/{id}',[MedicalHistoryController::class,'destroy']);
     //user
-    Route::get('user',[UserController::class,'index']);
+    // Route::get('user',[UserController::class,'index']);
     //DeasesTypeRoute
     Route::get('disease-type',[DiseaseTypeController::class,'index']);
     Route::post('disease-type',[DiseaseTypeController::class,'store']);
