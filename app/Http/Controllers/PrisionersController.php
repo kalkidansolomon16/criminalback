@@ -16,7 +16,27 @@ class PrisionersController extends Controller
      */
     public function index()
     {
-        $Prisioner = Prisioner::all();
+        $Prisioner = Prisioner::with([
+          
+             'birthRegion',
+             'birthTown',  
+             'birthCity',  
+             'currentRegion', 
+             'currentTown',  
+             'currentCity',  
+             'educationalLevel',
+             'ethnicGroup',
+             'religion',
+             'closestRespondentRegion',
+             'closestRespondentTown',
+             'closestRespondentCity',
+             'crime',
+             'criminalType', 
+             'arrestCourt',  
+             'verdictCourt', 
+             'updatedVerdictCourt', 
+             'user'
+         ])->get();
         if($Prisioner){
             return response()->json([
                 'Prisioner'=>$Prisioner,
@@ -95,7 +115,27 @@ class PrisionersController extends Controller
      */
     public function show(string $id)
     {
-        $Prisioner = Prisioner::find($id);
+        $Prisioner = Prisioner::with([
+          
+            'birthRegion',
+            'birthTown',  
+            'birthCity',  
+            'currentRegion', 
+            'currentTown',  
+            'currentCity',  
+            'educationalLevel',
+            'ethnicGroup',
+            'religion',
+            'closestRespondentRegion',
+            'closestRespondentTown',
+            'closestRespondentCity',
+            'crime',
+            'criminalType', 
+            'arrestCourt',  
+            'verdictCourt', 
+            'updatedVerdictCourt', 
+            'user'
+        ])->find($id);
         if($Prisioner){
             return response()->json([
                 'Prisioner'=>$Prisioner,

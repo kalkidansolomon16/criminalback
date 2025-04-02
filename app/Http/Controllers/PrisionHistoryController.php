@@ -12,7 +12,27 @@ class PrisionHistoryController extends Controller
     
     public function index() {
     
-        $prisionHistory = PrisionHistory::all();
+        $prisionHistory = PrisionHistory::with([
+          
+            'birthRegion',
+            'birthTown',  
+            'birthCity',  
+            'currentRegion', 
+            'currentTown',  
+            'currentCity',  
+            'educationalLevel',
+            'ethnicGroup',
+            'religion',
+            'closestRespondentRegion',
+            'closestRespondentTown',
+            'closestRespondentCity',
+            'crime',
+            'criminalType', 
+            'arrestCourt',  
+            'verdictCourt', 
+            'updatedVerdictCourt', 
+            'user'
+        ])->get();
     
         return response()->json([
             'data' => $prisionHistory
@@ -46,7 +66,7 @@ class PrisionHistoryController extends Controller
     
         $prisionHistory = new PrisionHistory();
         $prisionHistory->prisioner_id = $request->prisioner_id;
-        $prisionHistory->photo = $request->photo;
+        // $prisionHistory->photo = $request->photo;
         $prisionHistory->prision_cell_id = $request->prision_cell_id;
         $prisionHistory->criminal_type_id = $request->criminal_type_id;
         $prisionHistory->current_city_id = $request->current_city_id;
@@ -65,6 +85,12 @@ class PrisionHistoryController extends Controller
         $prisionHistory->release_reason = $request->release_reason;
         $prisionHistory->date_of_mercy_release = $request->date_of_mercy_release;
         $prisionHistory->user_id = $request->user_id;
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo');
+            $photoName = 'ka_l' . time() . '_' . $photo->getClientOriginalName();
+            $photo->move(public_path('img'), $photoName);
+            $prisionHistory->photo = 'img/' . $photoName;
+        }
         $prisionHistory->save();
     
         return response()->json([
@@ -73,8 +99,29 @@ class PrisionHistoryController extends Controller
         ], 201);
     }
     
-    public function show(PrisionHistory $prisionHistory) {
-        
+    public function show(string $id){
+        $prisionHistory = PrisionHistory::with([
+          
+            'birthRegion',
+            'birthTown',  
+            'birthCity',  
+            'currentRegion', 
+            'currentTown',  
+            'currentCity',  
+            'educationalLevel',
+            'ethnicGroup',
+            'religion',
+            'closestRespondentRegion',
+            'closestRespondentTown',
+            'closestRespondentCity',
+            'crime',
+            'criminalType', 
+            'arrestCourt',  
+            'verdictCourt', 
+            'updatedVerdictCourt', 
+            'user',
+            'prisonerCell'
+        ])->find($id);
         return response()->json([
             'data' => $prisionHistory
         ]); 
@@ -106,7 +153,7 @@ class PrisionHistoryController extends Controller
         ]);
     
         $prisionHistory->prisioner_id = $request->prisioner_id;
-        $prisionHistory->photo = $request->photo;
+       // $prisionHistory->photo = $request->photo;
         $prisionHistory->prision_cell_id = $request->prision_cell_id;
         $prisionHistory->criminal_type_id = $request->criminal_type_id;
         $prisionHistory->current_city_id = $request->current_city_id;
@@ -125,6 +172,12 @@ class PrisionHistoryController extends Controller
         $prisionHistory->release_reason = $request->release_reason;
         $prisionHistory->date_of_mercy_release = $request->date_of_mercy_release;
         $prisionHistory->user_id = $request->user_id;
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo');
+            $photoName = 'ka_l' . time() . '_' . $photo->getClientOriginalName();
+            $photo->move(public_path('img'), $photoName);
+            $prisionHistory->photo = 'img/' . $photoName;
+        }
         $prisionHistory->save();
     
         return response()->json([
