@@ -114,7 +114,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('prision-history',[PrisionHistoryController::class,'index']);
     Route::post('prision-history',[PrisionHistoryController::class,'store']);
-    Route::get('prision-history/{prision-history}',[PrisionHistoryController::class,'show']);
+    Route::get('prision-history/{id}',[PrisionHistoryController::class,'show']);
     Route::put('prision-history/{prision-history}',[PrisionHistoryController::class,'update']);
     Route::delete('prision-history/{prision-history}',[PrisionHistoryController::class,'destroy']);
 
@@ -239,7 +239,7 @@ Route::get('prisioner',[PrisionersController::class,'index']);
 Route::post('prisioner',[PrisionersController::class,'store']);
 Route::get('prisioner/{id}',[PrisionersController::class,'show']);
 Route::put('prisioner/{id}',[PrisionersController::class,'update']);
-Route::get('prisioner/{id}',[PrisionersController::class,'destroy']);
+Route::delete('prisioner/{id}',[PrisionersController::class,'destroy']);
 //prisionerApperance
 Route::get('prisionerapperance',[PrisionerApperanceController::class,'index']);
 Route::post('prisionerapperance',[PrisionerApperanceController::class,'store']);
