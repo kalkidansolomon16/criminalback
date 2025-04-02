@@ -5,38 +5,43 @@ use App\Models\CriminalGuard;
 
 use App\Models\EducationalLEvel;
 use App\Models\EducationalLevels;
+use App\Models\PrisionerApperance;
 use App\Models\CriminalInformation;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EarController;
+use App\Http\Controllers\EyeController;
+use App\Http\Controllers\LipController;
+
 use App\Http\Controllers\SexController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\NoseController;
 use App\Http\Controllers\RoleController;
-
 use App\Http\Controllers\TownController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CourtController;
 use App\Http\Controllers\CrimeController;
+use App\Http\Controllers\TeethController;
+use App\Http\Controllers\PublicController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\CriminalController;
 use App\Http\Controllers\HairTypeController;
 use App\Http\Controllers\ReligionController;
+use App\Http\Controllers\PrisionersController;
 use App\Http\Controllers\CaseHistoryController;
-use App\Http\Controllers\CourtController;
 use App\Http\Controllers\DiseaseTypeController;
 use App\Http\Controllers\EthnicGroupController;
 use App\Http\Controllers\CriminalTypeController;
+use App\Http\Controllers\PrisonercellController;
 use App\Http\Controllers\MedicalHistoryController;
+use App\Http\Controllers\PrisionHistoryController;
+use App\Http\Controllers\Prisioner_crimeController;
 use App\Http\Controllers\EducationalLevelController;
+use App\Http\Controllers\prisioners_casheController;
+use App\Http\Controllers\PrisionerPropertyController;
 use App\Http\Controllers\PrisionerApperanceController;
 use App\Http\Controllers\PrisionerCourtStoryController;
-use App\Http\Controllers\PrisionerPropertyController;
-use App\Http\Controllers\PrisionersController;
-use App\Http\Controllers\PublicController;
-use App\Http\Controllers\PrisionHistoryController;
-use App\Http\Controllers\PrisonercellController;
-use App\Http\Controllers\prisioners_casheController;
-use App\Http\Controllers\Prisioner_crimeController;
-use App\Models\PrisionerApperance;
 
 Route::get('/', function () {
     return 'Hello';
@@ -51,6 +56,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('cash-type',[PublicController::class,'cashTypes']);
     Route::get('status',[PublicController::class,'verdict_status']);
      Route::get('criminal-status',[PublicController::class,'criminal_status']);
+     Route::get('user-role',[PublicController::class,'userRole']);
     
     //medical history
     Route::get('medical',[MedicalHistoryController::class,'index']);
@@ -113,36 +119,88 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('prision-history/{prision-history}',[PrisionHistoryController::class,'destroy']);
 
 
-    Route::get('prisoner-cell',[PrisonercellController::class,'index']);
-    Route::post('prisoner-cell',[PrisonercellController::class,'store']);
-    Route::get('prisoner-cell/{prisoner-cell}',[PrisonercellController::class,'show']);
-    Route::put('prisoner-cell/{prisoner-cell}',[PrisonercellController::class,'update']);
-    Route::delete('prisoner-cell/{prisoner-cell}',[PrisonercellController::class,'destroy']);
+    Route::get('prisonerCell',[PrisonercellController::class,'index']);
+    Route::post('prisonerCell',[PrisonercellController::class,'store']);
+    Route::get('prisonerCell/{prisonerCell}',[PrisonercellController::class,'show']);
+    Route::put('prisonerCell/{prisonerCell}',[PrisonercellController::class,'update']);
+    Route::delete('prisonerCell/{prisonerCell}',[PrisonercellController::class,'destroy']);
 
 
     Route::get('crime',[CrimeController::class,'index']);
-    Route::post('crime',[CrimeController::class,'post']);
-    Route::put('crime/{id}',[CrimeController::class,'update']);
-    Route::delete('crime/{id}',[CrimeController::class,'destroy']);
+    Route::post('crime',[CrimeController::class,'store']);
+    Route::put('crime/{crime}',[CrimeController::class,'update']);
+    Route::delete('crime/{crime}',[CrimeController::class,'destroy']);
 
+    Route::post('user',[UserController::class,'store']);
+    Route::put('user/{id}',[UserController::class,'update']);
+    Route::delete('user/{id}',[UserController::class,'destroy']);
+
+    Route::get('hair',[HairTypeController::class,'index']);
+    Route::post('hair',[HairTypeController::class,'store']);
+    Route::put('hair/{hair}',[HairTypeController::class,'update']);
+    Route::delete('hair/{hair}',[HairTypeController::class,'destroy']);
+
+    Route::get('ethnic',[EthnicGroupController::class,'index']);
+    Route::post('ethnic',[EthnicGroupController::class,'store']);
+    Route::put('ethnic/{ethnic}',[EthnicGroupController::class,'update']);
+    Route::delete('ethnic/{ethnic}',[EthnicGroupController::class,'destroy']);
+
+    Route::get('court',[CourtController::class,'index']);
+    Route::post('court',[CourtController::class,'store']);
+    Route::get('court/{court}',[CourtController::class,'show']);
+    Route::put('court/{court}',[CourtController::class,'update']);
+    Route::delete('court/{court}',[CourtController::class,'destroy']);
+
+    
+    Route::get('criminalType',[CriminalTypeController::class,'index']);
+    Route::post('criminalType',[CriminalTypeController::class,'store']);
+    Route::put('criminalType/{criminalType}',[CriminalTypeController::class,'update']);
+    Route::delete('criminalType/{criminalType}',[CriminalTypeController::class,'destroy']);
+
+    Route::get('education',[EducationalLevelController::class,'index']);
+    Route::post('education',[EducationalLevelController::class,'store']);
+    Route::put('education/{education}',[EducationalLevelController::class,'update']);
+    Route::delete('education/{education}',[EducationalLevelController::class,'destroy']);
+
+    Route::get('type',[TypeController::class,'index']);
+    Route::post('type',[TypeController::class,'store']);
+    Route::put('type/{type}',[TypeController::class,'update']);
+    Route::delete('type/{type}',[TypeController::class,'destroy']);
+
+
+    Route::get('teeth',[TeethController::class,'index']);
+    Route::post('teeth',[TeethController::class,'store']);
+    Route::put('teeth/{teeth}',[TeethController::class,'update']);
+    Route::delete('teeth/{teeth}',[TeethController::class,'destroy']);
+
+
+    Route::get('nose',[NoseController::class,'index']);
+    Route::post('nose',[NoseController::class,'store']);
+    Route::put('nose/{nose}',[NoseController::class,'update']);
+    Route::delete('nose/{nose}',[NoseController::class,'destroy']);
+
+    Route::get('lip',[LipController::class,'index']);
+    Route::post('lip',[LipController::class,'store']);
+    Route::put('lip/{lip}',[LipController::class,'update']);
+    Route::delete('lip/{lip}',[LipController::class,'destroy']);
+
+    Route::get('ear',[EarController::class,'index']);
+    Route::post('ear',[EarController::class,'store']);
+    Route::put('ear/{ear}',[EarController::class,'update']);
+    Route::delete('ear/{ear}',[EarController::class,'destroy']);
+
+    Route::get('eye',[EyeController::class,'index']);
+    Route::post('eye',[EyeController::class,'store']);
+    Route::put('eye/{eye}',[EyeController::class,'update']);
+    Route::delete('eye/{eye}',[EyeController::class,'destroy']);
 
 });
 
 //educational Level
-Route::get('education',[EducationalLevelController::class,'index']);
-Route::post('education',[EducationalLevelController::class,'post']);
-Route::put('education/{id}',[EducationalLevelController::class,'update']);
-Route::delete('education/{id}',[EducationalLevelController::class,'destroy']);
+
 //hairType
-Route::get('hair',[HairTypeController::class,'index']);
-Route::post('hair',[HairTypeController::class,'store']);
-Route::put('hair/{id}',[HairTypeController::class,'update']);
-Route::delete('hair/{id}',[HairTypeController::class,'destroy']);
-//ethinic
-Route::get('ethincgroup',[EthnicGroupController::class,'index']);
-Route::post('ethincgroup',[EthnicGroupController::class,'post']);
-Route::put('ethincgroup/{id}',[EthnicGroupController::class,'update']);
-Route::delete('ethincgroup/{id}',[EthnicGroupController::class,'destroy']);
+
+
 //criminal
 Route::get('criminal', [CriminalController::class, 'index']);
 Route::post('criminal', [CriminalController::class, 'store']); // Change 'post' to 'store'
@@ -153,10 +211,6 @@ Route::delete('criminal/{id}', [CriminalController::class, 'destroy']);
 
 //criminalType
 
-Route::get('criminalType',[CriminalTypeController::class,'index']);
-Route::post('criminalType',[CriminalTypeController::class,'post']);
-Route::put('criminalType/{id}',[CriminalTypeController::class,'update']);
-Route::delete('criminalType/{id}',[CriminalTypeController::class,'destroy']);
 //criminalInformation
 Route::get('criminalInfo',[CriminalInformation::class,'index']);
 Route::post('criminalInfo',[CriminalInformation::class,'store']);
@@ -168,26 +222,8 @@ Route::post('case',[CaseHistoryController::class,'store']);
 Route::put('case/{id}',[CaseHistoryController::class,'update']);
 Route::delete('case/{id}',[CaseHistoryController::class,'destroy']);
 //type
-Route::get('type',[TypeController::class,'index']);
-Route::post('type',[TypeController::class,'store']);
-Route::put('type/{id}',[TypeController::class,'update']);
-Route::delete('type/{id}',[TypeController::class,'destroy']);
-//role
-// Route::get('role',[RoleController::class,'index']);
-// Route::post('role',[RoleController::class,'store']);
-// Route::put('role/{id}',[RoleController::class,'update']);
-// Route::delete('role/{id}',[RoleController::class,'destroy']);
-//sex
-// Route::get('sex',[SexController::class,'index']);
-// Route::post('sex',[SexController::class,'store']);
-// Route::put('sex/{id}',[SexController::class,'update']);
-// Route::delete('sex/{id}',[SexController::class,'destroy']);
-//user
 
-Route::post('user',[UserController::class,'store']);
-Route::put('user/{id}',[UserController::class,'update']);
-Route::delete('user/{id}',[UserController::class,'destroy']);
-//medical History
+
 
 
 //criminalGuard
@@ -217,12 +253,7 @@ Route::get('prisionerProperty/{id}',[PrisionerPropertyController::class,'show'])
 Route::put('prisionerProperty/{id}',[PrisionerPropertyController::class,'update']);
 Route::get('prisionerProperty/{id}',[PrisionerPropertyController::class,'destroy']);
 //type
-Route::get('type',[TypeController::class,'index']);
-Route::post('type',[TypeController::class,'store']);
-Route::get('type/{id}',[TypeController::class,'show']);
-Route::put('type/{id}',[TypeController::class,'update']);
-Route::get('type/{id}',[TypeController::class,'destroy']);
-//prisoner court story
+
 
 Route::get('prisonerCourt',[PrisionerCourtStoryController::class,'index']);
 Route::post('prisonerCourt',[PrisionerCourtStoryController::class,'store']);
@@ -232,8 +263,4 @@ Route::get('prisonerCourt/{id}',[PrisionerCourtStoryController::class,'destroy']
 
 //court
 
-Route::get('court',[CourtController::class,'index']);
-Route::post('court',[CourtController::class,'store']);
-Route::get('court/{id}',[CourtController::class,'show']);
-Route::put('court/{id}',[CourtController::class,'update']);
-Route::get('court/{id}',[CourtController::class,'destroy']);
+

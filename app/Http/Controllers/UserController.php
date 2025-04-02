@@ -13,7 +13,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $user = User::all();
+        $user = User::with('role:id,name')->get();
         return response()->json([
             'user'=>$user,
             'message'=>'Success'

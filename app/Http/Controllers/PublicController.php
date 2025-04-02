@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Settings\Constants;
+// use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PublicController extends Controller
 {
@@ -17,6 +20,28 @@ class PublicController extends Controller
                 [ 'id' => Constants::ሀኪም , 'name' => 'ሀኪም '],
             ]
         );
+    }
+    public function userRole(){
+        $user = Auth::user();
+        if($user){
+            $roleId = $user->role_id;
+            $roleName = [
+                Constants::አስተዳዳሪ => 'አስተዳዳሪ',
+                Constants::ፖሊስ => 'ፖሊስ',
+                Constants::ጥበቃ => 'ጥበቃ',
+                Constants::ሀኪም => 'ሀኪም',
+            ];
+            if(array_key_exists($roleId, $roleName)){
+                return response()->json([
+                    'data' => [
+                        'id' => $roleId,
+                        'name' => $roleName[$roleId]
+                    ]
+                ]);
+
+            }
+        }
+        return response()->json(['data' => null],404);
     }
 
     public function sexes() {
