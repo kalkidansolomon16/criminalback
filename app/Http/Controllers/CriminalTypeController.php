@@ -7,53 +7,60 @@ use App\Models\CriminalType;
 use Illuminate\Http\Request;
 
 class CriminalTypeController extends Controller
-{
-    public function index()
-    {
-        $criminalType = CriminalType::all();
-        if($criminalType){
-            return response()->json([
-                'message'=>'Sucess',
-                'data'=>$criminalType
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>404,
-                'message'=>'Hair type not found'
-            ]);
-        }
-    }
 
-    public function store(Request $request)
-    {
-        $fields = $request->validate([
-            'name' =>'required',
-        ]);
-        $type =CriminalType::create($fields);
-        return $type;
-    }
-
-
-    public function show(CriminalType $type)
-    {
-        return $type;
-    }
-
-
-    public function update(Request $request, CriminalType $type)
-    {
-        $fields = $request->validate([
-            'name' =>'required',
-        ]);
-        $type->update($fields);
-        return $type;
-    }
-
-
-    public function destroy(CriminalType $type)
-    {
-        $type->delete();
-        return ['message' =>'type deleted successully!'];
-    }
-}
+        
+ {
+            
+            
+                public function index() {
+            
+                    $criminalTypes = CriminalType::all();
+            
+                    return response()->json([
+                        'data' => $criminalTypes
+                    ]);
+                }
+            
+                public function store(Request $request) {
+            
+                    $request->validate([
+                        'name' => 'required|string|max:255',
+                    ]);
+            
+                    $criminalType = new CriminalType();
+                    $criminalType->name = $request->name;
+                    $criminalType->save();
+            
+                    return response()->json([
+                        'message' => 'criminalType Successfully Created',
+                    ], 201);
+                }
+            
+                public function show(CriminalType $criminalType) {
+                    
+                    return response()->json([
+                        'data' => $criminalType
+                    ]); 
+                }
+            
+                public function update(Request $request, CriminalType $criminalType) {
+            
+                    $request->validate([
+                        'name' => 'required|string|max:255',
+                    ]);
+            
+                    $criminalType->name = $request->name;
+                    $criminalType->save();
+            
+                    return response()->json([
+                        'message' => 'criminalType Updated Successfully',
+                    ]);
+                }
+            
+                public function destroy(CriminalType $criminalType) {
+                    $criminalType->delete();
+                    return response()->json(['message' => 'criminalType deleted successfully!']);
+                }
+            }
+            
+    

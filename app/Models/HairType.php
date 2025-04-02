@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class HairType extends Model
 {
-    //
+    protected $fillable = [
+        'name',
+    ];
 }

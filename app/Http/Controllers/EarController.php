@@ -2,23 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Models\Court;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Http\Request;
+use App\Models\Ear;
 use Illuminate\Support\Facades\Validator;
 
-    
-        class CourtController extends Controller{
-        
-        
+class EarController extends Controller
+{              
             public function index() {
         
-                $courts = Court::all();
+                $ears = Ear::all();
         
                 return response()->json([
-                    'data' => $courts
+                    'data' => $ears
                 ]);
             }
         
@@ -28,39 +24,41 @@ use Illuminate\Support\Facades\Validator;
                     'name' => 'required|string|max:255',
                 ]);
         
-                $court = new Court();
-                $court->name = $request->name;
-                $court->save();
+                $ear = new Ear();
+                $ear->name = $request->name;
+                $ear->save();
         
                 return response()->json([
-                    'message' => 'court Successfully Created',
+                    'message' => 'ear Successfully Created',
                 ], 201);
             }
         
-            public function show(Court $court) {
+            public function show(Ear $ear) {
                 
                 return response()->json([
-                    'data' => $court
+                    'data' => $ear
                 ]); 
             }
         
-            public function update(Request $request, Court $court) {
+            public function update(Request $request, Ear $ear) {
         
                 $request->validate([
                     'name' => 'required|string|max:255',
                 ]);
         
-                $court->name = $request->name;
-                $court->save();
+                $ear->name = $request->name;
+                $ear->save();
         
                 return response()->json([
-                    'message' => 'court Updated Successfully',
+                    'message' => 'ear Updated Successfully',
                 ]);
             }
         
-            public function destroy(Court $court) {
-                $court->delete();
-                return response()->json(['message' => 'court deleted successfully!']);
+            public function destroy(Ear $ear) {
+                $ear->delete();
+                return response()->json(['message' => 'ear deleted successfully!']);
             }
         }
         
+        
+    

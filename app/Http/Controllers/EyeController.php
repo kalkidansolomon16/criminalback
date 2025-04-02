@@ -3,19 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Crime;
 use Illuminate\Http\Request;
+use App\Models\Eye;
+use Illuminate\Support\Facades\Validator;
 
-
-            class CrimeController extends Controller{
-            
-            
+class EyeController extends Controller
+{           
                 public function index() {
             
-                    $crimes = Crime::all();
+                    $eyes = Eye::all();
             
                     return response()->json([
-                        'data' => $crimes
+                        'data' => $eyes
                     ]);
                 }
             
@@ -25,40 +24,42 @@ use Illuminate\Http\Request;
                         'name' => 'required|string|max:255',
                     ]);
             
-                    $crime = new Crime();
-                    $crime->name = $request->name;
-                    $crime->save();
+                    $eye = new Eye();
+                    $eye->name = $request->name;
+                    $eye->save();
             
                     return response()->json([
-                        'message' => 'crime Successfully Created',
+                        'message' => 'eye Successfully Created',
                     ], 201);
                 }
             
-                public function show(Crime $crime) {
+                public function show(Eye $eye) {
                     
                     return response()->json([
-                        'data' => $crime
+                        'data' => $eye
                     ]); 
                 }
             
-                public function update(Request $request, Crime $crime) {
+                public function update(Request $request, Eye $eye) {
             
                     $request->validate([
                         'name' => 'required|string|max:255',
                     ]);
             
-                    $crime->name = $request->name;
-                    $crime->save();
+                    $eye->name = $request->name;
+                    $eye->save();
             
                     return response()->json([
-                        'message' => 'crime Updated Successfully',
+                        'message' => 'eye Updated Successfully',
                     ]);
                 }
             
-                public function destroy(Crime $crime) {
-                    $crime->delete();
-                    return response()->json(['message' => 'crime deleted successfully!']);
+                public function destroy(Eye $eye) {
+                    $eye->delete();
+                    return response()->json(['message' => 'eye deleted successfully!']);
                 }
             }
             
+            
+        
     

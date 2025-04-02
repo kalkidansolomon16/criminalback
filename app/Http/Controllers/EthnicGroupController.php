@@ -6,45 +6,58 @@ use App\Http\Controllers\Controller;
 use App\Models\EthnicGroup;
 use Illuminate\Http\Request;
 
-class EthnicGroupController extends Controller
-{
-    public function index()
-    {
-        $ethnicgroups = EthnicGroup::all(); // Fixed typo from $towm to $religion
-        return response()->json([
-            'message' => 'Success',
-            'data' => $ethnicgroups
-        ]);
+
+    class EthnicGroupController extends Controller{
+    
+    
+        public function index() {
+    
+            $ethnicgroups = EthnicGroup::all();
+    
+            return response()->json([
+                'data' => $ethnicgroups
+            ]);
+        }
+    
+        public function store(Request $request) {
+    
+            $request->validate([
+                'name' => 'required|string|max:255',
+            ]);
+    
+            $ethnic = new EthnicGroup();
+            $ethnic->name = $request->name;
+            $ethnic->save();
+    
+            return response()->json([
+                'message' => 'ethnic Successfully Created',
+            ], 201);
+        }
+    
+        public function show(EthnicGroup $ethnic) {
+            
+            return response()->json([
+                'data' => $ethnic
+            ]); 
+        }
+    
+        public function update(Request $request, EthnicGroup $ethnic) {
+    
+            $request->validate([
+                'name' => 'required|string|max:255',
+            ]);
+    
+            $ethnic->name = $request->name;
+            $ethnic->save();
+    
+            return response()->json([
+                'message' => 'ethnic Updated Successfully',
+            ]);
+        }
+    
+        public function destroy(EthnicGroup $ethnic) {
+            $ethnic->delete();
+            return response()->json(['message' => 'ethnic deleted successfully!']);
+        }
     }
-
-    public function store(Request $request)
-    {
-        $fields = $request->validate([
-            'name' => 'required|string|max:255', // Added validation for string and max length
-        ]);
-
-        $ethnicgroup = EthnicGroup::create($fields);
-        return response()->json($ethnicgroup, 201); // Return the created ethnicgroup with a 201 status
-    }
-
-    public function show(EthnicGroup $ethnicgroup)
-    {
-        return response()->json($ethnicgroup); // Return the ethnicgroup as a JSON response
-    }
-
-    public function update(Request $request, EthnicGroup $ethnicgroup)
-    {
-        $fields = $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
-
-        $ethnicgroup->update($fields);
-        return response()->json($ethnicgroup); // Return the updated ethnicgroup
-    }
-
-    public function destroy(EthnicGroup $ethnicgroup)
-    {
-        $ethnicgroup->delete();
-        return response()->json(['message' => 'ethnicgroup deleted successfully!']); // Corrected message
-    }
-}
+    
