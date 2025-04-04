@@ -36,41 +36,42 @@ return new class extends Migration
         Schema::create('prision_histories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('prisioner_id')->references('id')->on('prisioners')->onDelete('cascade');
-            $table->string('photo');
-            $table->foreignId('prision_cell_id')->references('id')->on('prision_cells')->onDelete('cascade');
-            $table->foreignId('criminal_type_id')->references('id')->on('criminal_types')->onDelete('cascade');
-            $table->foreignId('current_city_id')->references('id')->on('cities')->onDelete('cascade');
-            $table->foreignId('educational_level_id')->references('id')->on('educational_levels')->onDelete('cascade');
-            $table->foreignId('religion_id')->references('id')->on('religions')->onDelete('cascade');
-            $table->string('closest_respondent');
-            $table->foreignId('closest_respondent_town_id')->references('id')->on('towns')->onDelete('cascade');
-            $table->string('current_district');
-            $table->string('closest_respondent_district');
-            $table->string('job');
-            $table->string('phone_number');
-            $table->string('mobile_number');
-            $table->dateTime('date_time_entered');
-            $table->string('end_date_of_arrest');
-            $table->string('date_of_release');
+            $table->string('photo')->nullable();
+            $table->foreignId('prision_cell_id')->nullable()->references('id')->on('prision_cells')->onDelete('cascade')->nullable();
+            $table->foreignId('criminal_type_id')->nullable()->references('id')->on('criminal_types')->onDelete('cascade')->nullable();
+            $table->foreignId('current_city_id')->nullable()->references('id')->on('cities')->onDelete('cascade')->nullable();
+            $table->foreignId('educational_level_id')->nullable()->references('id')->on('educational_levels')->onDelete('cascade')->nullable();
+            $table->foreignId('religion_id')->nullable()->references('id')->on('religions')->onDelete('cascade')->nullable();
+            $table->string('closest_respondent')->nullable();
+            $table->foreignId('closest_respondent_town_id')->nullable()->references('id')->on('towns')->onDelete('cascade')->nullable();
+            $table->string('current_district')->nullable();
+            $table->string('closest_respondent_district')->nullable();
+            $table->string('job')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('mobile_number')->nullable();
+            $table->dateTime('date_time_entered')->nullable();
+            $table->string('end_date_of_arrest')->nullable();
+            $table->string('date_of_release')->nullable();
             $table->string('release_reason')->nullable();
             $table->dateTime('date_of_mercy_release')->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
 
-        Schema::create('prisioner_appearances', function (Blueprint $table) {
+        Schema::create('prisoner_apperances', function (Blueprint $table) {
             $table->id();
             $table->foreignId('prision_history_id')->references('id')->on('prision_histories')->onDelete('cascade');
             $table->foreignId('hair_type_id')->references('id')->on('hair_types')->onDelete('cascade');
+            $table->foreignId('nose_id')->references('id')->on('noses')->onDelete('cascade');
+            $table->foreignId('eye_id')->references('id')->on('eyes')->onDelete('cascade');
+            $table->foreignId('teeth_id')->references('id')->on('teeths')->onDelete('cascade');
+            $table->foreignId('lip_id')->references('id')->on('lips')->onDelete('cascade');
+            $table->foreignId('ear_id')->references('id')->on('ears')->onDelete('cascade');
             $table->float('height');
             $table->string('face');
             $table->string('forehead');
-            $table->string('nose');
-            $table->string('eye_color');
-            $table->string('teeth');
-            $table->string('lip');
-            $table->string('ear');
             $table->string('unique_appearance');
+            $table->string('extra_description');
             $table->string('citizenship');
             $table->timestamps();
         });
@@ -129,9 +130,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('prision_cells');
-        Schema::dropIfExists('prisioners');
+        Schema::dropIfExists('prisoner_apperances');
         Schema::dropIfExists('prision_histories');
         Schema::dropIfExists('prisioner_crimes');
         Schema::dropIfExists('prisioner_court_stories');
+        Schema::dropIfExists('prisioners');
     }
 };
