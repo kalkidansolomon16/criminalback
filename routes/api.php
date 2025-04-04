@@ -235,8 +235,9 @@ Route::delete('criminalGuard/{id}',[CriminalGuard::class,'destroy']);
 //login
 Route::post('login',[AuthController::class,'login']);
 //prisioner
-Route::get('prisioner',[PrisionersController::class,'index']);
-Route::post('prisioner',[PrisionersController::class,'store']);
+Route::get('prisoner',[PrisionersController::class,'index'])->middleware('auth:sanctum');
+Route::post('prisoner/basic-information',[PrisionersController::class,'storeBasicInformation'])->middleware('auth:sanctum');
+Route::post('prisoner/apperance',[PrisionersController::class,'storeApperance'])->middleware('auth:sanctum');
 Route::get('prisioner/{id}',[PrisionersController::class,'show']);
 Route::put('prisioner/{id}',[PrisionersController::class,'update']);
 Route::delete('prisioner/{id}',[PrisionersController::class,'destroy']);

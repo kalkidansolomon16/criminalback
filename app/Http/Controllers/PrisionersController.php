@@ -6,7 +6,11 @@ use App\Models\Prisioner;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Models\PrisonerApperance;
+use App\Models\PrisionHistory;
+use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class PrisionersController extends Controller
@@ -39,15 +43,15 @@ class PrisionersController extends Controller
          ])->get();
         if($Prisioner){
             return response()->json([
-                'Prisioner'=>$Prisioner,
-                'message'=>'Success'
+                'Prisioner' => $Prisioner,
+                'message' => 'Success'
             ]);
             
         }
         else{
             return response()->json([
-                'status'=>404,
-                'message'=>'Prisioner not found'
+                'status' => 404,
+                'message' => 'Prisioner not found'
             ]);
         }
     }
@@ -63,51 +67,112 @@ class PrisionersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function storeBasicInformation(Request $request)
     {
         $validation = Validator::make($request->all(),[
-            'prisioner_unique_number'=>'required',
-            'prision_unique_number'=>'required',
-            'first_name'=>'required',
-            'middle_name'=>'required',
-            'last_name'=>'required',
-            'date_of_birth'=>'required',
-            'mother_name'=>'required',
-            'sex'=>'required',
-            'birth_district'=>'required',
-            'birth_town_id'=>'required',
-            'ethnic_group_id'=>'required',
+            'first_name' => 'required',
+            'middle_name' => 'required',
+            'last_name' => 'required',
+            'date_of_birth' => 'required',
+            'mother_name' => 'required',
+            'sex' => 'required',
+            'birth_district' => 'required',
+            'birth_town_id' => 'required',
+            'ethnic_group_id' => 'required',
             
         ]);
+
         if($validation->fails()){
             return response()->json([
-                'status'=>422,
-                'message'=>$validation->messages()
-            ]);
+                'message' => $validation->messages()->first()
+            ], 422);
         }
-        else{
+
+        try {
+            DB::beginTransaction();
             $Prisioner = new Prisioner();
-            $Prisioner->prisioner_unique_number = request('prisioner_unique_number');
-            $Prisioner->prision_unique_number = request('prision_unique_number');
+            $Prisioner->prisioner_unique_number = mt_rand(1, 9999999); // the System can assign a unique number
+            $Prisioner->prision_unique_number = mt_rand(1, 9999999);
+            
             $Prisioner->first_name = request('first_name');
             $Prisioner->middle_name = request('middle_name');
             $Prisioner->last_name = request('last_name');
             $Prisioner->date_of_birth = request('date_of_birth');
-            // $Prisioner->last_name = request('last_name');
-            // $Prisioner->date_of_birth = request('date_of_birth');
             $Prisioner->mother_name = request('mother_name');
             $Prisioner->sex = request('sex');
-            // $Prisioner->birth_place = request('birth_place');
             $Prisioner->birth_district = request('birth_district');
             $Prisioner->birth_town_id = request('birth_town_id');
             $Prisioner->ethnic_group_id = request('ethnic_group_id');
-                    $Prisioner->save();
+            $Prisioner->save();
+            
+            $prisonHistory = new PrisionHistory();  
+            $prisonHistory->prisioner_id = $Prisioner->id;
+            $prisonHistory->user_id = Auth::id();
+            $prisonHistory->save();
+            DB::commit();
+        } catch(Exception $e) {
+            DB::rollBack();
             return response()->json([
-                'message'=>"Prisioner added Successfully",
-                'prisioner'=> $Prisioner
-            ]);
+                'message' => $e->getMessage(),
+            ], 422);
         }
-        
+
+        return response()->json([
+            'message' => "Prisioner added Successfully",
+            'prison_history_id' => $prisonHistory->id,
+        ]);
+    }
+
+    public function storeApperance(Request $request) {
+        $validation = Validator::make($request->all(),[
+            'prison_history_id' => 'required',
+            'hair_type_id' => 'required',
+            'nose_id' => 'required',
+            'eye_id' => 'required',
+            'teeth_id' => 'required',
+            'lip_id' => 'required',
+            'ear_id' => 'required',
+            'height' => 'required',
+            'face' => 'required',
+            'forehead' => 'required',
+            'unique_appearance' => 'required',
+            'extra_description' => 'required',
+            'citizenship' => 'required',
+            
+        ]);
+
+        if($validation->fails()){
+            return response()->json([
+                'message' => $validation->messages()->first()
+            ], 422);
+        }
+
+        $prisonHistory = PrisionHistory::find($request->prison_history_id);
+        if(!$prisonHistory) {
+            return response()->json([
+                'message' => 'Prison History not found!',
+            ], 422);
+        }
+
+        $prisonAppearance = new PrisonerApperance();
+        $prisonAppearance->hair_type_id = $request->hair_type_id;
+        $prisonAppearance->nose_id = $request->nose_id;
+        $prisonAppearance->eye_id = $request->eye_id;
+        $prisonAppearance->teeth_id = $request->teeth_id;
+        $prisonAppearance->lip_id = $request->lip_id;
+        $prisonAppearance->ear_id = $request->ear_id;
+        $prisonAppearance->height = $request->height;
+        $prisonAppearance->face = $request->face;
+        $prisonAppearance->forehead = $request->forehead;
+        $prisonAppearance->unique_appearance = $request->unique_appearance;
+        $prisonAppearance->extra_description = $request->extra_description;
+        $prisonAppearance->citizenship = $request->citizenship;
+        $prisonAppearance->prision_history_id = $request->prison_history_id;
+        $prisonAppearance->save();
+
+        return response()->json([
+            'message' => "Prisioner Apperance Added Successfully",
+        ]);
     }
 
     /**
@@ -138,14 +203,14 @@ class PrisionersController extends Controller
         ])->find($id);
         if($Prisioner){
             return response()->json([
-                'Prisioner'=>$Prisioner,
-                'message'=>'Success'
+                'Prisioner' => $Prisioner,
+                'message' => 'Success'
             ]);
         }
         else{
             return response()->json([
-                'status'=>422,
-                'message'=>'Prisioner Not Found'
+                'status' => 422,
+                'message' => 'Prisioner Not Found'
             ]);
         }
     }
@@ -158,14 +223,14 @@ class PrisionersController extends Controller
         $Prisioner = Prisioner::find($id);
         if($Prisioner){
             return response()->json([
-                'Prisioner'=>$Prisioner,
-                'message'=>'Success'
+                'Prisioner' => $Prisioner,
+                'message' => 'Success'
             ]);
         }
         else{
             return response()->json([
-                'status'=>422,
-                'message'=>'Prisioner status not found'
+                'status' => 422,
+                'message' => 'Prisioner status not found'
 
             ]);
         }
@@ -177,22 +242,22 @@ class PrisionersController extends Controller
     public function update(Request $request, string $id)
     {
         $validation = Validator::make($request->all(),[
-           'prisioner_unique_number'=>'required',
-           'prision_unique_number'=>'required',
-            'first_name'=>'required',
-            'middle_name'=>'required',
-            'last_name'=>'required',
-            'date_of_birth'=>'required',
-            'mother_name'=>'required',
-            'sex'=>'required',
-            'birth_district'=>'required',
-            'birth_town_id'=>'required',
-            'ethnic_group_id'=>'required',
+           'prisioner_unique_number' => 'required',
+           'prision_unique_number' => 'required',
+            'first_name' => 'required',
+            'middle_name' => 'required',
+            'last_name' => 'required',
+            'date_of_birth' => 'required',
+            'mother_name' => 'required',
+            'sex' => 'required',
+            'birth_district' => 'required',
+            'birth_town_id' => 'required',
+            'ethnic_group_id' => 'required',
         ]);
         if($validation->fails()){
             return response()->json([
-                'status'=>422,
-                'message'=>$validation->messages()
+                'status' => 422,
+                'message' => $validation->messages()
             ]);
         }
         else{
@@ -227,12 +292,12 @@ class PrisionersController extends Controller
         if($Prisioner){
             $Prisioner->delete();
             return response()->json([
-                'message'=>'Prisioner  Deleted Successfully'
+                'message' => 'Prisioner  Deleted Successfully'
             ]);
         }
         else{
             return response()->json([
-                'message'=>'Prisioner with this id not foud'
+                'message' => 'Prisioner with this id not foud'
             ]);
         }
     }
