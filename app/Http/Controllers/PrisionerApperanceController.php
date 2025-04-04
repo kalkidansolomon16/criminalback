@@ -7,7 +7,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Models\Prisioner_appearance;
+use App\Models\PrisonerApperance;
 use Illuminate\Support\Facades\Validator;
 
 class PrisionerApperanceController extends Controller
@@ -17,7 +17,7 @@ class PrisionerApperanceController extends Controller
      */
     public function index()
     {
-        $prisionerApperance = Prisioner_appearance::all();
+        $prisionerApperance = PrisonerApperance::all();
         if($prisionerApperance){
             return response()->json([
                 'prisionerApperance'=>$prisionerApperance,
@@ -68,7 +68,7 @@ class PrisionerApperanceController extends Controller
             ]);
         }
         else{
-            $prisionerApperance = new Prisioner_appearance();
+            $prisionerApperance = new PrisonerApperance();
             $prisionerApperance->prision_history_id = request('prision_history_id');
             $prisionerApperance->hair_type_id = request('hair_type_id');
             $prisionerApperance->height = request('height');
@@ -97,7 +97,7 @@ class PrisionerApperanceController extends Controller
      */
     public function show(string $id)
     {
-        $PrisionerApperance =Prisioner_appearance::find($id);
+        $PrisionerApperance =PrisonerApperance::find($id);
         if($PrisionerApperance){
             return response()->json([
                 'PrisionerApperance'=>$PrisionerApperance,
@@ -117,7 +117,7 @@ class PrisionerApperanceController extends Controller
      */
     public function edit(string $id)
     {
-        $PrisionerApperance =Prisioner_appearance::find($id);
+        $PrisionerApperance =PrisonerApperance::find($id);
         if($PrisionerApperance){
             return response()->json([
                 'PrisionerApperance'=>$PrisionerApperance,
@@ -158,7 +158,7 @@ class PrisionerApperanceController extends Controller
             ]);
         }
         else{
-            $prisionerApperance = new  Prisioner_appearance();
+            $prisionerApperance = new  PrisonerApperance();
         
             $prisionerApperance->prision_history_id = request('prision_history_id');
             $prisionerApperance->hair_type_id = request('hair_type_id');
@@ -186,7 +186,7 @@ class PrisionerApperanceController extends Controller
      */
     public function destroy(string $id)
     {
-        $PrisioPrisionerApperance = Prisioner_appearance::find($id);
+        $PrisioPrisionerApperance = PrisonerApperance::find($id);
         if($PrisioPrisionerApperance){
             $PrisioPrisionerApperance->delete();
             return response()->json([
