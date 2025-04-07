@@ -58,3 +58,4 @@ class NoseController extends Controller
         return response()->json(['message' => 'nose deleted successfully!']);
     }
 }
+// try
