@@ -123,6 +123,53 @@ class PrisionersController extends Controller
         ]);
     }
 
+    public function storePersonalInfo(Request $request) {
+        $validation = Validator::make($request->all(),[
+            'prison_history_id' => 'required',
+			'phone_number' => 'required',
+			'closest_respondent' => 'required',
+			'closest_respondent_district' => 'required',
+			'religion_id' => 'required',
+			'mobile_number' => 'required',
+			'closest_respondent_town_id' => 'required',
+			'current_district' => 'required',
+			'job' => 'required',
+			'current_city_id' => 'required',
+			'educational_level_id' => 'required',
+            
+        ]);
+
+        if($validation->fails()){
+            return response()->json([
+                'message' => $validation->messages()->first()
+            ], 422);
+        }
+
+        $prisonHistory = PrisionHistory::find($request->prison_history_id);
+        if(!$prisonHistory) {
+            return response()->json([
+                'message' => 'Prison History not found!',
+            ], 422);
+        }
+
+        $prisonHistory->phone_number = $request->phone_number; 
+        $prisonHistory->closest_respondent = $request->closest_respondent; 
+        $prisonHistory->closest_respondent_district = $request->closest_respondent_district; 
+        $prisonHistory->religion_id = $request->religion_id; 
+        $prisonHistory->mobile_number = $request->mobile_number; 
+        $prisonHistory->closest_respondent_town_id = $request->closest_respondent_town_id; 
+        $prisonHistory->current_district = $request->current_district; 
+        $prisonHistory->job = $request->job; 
+        $prisonHistory->current_city_id = $request->current_city_id; 
+        $prisonHistory->educational_level_id = $request->educational_level_id; 
+
+        $prisonHistory->save();
+
+        return response()->json([
+            'message' => "Prisioner Personal Informations Saved Successfully",
+        ]);
+    }
+
     public function storeApperance(Request $request) {
         $validation = Validator::make($request->all(),[
             'prison_history_id' => 'required',

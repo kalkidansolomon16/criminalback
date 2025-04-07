@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
             prisonercellSeeder::class,
             TeethSeeder::class,
             TypeSeeder::class,
+            ReligionSeeder::class,
+            EducationalLevelsSeeder::class,
         ]);
     }
 }

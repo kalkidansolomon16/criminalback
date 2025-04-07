@@ -238,6 +238,7 @@ Route::post('login',[AuthController::class,'login']);
 Route::get('prisoner',[PrisionersController::class,'index'])->middleware('auth:sanctum');
 Route::post('prisoner/basic-information',[PrisionersController::class,'storeBasicInformation'])->middleware('auth:sanctum');
 Route::post('prisoner/apperance',[PrisionersController::class,'storeApperance'])->middleware('auth:sanctum');
+Route::post('prisoner/personal-info',[PrisionersController::class,'storePersonalInfo'])->middleware('auth:sanctum');
 Route::get('prisioner/{id}',[PrisionersController::class,'show']);
 Route::put('prisioner/{id}',[PrisionersController::class,'update']);
 Route::delete('prisioner/{id}',[PrisionersController::class,'destroy']);
