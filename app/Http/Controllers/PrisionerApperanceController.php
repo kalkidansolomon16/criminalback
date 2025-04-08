@@ -17,7 +17,19 @@ class PrisionerApperanceController extends Controller
      */
     public function index()
     {
-        $prisionerApperance = PrisonerApperance::all();
+        $prisionerApperance = PrisonerApperance::with('hair','eye','teeth','lip','ear','nose')->get();
+        if($prisionerApperance){
+            return response()->json([
+                'prisionerApperance'=>$prisionerApperance,
+                'message'=>'Success'
+            ]);
+        }
+        else{
+            return response()->json([
+                'status'=>404,
+                'message'=>'PrisionerApperance not found'
+            ]);
+        }
         if($prisionerApperance){
             return response()->json([
                 'prisionerApperance'=>$prisionerApperance,

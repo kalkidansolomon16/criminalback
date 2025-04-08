@@ -18,7 +18,20 @@ class PrisionerPropertyController extends Controller
      */
     public function index()
     {
-        $prisionerProperty = Prisioner_property::all();
+        $prisionerProperty = Prisioner_property::with('type')->get();
+        if($prisionerProperty){
+            return response()->json([
+                'prisionerProperty'=>$prisionerProperty,
+                'message'=>'Success'
+            ]);
+            
+        }
+        else{
+            return response()->json([
+                'status'=>404,
+                'message'=>'PrisionerProperty not found'
+            ]);
+        }
         if($prisionerProperty){
             return response()->json([
                 'prisionerProperty'=>$prisionerProperty,

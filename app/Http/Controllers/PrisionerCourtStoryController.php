@@ -18,7 +18,7 @@ class PrisionerCourtStoryController extends Controller
      */
     public function index()
     {
-        $prisionerCourtStory = Prisioner_court_story::all();
+        $prisionerCourtStory = Prisioner_court_story::with('court','updatedCourt')->get();
         if($prisionerCourtStory){
             return response()->json([
                 'prisionerCourtStory'=>$prisionerCourtStory,

@@ -9,7 +9,13 @@ class Prisioner_crimeController extends Controller {
 
     public function index() {
 
-        $prisionerCrime = Prisioner_crime::all();
+        $prisionerCrime = Prisioner_crime::with('crime')->get();
+        if ($prisionerCrime->isEmpty()) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Prisioner Crime not found'
+            ]);
+        }
 
         return response()->json([
             'data' => $prisionerCrime
