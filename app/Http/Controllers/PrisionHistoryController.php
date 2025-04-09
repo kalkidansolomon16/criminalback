@@ -43,7 +43,7 @@ class PrisionHistoryController extends Controller
     
         $request->validate([
             'prisioner_id' =>'required',
-            'photo' => 'required',
+            //'photo' => 'required',
             'prision_cell_id' => 'required',
             'criminal_type_id' => 'required',
             'current_city_id' => 'required',
