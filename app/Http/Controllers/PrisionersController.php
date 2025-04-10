@@ -151,34 +151,37 @@ class PrisionersController extends Controller
                 'message' => 'Prison History not found!',
             ], 422);
         }
-        $prisonHistory->prision_cell_id = $request->prision_cell_id;
-        $prisonHistory->criminal_type_id = $request->criminal_type_id;
-        $prisonHistory->phone_number = $request->phone_number; 
-        $prisonHistory->closest_respondent = $request->closest_respondent; 
-        $prisonHistory->closest_respondent_district = $request->closest_respondent_district; 
-        $prisonHistory->religion_id = $request->religion_id; 
-        $prisonHistory->mobile_number = $request->mobile_number; 
-        $prisonHistory->closest_respondent_town_id = $request->closest_respondent_town_id; 
-        $prisonHistory->current_district = $request->current_district; 
-        $prisonHistory->job = $request->job; 
-        $prisonHistory->current_city_id = $request->current_city_id; 
-        $prisonHistory->educational_level_id = $request->educational_level_id; 
-        $prisonHistory->date_time_entered = $request->date_time_entered;
-        $prisonHistory->end_date_of_arrest = $request->end_date_of_arrest;
-        $prisonHistory->date_of_release = $request->date_of_release;
-        $prisonHistory->release_reason = $request->release_reason;
-        $prisonHistory->date_of_mercy_release = $request->date_of_mercy_release;
-        if ($request->hasFile('photo')) {
-            $photo = $request->file('photo');
-            $photoName = 'ka_l' . time() . '_' . $photo->getClientOriginalName();
-            $photo->move(public_path('img'), $photoName);
-            $prisonHistory->photo = 'img/' . $photoName;
+        else{
+            $prisonHistory->prision_cell_id = $request->prision_cell_id;
+            $prisonHistory->criminal_type_id = $request->criminal_type_id;
+            $prisonHistory->phone_number = $request->phone_number; 
+            $prisonHistory->closest_respondent = $request->closest_respondent; 
+            $prisonHistory->closest_respondent_district = $request->closest_respondent_district; 
+            $prisonHistory->religion_id = $request->religion_id; 
+            $prisonHistory->mobile_number = $request->mobile_number; 
+            $prisonHistory->closest_respondent_town_id = $request->closest_respondent_town_id; 
+            $prisonHistory->current_district = $request->current_district; 
+            $prisonHistory->job = $request->job; 
+            $prisonHistory->current_city_id = $request->current_city_id; 
+            $prisonHistory->educational_level_id = $request->educational_level_id; 
+            $prisonHistory->date_time_entered = $request->date_time_entered;
+            $prisonHistory->end_date_of_arrest = $request->end_date_of_arrest;
+            $prisonHistory->date_of_release = $request->date_of_release;
+            $prisonHistory->release_reason = $request->release_reason;
+            $prisonHistory->date_of_mercy_release = $request->date_of_mercy_release;
+            if ($request->hasFile('photo')) {
+                $photo = $request->file('photo');
+                $photoName = 'ka_l' . time() . '_' . $photo->getClientOriginalName();
+                $photo->move(public_path('img'), $photoName);
+                $prisonHistory->photo = 'img/' . $photoName;
+            }
+            $prisonHistory->save();
+    
+            return response()->json([
+                'message' => "Prisioner Personal Informations Saved Successfully",
+            ]);
         }
-        $prisonHistory->save();
 
-        return response()->json([
-            'message' => "Prisioner Personal Informations Saved Successfully",
-        ]);
     }
 
     public function storeApperance(Request $request) {
