@@ -16,18 +16,19 @@ class MedicalHistoryController extends Controller
      */
     public function index()
     {
-        $medicalHostory = MedicalHistory::all();
-        if($medicalHostory){
-
+        $medicalHistory = MedicalHistory::with(['prisonerHistory.prisoner','diseaseType'])->get();
+    
+        if ($medicalHistory->isNotEmpty()) {
             return response()->json([
-                'data'=>$medicalHostory,
-                'message'=>'Success'
+                'data' => $medicalHistory,
+                'status' => 200,
+                'message' => 'Success'
             ]);
-        }
-        else{
+        } else {
             return response()->json([
-                'status'=>422,
-                'message'=>'Medical History Not Found'
+                'medical_info' => [],
+                'status' => 422,
+                'message' => 'Medical History Not Found'
             ]);
         }
     }
