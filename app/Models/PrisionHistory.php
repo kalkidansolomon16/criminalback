@@ -1,9 +1,21 @@
 <?php
 
 namespace App\Models;
+use App\Models\City;
+use App\Models\Town;
+use App\Models\User;
+use App\Models\Court;
+use App\Models\Crime;
+use App\Models\Region;
+use App\Models\Religion;
+use App\Models\EthnicGroup;
+use App\Models\CriminalType;
+use App\Models\EducationalLevel;
+// use App\Models\prisonerHistory;
+
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PrisionHistory extends Model
 {
@@ -99,5 +111,12 @@ class PrisionHistory extends Model
     public function prisonerCell(): BelongsTo
     {
         return $this->belongsTo(Court::class, 'prision_cell_id');
+    }
+    // public function medicalHistory() {
+    //     return $this->hasMany(medicalHistory::class);
+    // }
+    public function prisoner()
+    {
+        return $this->belongsTo(Prisioner::class, 'prisioner_id');
     }
 }
