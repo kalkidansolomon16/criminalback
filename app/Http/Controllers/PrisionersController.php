@@ -6,8 +6,11 @@ use App\Models\Prisioner;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Prisioner_crime;
+use App\Models\Prisioner_property;
 use App\Models\PrisonerApperance;
 use App\Models\PrisionHistory;
+use App\Settings\Constants;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -136,6 +139,7 @@ class PrisionersController extends Controller
 			'job' => 'required',
 			'current_city_id' => 'required',
 			'educational_level_id' => 'required',
+			'date_time_entered' => 'required',
             
         ]);
 
@@ -152,8 +156,8 @@ class PrisionersController extends Controller
             ], 422);
         }
         else{
-            $prisonHistory->prision_cell_id = $request->prision_cell_id;
-            $prisonHistory->criminal_type_id = $request->criminal_type_id;
+            // $prisonHistory->prision_cell_id = $request->prision_cell_id;
+            // $prisonHistory->criminal_type_id = $request->criminal_type_id;
             $prisonHistory->phone_number = $request->phone_number; 
             $prisonHistory->closest_respondent = $request->closest_respondent; 
             $prisonHistory->closest_respondent_district = $request->closest_respondent_district; 
@@ -165,16 +169,16 @@ class PrisionersController extends Controller
             $prisonHistory->current_city_id = $request->current_city_id; 
             $prisonHistory->educational_level_id = $request->educational_level_id; 
             $prisonHistory->date_time_entered = $request->date_time_entered;
-            $prisonHistory->end_date_of_arrest = $request->end_date_of_arrest;
-            $prisonHistory->date_of_release = $request->date_of_release;
-            $prisonHistory->release_reason = $request->release_reason;
-            $prisonHistory->date_of_mercy_release = $request->date_of_mercy_release;
-            if ($request->hasFile('photo')) {
-                $photo = $request->file('photo');
-                $photoName = 'ka_l' . time() . '_' . $photo->getClientOriginalName();
-                $photo->move(public_path('img'), $photoName);
-                $prisonHistory->photo = 'img/' . $photoName;
-            }
+            // $prisonHistory->end_date_of_arrest = $request->end_date_of_arrest;
+            // $prisonHistory->date_of_release = $request->date_of_release;
+            // $prisonHistory->release_reason = $request->release_reason;
+            // $prisonHistory->date_of_mercy_release = $request->date_of_mercy_release;
+            // if ($request->hasFile('photo')) {
+            //     $photo = $request->file('photo');
+            //     $photoName = 'ka_l' . time() . '_' . $photo->getClientOriginalName();
+            //     $photo->move(public_path('img'), $photoName);
+            //     $prisonHistory->photo = 'img/' . $photoName;
+            // }
             $prisonHistory->save();
     
             return response()->json([
@@ -236,6 +240,77 @@ class PrisionersController extends Controller
         ]);
     }
 
+    public function storeProperties(Request $request) {
+        $validation = Validator::make($request->all(),[
+            'prison_history_id' => 'required',
+            'properties' => 'required',
+        ]);
+
+        if($validation->fails()){
+            return response()->json([
+                'message' => $validation->messages()->first()
+            ], 422);
+        }
+
+        $prisonHistory = PrisionHistory::find($request->prison_history_id);
+        if(!$prisonHistory) {
+            return response()->json([
+                'message' => 'Prison History not found!',
+            ], 422);
+        }
+
+        $properties = $request->properties;
+        
+        foreach($properties as $property) {
+            $p = new Prisioner_property();
+            $p->prision_history_id = $request->prison_history_id;
+            $p->type_id = $property['type_id'];
+            $p->amount = $property['amount'];
+            $p->description = $property['description'];
+            $p->date_received = now();
+            $p->save();
+        }
+
+        return response()->json([
+            'message' => "Prisioner Properties Saved",
+        ]);
+    }
+
+    public function storeCrimes(Request $request) {
+        $validation = Validator::make($request->all(),[
+            'prison_history_id' => 'required',
+            'all_crimes' => 'required',
+        ]);
+
+        if($validation->fails()){
+            return response()->json([
+                'message' => $validation->messages()->first()
+            ], 422);
+        }
+
+        $prisonHistory = PrisionHistory::find($request->prison_history_id);
+        if(!$prisonHistory) {
+            return response()->json([
+                'message' => 'Prison History not found!',
+            ], 422);
+        }
+
+        $allCrimes = $request->all_crimes;
+        
+        foreach($allCrimes as $crime) {
+            $c = new Prisioner_crime();
+            $c->prision_history_id = $request->prison_history_id;
+            $c->crime_id = $crime['crime_id'];
+            $c->crime_description = $crime['description'];
+            $c->status = Constants::ACCUSED;
+            $c->save();
+        }
+
+        return response()->json([
+            'message' => "Prisioner Crimes Saved",
+        ]);
+    }
+    
     /**
      * Display the specified resource.
      */

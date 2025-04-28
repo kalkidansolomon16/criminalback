@@ -1,5 +1,6 @@
 <?php
 
+use App\Settings\Constants;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -103,7 +104,7 @@ return new class extends Migration
             $table->foreignId('crime_id')->references('id')->on('crimes')->onDelete('cascade');
             
             $table->longText('crime_description');
-            $table->integer('status'); // 1 -> accused, 2 -> found guilty
+            $table->integer('status')->default(Constants::ACCUSED); // 1 -> accused, 2 -> found guilty
             $table->timestamps();
 
         });

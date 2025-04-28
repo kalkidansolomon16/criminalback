@@ -19,4 +19,8 @@ class Constants{
 
     public const ተጠርጣሪ = 1;
     public const ፍርደኛ  = 2;
+
+    public const ACCUSED = 1;
+    public const GUILTY = 2;
+
 }
