@@ -43,7 +43,17 @@ class PublicController extends Controller
         }
         return response()->json(['data' => null],404);
     }
-
+    public function getRoleName($roleId)
+    {
+        $roles = [
+            Constants::አስተዳዳሪ => 'አስተዳዳሪ',
+            Constants::ፖሊስ => 'ፖሊስ',
+            Constants::ጥበቃ => 'ጥበቃ',
+            Constants::ሀኪም => 'ሀኪም',
+        ];
+    
+        return $roles[$roleId] ?? 'Unknown Role';
+    }
     public function sexes() {
         
         return response()->json(

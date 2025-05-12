@@ -49,6 +49,10 @@ Route::get('/', function () {
 Route::middleware('auth:sanctum')->get('user', function (Request $request) {
     return $request->user();
 });
+// Route::middleware('auth:sanctum')->get('user', function (Request $request) {
+//     $user = $request->user()->load('role'); // Load the role relationship
+//     return response()->json($user);
+// });
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('sexes',[PublicController::class,'sexes']);
@@ -115,8 +119,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('prision-history',[PrisionHistoryController::class,'index']);
     Route::post('prision-history',[PrisionHistoryController::class,'store']);
     Route::get('prision-history/{id}',[PrisionHistoryController::class,'show']);
-    Route::put('prision-history/{prision-history}',[PrisionHistoryController::class,'update']);
-    Route::delete('prision-history/{prision-history}',[PrisionHistoryController::class,'destroy']);
+    Route::put('prision-history/{id}',[PrisionHistoryController::class,'update']);
+    Route::delete('prision-history/{id}',[PrisionHistoryController::class,'destroy']);
 
 
     Route::get('prisonerCell',[PrisonercellController::class,'index']);

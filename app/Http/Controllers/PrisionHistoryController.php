@@ -59,7 +59,7 @@ class PrisionHistoryController extends Controller
             'date_time_entered' => 'required',
             'end_date_of_arrest' => 'required',
             'date_of_release' => 'required',
-            'release_reason' => 'required',
+            //'release_reason' => 'required',
             'date_of_mercy_release' => 'required',
             'user_id' => 'required'
         ]);
@@ -127,11 +127,11 @@ class PrisionHistoryController extends Controller
         ]); 
     }
     
-    public function update(Request $request, PrisionHistory $prisionHistory) {
+    public function update(Request $request,string $id) {
     
         $request->validate([
             'prisioner_id' =>'required',
-            'photo' => 'required',
+            //'photo' => 'required',
             'prision_cell_id' => 'required',
             'criminal_type_id' => 'required',
             'current_city_id' => 'required',
@@ -151,7 +151,7 @@ class PrisionHistoryController extends Controller
             'date_of_mercy_release' => 'required',
             'user_id' => 'required'
         ]);
-    
+        $prisionHistory = PrisionHistory::findOrFail($id);
         $prisionHistory->prisioner_id = $request->prisioner_id;
        // $prisionHistory->photo = $request->photo;
         $prisionHistory->prision_cell_id = $request->prision_cell_id;
