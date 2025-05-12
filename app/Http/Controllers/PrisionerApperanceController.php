@@ -170,7 +170,8 @@ class PrisionerApperanceController extends Controller
             ]);
         }
         else{
-            $prisionerApperance = new  PrisonerApperance();
+            $prisionerApperance = PrisonerApperance::findOrFail($id);
+    
         
             $prisionerApperance->prision_history_id = request('prision_history_id');
             $prisionerApperance->hair_type_id = request('hair_type_id');
