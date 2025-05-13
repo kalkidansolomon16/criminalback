@@ -44,6 +44,7 @@ class PrisionersController extends Controller
              'updatedVerdictCourt', 
              'user'
          ])->get();
+         
         if($Prisioner){
             return response()->json([
                 'Prisioner' => $Prisioner,
@@ -123,6 +124,7 @@ class PrisionersController extends Controller
         return response()->json([
             'message' => "Prisioner added Successfully",
             'prison_history_id' => $prisonHistory->id,
+            'prisoner' => $Prisioner->id,
         ]);
     }
 
@@ -311,35 +313,52 @@ class PrisionersController extends Controller
         ]);
     }
     
+
+    public function createNewStoryOnExistingPrisoner() {
+
+        $prisoner = request('prisoner_id');
+        $prisonHistory = new PrisionHistory();  
+        $prisonHistory->prisioner_id = $prisoner;
+        $prisonHistory->user_id = Auth::id();
+        $prisonHistory->save();
+        
+        return response()->json([
+            'message' => "Prisioner history added",
+            'prison_history_id' => $prisonHistory->id,
+            'prisoner' => $prisoner,
+        ]);
+    }
+
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function showPrisonerInformation($id)
     {
         $Prisioner = Prisioner::with([
-          
             'birthRegion',
             'birthTown',  
-            'birthCity',  
             'currentRegion', 
             'currentTown',  
             'currentCity',  
-            'educationalLevel',
             'ethnicGroup',
-            'religion',
-            'closestRespondentRegion',
-            'closestRespondentTown',
-            'closestRespondentCity',
-            'crime',
-            'criminalType', 
-            'arrestCourt',  
-            'verdictCourt', 
-            'updatedVerdictCourt', 
-            'user'
+            'user',
+            'prisonHistories.religion',
+            'prisonHistories.educationalLevel',
+            'prisonHistories.currentCity',
+            'prisonHistories.closestRespondentTown',
+            'prisonHistories.prisonerApperance.hair',
+            'prisonHistories.prisonerApperance.eye',
+            'prisonHistories.prisonerApperance.lip',
+            'prisonHistories.prisonerApperance.ear',
+            'prisonHistories.prisonerApperance.nose',
+            'prisonHistories.prisonerApperance.teeth',
+            'prisonHistories.prisioner_crimes.crime',
+            
         ])->find($id);
+
         if($Prisioner){
             return response()->json([
-                'Prisioner' => $Prisioner,
+                'data' => $Prisioner,
                 'message' => 'Success'
             ]);
         }

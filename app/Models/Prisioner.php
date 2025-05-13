@@ -95,4 +95,9 @@ class Prisioner extends Model
     {
         return $this->belongsTo(Court::class, 'updated_verdict_court_id');
     }
+
+    public function prisonHistories() {
+        return $this->hasMany(PrisionHistory::class);
+
+    }
 }
