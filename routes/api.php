@@ -42,6 +42,7 @@ use App\Http\Controllers\prisioners_casheController;
 use App\Http\Controllers\PrisionerPropertyController;
 use App\Http\Controllers\PrisionerApperanceController;
 use App\Http\Controllers\PrisionerCourtStoryController;
+use App\Http\Controllers\PrisonerAttendanceController;
 
 Route::get('/', function () {
     return 'Hello';
@@ -67,6 +68,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('medical',[MedicalHistoryController::class,'store']);
     Route::put('medical/{id}',[MedicalHistoryController::class,'update']);
     Route::delete('medical/{id}',[MedicalHistoryController::class,'destroy']);
+
+    //attendance
+    Route::get('attendance',[PrisonerAttendanceController::class,'index']);
+    Route::post('attendance',[PrisonerAttendanceController::class,'store']);
+    Route::put('attendance/{attendance}',[PrisonerAttendanceController::class,'update']);
+    Route::delete('attendance/{attendance}',[PrisonerAttendanceController::class,'destroy']);
     //user
     // Route::get('user',[UserController::class,'index']);
     //DeasesTypeRoute
@@ -207,7 +214,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 //criminal
 Route::get('criminal', [CriminalController::class, 'index']);
-Route::post('criminal', [CriminalController::class, 'store']); // Change 'post' to 'store'
+Route::post('criminal', [CriminalController::class, 'store']); 
 Route::put('criminal/{id}', [CriminalController::class, 'update']);
 Route::delete('criminal/{id}', [CriminalController::class, 'destroy']);
 //crime

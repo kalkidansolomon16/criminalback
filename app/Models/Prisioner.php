@@ -100,4 +100,9 @@ class Prisioner extends Model
         return $this->hasMany(PrisionHistory::class);
 
     }
+    public function prisonerAttendance(): BelongsTo
+     {
+        return $this->belongsTo(PrisonerAttendace::class, 'prisoner_attendance_id');
+
+    }
 }
