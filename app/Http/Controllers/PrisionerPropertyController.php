@@ -91,10 +91,6 @@ class PrisionerPropertyController extends Controller
         }
         
     }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $prisionerProperty = Prisioner_property::find($id);
