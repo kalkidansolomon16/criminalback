@@ -102,7 +102,7 @@ class Prisioner extends Model
     }
     public function prisonerAttendance(): BelongsTo
      {
-        return $this->belongsTo(PrisonerAttendace::class, 'prisoner_attendance_id');
+        return $this->belongsTo(Prisoner_attendance::class, 'prisoner_attendance_id');
 
     }
 }

@@ -150,46 +150,54 @@ class PrisionerApperanceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validation = Validator::make($request->all(),[
-           'PrisionerApperance_unique_number'=>'required',
-           'prision_unique_number'=>'required',
-            'first_name'=>'required',
-            'middle_name'=>'required',
-            'last_name'=>'required',
-            'date_of_birth'=>'required',
-            'mother_name'=>'required',
-            'sex'=>'required',
-            'birth_district'=>'required',
-            'birth_town_id'=>'required',
-            'ethnic_group_id'=>'required',
+        $validation = Validator::make($request->all(), [
+            'prision_history_id' => 'required',
+            'hair_type_id' => 'required',
+            'height' => 'required',
+            'face' => 'required',
+            'forehead' => 'required',
+            'nose' => 'required',
+            'eye_color' => 'required',
+            'teeth' => 'required',
+            'lip' => 'required',
+            'ear' => 'required',
+            'unique_appearance' => 'required',
+            'citizenship' => 'required',
         ]);
-        if($validation->fails()){
+    
+        if ($validation->fails()) {
             return response()->json([
-                'status'=>422,
-                'message'=>$validation->messages()
+                'status' => 422,
+                'message' => $validation->messages()
             ]);
         }
-        else{
+    
+        try {
             $prisionerApperance = PrisonerApperance::findOrFail($id);
     
-        
-            $prisionerApperance->prision_history_id = request('prision_history_id');
-            $prisionerApperance->hair_type_id = request('hair_type_id');
-            $prisionerApperance->height = request('height');
-            $prisionerApperance->face = request('face');
-            $prisionerApperance->forehead = request('forehead');
-            $prisionerApperance->nose = request('nose');
-
-            $prisionerApperance->eye_color = request('eye_color');
-            $prisionerApperance->teeth = request('teeth');
-
-            $prisionerApperance->lip = request('lip');
-            $prisionerApperance->ear = request('ear');
-            $prisionerApperance->unique_appearance = request('unique_appearance');
-            $prisionerApperance->citizenship = request('citizenship');
-            $prisionerApperance->update();
+            // Update fields
+            $prisionerApperance->prision_history_id = $request->input('prision_history_id');
+            $prisionerApperance->hair_type_id = $request->input('hair_type_id');
+            $prisionerApperance->height = $request->input('height');
+            $prisionerApperance->face = $request->input('face');
+            $prisionerApperance->forehead = $request->input('forehead');
+            $prisionerApperance->nose = $request->input('nose');
+            $prisionerApperance->eye_color = $request->input('eye_color');
+            $prisionerApperance->teeth = $request->input('teeth');
+            $prisionerApperance->lip = $request->input('lip');
+            $prisionerApperance->ear = $request->input('ear');
+            $prisionerApperance->unique_appearance = $request->input('unique_appearance');
+            $prisionerApperance->citizenship = $request->input('citizenship');
+    
+            $prisionerApperance->save(); // Save changes
+    
             return response()->json([
-                'message'=>"PrisioPrisionerApperance updated Successfully"
+                'message' => "Prisoner appearance updated successfully"
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => "An error occurred: " . $e->getMessage()
             ]);
         }
     }
