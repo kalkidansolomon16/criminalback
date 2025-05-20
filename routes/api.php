@@ -254,6 +254,7 @@ Route::post('prisoner/property',[PrisionersController::class,'storeProperties'])
 Route::post('prisoner/crime',[PrisionersController::class,'storeCrimes'])->middleware('auth:sanctum');
 Route::get('prisoner/prisoner-info/{id}',[PrisionersController::class,'showPrisonerInformation'])->middleware('auth:sanctum');
 Route::post('prisoner/new-history',[PrisionersController::class,'createNewStoryOnExistingPrisoner'])->middleware('auth:sanctum');
+Route::get('prisoner-history/{id}',[PrisionHistoryController::class,'show'])->middleware('auth:sanctum');
 Route::get('prisioner/{id}',[PrisionersController::class,'show']);
 Route::put('prisioner/{id}',[PrisionersController::class,'update']);
 Route::delete('prisioner/{id}',[PrisionersController::class,'destroy']);

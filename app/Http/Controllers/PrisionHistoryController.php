@@ -13,7 +13,7 @@ class PrisionHistoryController extends Controller
     public function index() {
     
         $prisionHistory = PrisionHistory::with([
-          
+            'prisoner',
             'birthRegion',
             'birthTown',  
             'birthCity',  
@@ -101,7 +101,7 @@ class PrisionHistoryController extends Controller
     
     public function show(string $id){
         $prisionHistory = PrisionHistory::with([
-          
+            'prisonerApperance',
             'birthRegion',
             'birthTown',  
             'birthCity',  
@@ -114,13 +114,14 @@ class PrisionHistoryController extends Controller
             'closestRespondentRegion',
             'closestRespondentTown',
             'closestRespondentCity',
-            'crime',
-            'criminalType', 
+            // 'crime',
+            // 'criminalType', 
             'arrestCourt',  
             'verdictCourt', 
             'updatedVerdictCourt', 
             'user',
-            'prisonerCell'
+            'prisonerCell',
+            'prisoner',
         ])->find($id);
         return response()->json([
             'data' => $prisionHistory

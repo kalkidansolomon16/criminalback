@@ -92,9 +92,18 @@ class PrisionersController extends Controller
             ], 422);
         }
 
+        $Prisioner = new Prisioner();
+        if(request('prison_history_id')) {
+            $his = PrisionHistory::find(request('prison_history_id'));
+            if($his) {
+                $Prisioner = Prisioner::find($his->prisioner_id);
+            }
+        }
+			
+
+
         try {
             DB::beginTransaction();
-            $Prisioner = new Prisioner();
             $Prisioner->prisioner_unique_number = mt_rand(1, 9999999); // the System can assign a unique number
             $Prisioner->prision_unique_number = mt_rand(1, 9999999);
             
@@ -221,7 +230,7 @@ class PrisionersController extends Controller
             ], 422);
         }
 
-        $prisonAppearance = new PrisonerApperance();
+        $prisonAppearance = PrisonerApperance::where('prision_history_id', $prisonHistory->id)->first() ?? new PrisonerApperance();
         $prisonAppearance->hair_type_id = $request->hair_type_id;
         $prisonAppearance->nose_id = $request->nose_id;
         $prisonAppearance->eye_id = $request->eye_id;
