@@ -122,6 +122,9 @@ class PrisionHistoryController extends Controller
             'user',
             'prisonerCell',
             'prisoner',
+            'prisonerProperties',
+            'prisioner_crimes',
+            
         ])->find($id);
         return response()->json([
             'data' => $prisionHistory

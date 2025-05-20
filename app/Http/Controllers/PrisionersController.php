@@ -273,7 +273,7 @@ class PrisionersController extends Controller
         $properties = $request->properties;
         
         foreach($properties as $property) {
-            $p = new Prisioner_property();
+            $p = Prisioner_property::where('prision_history_id', $request->prison_history_id)->where('type_id', $property['type_id'])->first() ?? new Prisioner_property();
             $p->prision_history_id = $request->prison_history_id;
             $p->type_id = $property['type_id'];
             $p->amount = $property['amount'];
@@ -309,10 +309,10 @@ class PrisionersController extends Controller
         $allCrimes = $request->all_crimes;
         
         foreach($allCrimes as $crime) {
-            $c = new Prisioner_crime();
+            $c = Prisioner_crime::where('prision_history_id', $request->prison_history_id)->where('crime_id', $crime['crime_id'])->first() ?? new Prisioner_crime();
             $c->prision_history_id = $request->prison_history_id;
             $c->crime_id = $crime['crime_id'];
-            $c->crime_description = $crime['description'];
+            $c->crime_description = $crime['crime_description'];
             $c->status = Constants::ACCUSED;
             $c->save();
         }

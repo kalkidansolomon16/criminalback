@@ -124,4 +124,10 @@ class PrisionHistory extends Model
     {
         return $this->hasOne(PrisonerApperance::class);
     }
+
+    public function prisonerProperties()
+    {
+        return $this->hasMany(Prisioner_property::class);
+    }
+
 }
