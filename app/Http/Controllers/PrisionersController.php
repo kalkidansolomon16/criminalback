@@ -43,7 +43,7 @@ class PrisionersController extends Controller
              'verdictCourt', 
              'updatedVerdictCourt', 
              'user'
-         ])->get();
+         ])->paginate(3);
          
         if($Prisioner){
             return response()->json([
