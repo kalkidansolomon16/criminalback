@@ -465,4 +465,63 @@ class PrisionersController extends Controller
             ]);
         }
     }
+    public function filter(Request $request)
+{
+    $query = Prisioner::with([
+        'birthRegion',
+        'birthTown',
+        'birthCity',
+        'currentRegion',
+        'currentTown',
+        'currentCity',
+        'educationalLevel',
+        'ethnicGroup',
+        'religion',
+        'closestRespondentRegion',
+        'closestRespondentTown',
+        'closestRespondentCity',
+        'crime',
+        'criminalType',
+        'arrestCourt',
+        'verdictCourt',
+        'updatedVerdictCourt',
+        'user'
+    ]);
+
+    // Apply filters if parameters are provided
+    if ($request->filled('sex')) {
+        $query->where('sex', $request->sex);
+    }
+
+    if ($request->filled('religion_id')) {
+        $query->where('religion_id', $request->religion_id);
+    }
+
+    if ($request->filled('ethnic_group_id')) {
+        $query->where('ethnic_group_id', $request->ethnic_group_id);
+    }
+
+    if ($request->filled('crime_type_id')) {
+        $query->whereHas('crime', function ($q) use ($request) {
+            $q->where('criminal_type_id', $request->crime_type_id);
+        });
+    }
+
+    if ($request->filled('first_name')) {
+        $query->where('first_name', 'like', '%' . $request->first_name . '%');
+    }
+
+    if ($request->filled('last_name')) {
+        $query->where('last_name', 'like', '%' . $request->last_name . '%');
+    }
+
+    // Paginate results
+    $prisoners = $query->paginate(10);
+
+    return response()->json([
+        'Prisioner' => $prisoners,
+        'message' => 'Filtered Results'
+    ]);
+}
+
 }

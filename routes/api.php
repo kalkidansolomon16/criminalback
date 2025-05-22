@@ -69,6 +69,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('medical/{id}',[MedicalHistoryController::class,'update']);
     Route::delete('medical/{id}',[MedicalHistoryController::class,'destroy']);
 
+    
+  Route::get('/prisoners/filter', [PrisionersController::class, 'filter']);
+
+
     //attendance
     Route::get('attendance',[PrisonerAttendanceController::class,'index']);
     Route::post('attendance',[PrisonerAttendanceController::class,'store']);
