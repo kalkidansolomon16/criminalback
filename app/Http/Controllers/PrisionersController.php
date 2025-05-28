@@ -21,10 +21,9 @@ class PrisionersController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $Prisioner = Prisioner::with([
-          
+        $prisoners = Prisioner::with([
              'birthRegion',
              'birthTown',  
              'birthCity',  
@@ -43,11 +42,46 @@ class PrisionersController extends Controller
              'verdictCourt', 
              'updatedVerdictCourt', 
              'user'
-         ])->paginate(3);
+         ]);
+        
+        if ($request->filled('sex')) {
+            $prisoners->where('sex', $request->sex);
+        }
+
+        if($request->filled('first_name')) {
+            $prisoners = $prisoners->where('first_name', 'LIKE', '%'.request('first_name').'%');
+        }
+
+        if($request->filled('middle_name')) {
+            $prisoners = $prisoners->where('middle_name', 'LIKE', '%'.request('middle_name').'%');
+        }
+
+        if($request->filled('last_name')) {
+            $prisoners = $prisoners->where('last_name', 'LIKE', '%'.request('last_name').'%');
+        }
+
+        if($request->filled('mother_name')) {
+            $prisoners = $prisoners->where('mother_name', 'LIKE', '%'.request('mother_name').'%');
+        }
+        
+
+        if($request->filled('crime_id')) {
+            $prisoners = $prisoners->whereHas('prisonHistories.prisioner_crimes', function($query) {
+                $query->where('crime_id', request('crime_id'));
+            });
+        }
+
+        if($request->filled('religion_id')) {
+            $prisoners = $prisoners->whereHas('prisonHistories.religion', function($query) {
+                $query->where('religion_id', request('religion_id'));
+            });
+        }
+
+        $prisoners = $prisoners->paginate(3);
          
-        if($Prisioner){
+        if($prisoners){
             return response()->json([
-                'Prisioner' => $Prisioner,
+                'Prisioner' => $prisoners,
                 'message' => 'Success'
             ]);
             
@@ -465,63 +499,5 @@ class PrisionersController extends Controller
             ]);
         }
     }
-    public function filter(Request $request)
-{
-    $query = Prisioner::with([
-        'birthRegion',
-        'birthTown',
-        'birthCity',
-        'currentRegion',
-        'currentTown',
-        'currentCity',
-        'educationalLevel',
-        'ethnicGroup',
-        'religion',
-        'closestRespondentRegion',
-        'closestRespondentTown',
-        'closestRespondentCity',
-        'crime',
-        'criminalType',
-        'arrestCourt',
-        'verdictCourt',
-        'updatedVerdictCourt',
-        'user'
-    ]);
-
-    // Apply filters if parameters are provided
-    if ($request->filled('sex')) {
-        $query->where('sex', $request->sex);
-    }
-
-    if ($request->filled('religion_id')) {
-        $query->where('religion_id', $request->religion_id);
-    }
-
-    if ($request->filled('ethnic_group_id')) {
-        $query->where('ethnic_group_id', $request->ethnic_group_id);
-    }
-
-    if ($request->filled('crime_type_id')) {
-        $query->whereHas('crime', function ($q) use ($request) {
-            $q->where('criminal_type_id', $request->crime_type_id);
-        });
-    }
-
-    if ($request->filled('first_name')) {
-        $query->where('first_name', 'like', '%' . $request->first_name . '%');
-    }
-
-    if ($request->filled('last_name')) {
-        $query->where('last_name', 'like', '%' . $request->last_name . '%');
-    }
-
-    // Paginate results
-    $prisoners = $query->paginate(10);
-
-    return response()->json([
-        'Prisioner' => $prisoners,
-        'message' => 'Filtered Results'
-    ]);
-}
 
 }
