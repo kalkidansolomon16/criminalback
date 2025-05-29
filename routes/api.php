@@ -56,6 +56,7 @@ Route::middleware('auth:sanctum')->get('user', function (Request $request) {
 // });
 
 Route::middleware(['auth:sanctum'])->group(function () {
+       Route::get('users',[UserController::class,'index']);
     Route::get('sexes',[PublicController::class,'sexes']);
     Route::get('roles',[PublicController::class,'roles']);
     Route::get('cash-type',[PublicController::class,'cashTypes']);
