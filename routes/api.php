@@ -250,6 +250,7 @@ Route::post('login',[AuthController::class,'login']);
 Route::get('prisoner',[PrisionersController::class,'index'])->middleware('auth:sanctum');
 Route::post('prisoner/basic-information',[PrisionersController::class,'storeBasicInformation'])->middleware('auth:sanctum');
 Route::post('prisoner/apperance',[PrisionersController::class,'storeApperance'])->middleware('auth:sanctum');
+Route::post('prisoner/medical-history',[PrisionersController::class,'storeMedicalHistory'])->middleware('auth:sanctum');
 Route::post('prisoner/personal-info',[PrisionersController::class,'storePersonalInfo'])->middleware('auth:sanctum');
 Route::post('prisoner/property',[PrisionersController::class,'storeProperties'])->middleware('auth:sanctum');
 Route::post('prisoner/crime',[PrisionersController::class,'storeCrimes'])->middleware('auth:sanctum');

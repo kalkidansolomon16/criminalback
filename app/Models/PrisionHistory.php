@@ -112,9 +112,11 @@ class PrisionHistory extends Model
     {
         return $this->belongsTo(Court::class, 'prision_cell_id');
     }
-    // public function medicalHistory() {
-    //     return $this->hasMany(medicalHistory::class);
-    // }
+
+    public function medicalHistories() {
+        return $this->hasMany(MedicalHistory::class);
+    }
+
     public function prisoner()
     {
         return $this->belongsTo(Prisioner::class, 'prisioner_id');

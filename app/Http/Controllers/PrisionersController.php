@@ -6,6 +6,7 @@ use App\Models\Prisioner;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\MedicalHistory;
 use App\Models\Prisioner_crime;
 use App\Models\Prisioner_property;
 use App\Models\PrisonerApperance;
@@ -285,6 +286,46 @@ class PrisionersController extends Controller
         ]);
     }
 
+    public function storeMedicalHistory(Request $request) {
+        $validation = Validator::make($request->all(),[
+            'prison_history_id' => 'required',
+            'disease_type_id' => 'required',
+            'hospital_name' => 'required',
+            'doctor_name' => 'required',
+            'date' => 'required',
+            'doctor_address' => 'required',
+            'medical_expense' => 'required',
+        ]);
+
+        if($validation->fails()){
+            return response()->json([
+                'message' => $validation->messages()->first()
+            ], 422);
+        }
+
+        $prisonHistory = PrisionHistory::find($request->prison_history_id);
+        if(!$prisonHistory) {
+            return response()->json([
+                'message' => 'Prison History not found!',
+            ], 422);
+        }
+
+        $medicalHistory = new MedicalHistory();
+        $medicalHistory->disease_type_id = $request->disease_type_id;
+        $medicalHistory->hospital_name = $request->hospital_name;
+        $medicalHistory->doctor_name = $request->doctor_name;
+        $medicalHistory->date = $request->date;
+        $medicalHistory->doctor_address = $request->doctor_address;
+        $medicalHistory->medical_expense = $request->medical_expense;
+        $medicalHistory->prision_history_id = $request->prison_history_id;
+        $medicalHistory->user_id = Auth::id();
+        $medicalHistory->save();
+
+        return response()->json([
+            'message' => "Prisioner medical history Added Successfully",
+        ]);
+    }
+
     public function storeProperties(Request $request) {
         $validation = Validator::make($request->all(),[
             'prison_history_id' => 'required',
@@ -396,6 +437,7 @@ class PrisionersController extends Controller
             'prisonHistories.prisonerApperance.nose',
             'prisonHistories.prisonerApperance.teeth',
             'prisonHistories.prisioner_crimes.crime',
+            'prisonHistories.medicalHistories.diseaseType',
             
         ])->find($id);
 
