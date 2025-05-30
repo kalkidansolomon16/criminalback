@@ -16,7 +16,7 @@ class MedicalHistoryController extends Controller
      */
     public function index()
     {
-        $medicalHistory = MedicalHistory::with(['prisonerHistory.prisoner','diseaseType'])->get();
+        $medicalHistory = MedicalHistory::with(['prisonerHistory.prisoner','diseaseType'])->paginate(10);
     
         if ($medicalHistory->isNotEmpty()) {
             return response()->json([
