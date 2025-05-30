@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             TypeSeeder::class,
             ReligionSeeder::class,
             EducationalLevelsSeeder::class,
+            PrisonerSeeder::class,
         ]);
     }
 }

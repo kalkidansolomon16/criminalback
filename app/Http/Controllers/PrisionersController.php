@@ -78,7 +78,7 @@ class PrisionersController extends Controller
             });
         }
 
-        $prisoners = $prisoners->paginate(3);
+        $prisoners = $prisoners->paginate(10);
          
         if($prisoners){
             return response()->json([
