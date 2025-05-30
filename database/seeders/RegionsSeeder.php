@@ -19,11 +19,8 @@ class RegionsSeeder extends Seeder
     public function run():void
    {
 
-            // you can start from this
-            // internetun lela mitekem sew ale ende?mebrat tefto data new eshi.
-
         $user = new User();
-        $user->full_name = 'kal';
+        $user->full_name = 'Kalkidan Solomon';
         $user->sex = Constants::ሴት;
         $user->age = 33;
         $user->password = Hash::make('123456789');
@@ -34,6 +31,45 @@ class RegionsSeeder extends Seeder
         $user->photo = '';
         $user->signature = '';
         $user->save();
+
+        $doc = new User();
+        $doc->full_name = 'Tigist Girma';
+        $doc->sex = Constants::ሴት;
+        $doc->age = 23;
+        $doc->password = Hash::make('123456789');
+        $doc->user_name = 'tg';
+        $doc->address = '';
+        $doc->phone_number = '0987654322';
+        $doc->role = Constants::ሀኪም;
+        $doc->photo = '';
+        $doc->signature = '';
+        $doc->save();
+
+        $police = new User();
+        $police->full_name = 'Seble Wongel';
+        $police->sex = Constants::ሴት;
+        $police->age = 24;
+        $police->password = Hash::make('123456789');
+        $police->user_name = 'seble';
+        $police->address = '';
+        $police->phone_number = '0987654324';
+        $police->role = Constants::ፖሊስ;
+        $police->photo = '';
+        $police->signature = '';
+        $police->save();
+
+        $guard = new User();
+        $guard->full_name = 'Tamrat Abebe';
+        $guard->sex = Constants::ወንድ;
+        $guard->age = 24;
+        $guard->password = Hash::make('123456789');
+        $guard->user_name = 'girma';
+        $guard->address = '';
+        $guard->phone_number = '0987654323';
+        $guard->role = Constants::ጥበቃ;
+        $guard->photo = '';
+        $guard->signature = '';
+        $guard->save();
 
         $regions = 
             [
