@@ -252,6 +252,7 @@ Route::post('prisoner/basic-information',[PrisionersController::class,'storeBasi
 Route::post('prisoner/apperance',[PrisionersController::class,'storeApperance'])->middleware('auth:sanctum');
 Route::post('prisoner/medical-history',[PrisionersController::class,'storeMedicalHistory'])->middleware('auth:sanctum');
 Route::post('prisoner/court-history',[PrisionersController::class,'storeCourtHistory'])->middleware('auth:sanctum');
+Route::post('prisoner/cash-history',[PrisionersController::class,'storeCashHistory'])->middleware('auth:sanctum');
 Route::post('prisoner/personal-info',[PrisionersController::class,'storePersonalInfo'])->middleware('auth:sanctum');
 Route::post('prisoner/property',[PrisionersController::class,'storeProperties'])->middleware('auth:sanctum');
 Route::post('prisoner/crime',[PrisionersController::class,'storeCrimes'])->middleware('auth:sanctum');

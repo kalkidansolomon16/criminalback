@@ -10,6 +10,7 @@ use App\Models\MedicalHistory;
 use App\Models\Prisioner_court_story;
 use App\Models\Prisioner_crime;
 use App\Models\Prisioner_property;
+use App\Models\Prisioners_cashe;
 use App\Models\PrisonerApperance;
 use App\Models\PrisionHistory;
 use App\Settings\Constants;
@@ -327,6 +328,49 @@ class PrisionersController extends Controller
         ]);
     }
 
+    public function storeCashHistory(Request $request) {
+        $validation = Validator::make($request->all(),[
+            'prison_history_id' => 'required',
+            'amount' => 'required|integer|min:0|max:100000',
+            'type' => 'required',
+        ]);
+
+        if($validation->fails()){
+            return response()->json([
+                'message' => $validation->messages()->first()
+            ], 422);
+        }
+
+        $prisonHistory = PrisionHistory::find($request->prison_history_id);
+        if(!$prisonHistory) {
+            return response()->json([
+                'message' => 'Prison History not found!',
+            ], 422);
+        }
+
+        $total = 0;
+        $deposit = Prisioners_cashe::where('prision_history_id', $request->prison_history_id)->where('type', Constants::ገቢ)->sum('amount');
+        $withdraw = Prisioners_cashe::where('prision_history_id', $request->prison_history_id)->where('type', Constants::ወጪ)->sum('amount');
+
+        if($request->type == Constants::ወጪ) {
+            if(($deposit - $withdraw - $request->amount) < 0) {
+                return response()->json([
+                    'message' => 'Not Enough Balance',
+                ], 422);
+            }
+        }
+
+        $prisonerCash = new Prisioners_cashe();
+        $prisonerCash->type = $request->type;
+        $prisonerCash->date = now();
+        $prisonerCash->amount = $request->amount;
+        $prisonerCash->prision_history_id = $request->prison_history_id;
+        $prisonerCash->save();
+
+        return response()->json([
+            'message' => "Prisioner Cash Stored Successfully",
+        ]);
+    }
 
     public function storeCourtHistory(Request $request) {
         $validation = Validator::make($request->all(),[
@@ -484,6 +528,7 @@ class PrisionersController extends Controller
             'prisonHistories.medicalHistories.diseaseType',
             'prisonHistories.prisonerCourtHistories.court',
             'prisonHistories.prisonerCourtHistories.updatedCourt',
+            'prisonHistories.prisonerCashes',
             
         ])->find($id);
 

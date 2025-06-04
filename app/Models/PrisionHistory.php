@@ -136,4 +136,9 @@ class PrisionHistory extends Model
     {
         return $this->hasMany(Prisioner_court_story::class);
     }
+    
+    public function prisonerCashes()
+    {
+        return $this->hasMany(Prisioners_cashe::class);
+    }
 }

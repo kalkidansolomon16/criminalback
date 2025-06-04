@@ -133,6 +133,7 @@ return new class extends Migration
         Schema::dropIfExists('prision_cells');
         Schema::dropIfExists('prisoner_apperances');
         Schema::dropIfExists('prision_histories');
+        Schema::dropIfExists('prisioners_cashes');
         Schema::dropIfExists('prisioner_crimes');
         Schema::dropIfExists('prisioner_court_stories');
         Schema::dropIfExists('prisioners');
