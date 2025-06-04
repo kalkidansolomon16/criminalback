@@ -7,6 +7,7 @@ use App\Models\Prisioner;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\MedicalHistory;
+use App\Models\Prisioner_court_story;
 use App\Models\Prisioner_crime;
 use App\Models\Prisioner_property;
 use App\Models\PrisonerApperance;
@@ -326,6 +327,49 @@ class PrisionersController extends Controller
         ]);
     }
 
+
+    public function storeCourtHistory(Request $request) {
+        $validation = Validator::make($request->all(),[
+            'prison_history_id' => 'required',
+            'court_id'=>'required',
+            'updated_verdict_court'=>'required',
+            'appointment_date'=>'required',
+            'verdict_description'=>'required',
+            'status'=>'required',
+            'criminal_status'=>'required',
+        ]);
+
+        if($validation->fails()){
+            return response()->json([
+                'message' => $validation->messages()->first()
+            ], 422);
+        }
+
+        $prisonHistory = PrisionHistory::find($request->prison_history_id);
+        if(!$prisonHistory) {
+            return response()->json([
+                'message' => 'Prison History not found!',
+            ], 422);
+        }
+
+        $courtHistory = new Prisioner_court_story();
+        $courtHistory->prision_history_id = request('prison_history_id');
+        $courtHistory->court_id = request('court_id');
+        $courtHistory->updated_verdict_court = request('updated_verdict_court');
+        $courtHistory->appointment_date = request('appointment_date');
+        $courtHistory->verdict_date = request('verdict_date');
+        $courtHistory->verdict_description = request('verdict_description');
+        $courtHistory->updated_verdict = request('updated_verdict');
+        $courtHistory->status = request('status');
+        $courtHistory->criminal_status = request('criminal_status');
+        $courtHistory->save();
+
+        return response()->json([
+            'message' => "Prisioner court history Added Successfully",
+        ]);
+    }
+
+
     public function storeProperties(Request $request) {
         $validation = Validator::make($request->all(),[
             'prison_history_id' => 'required',
@@ -438,6 +482,8 @@ class PrisionersController extends Controller
             'prisonHistories.prisonerApperance.teeth',
             'prisonHistories.prisioner_crimes.crime',
             'prisonHistories.medicalHistories.diseaseType',
+            'prisonHistories.prisonerCourtHistories.court',
+            'prisonHistories.prisonerCourtHistories.updatedCourt',
             
         ])->find($id);
 

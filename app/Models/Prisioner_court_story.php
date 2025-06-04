@@ -11,6 +11,7 @@ class Prisioner_court_story extends Model
         return $this->belongsTo(Court::class, 'court_id');
     }
     public function updatedCourt(){
-        return $this->belongsTo(Court::class, 'update_court_id');
+        return $this->belongsTo(Court::class, 'updated_verdict_court');
     }
+
 }
