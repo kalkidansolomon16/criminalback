@@ -33,6 +33,7 @@ use App\Http\Controllers\CaseHistoryController;
 use App\Http\Controllers\DiseaseTypeController;
 use App\Http\Controllers\EthnicGroupController;
 use App\Http\Controllers\CriminalTypeController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PrisonercellController;
 use App\Http\Controllers\MedicalHistoryController;
 use App\Http\Controllers\PrisionHistoryController;
@@ -56,7 +57,8 @@ Route::middleware('auth:sanctum')->get('user', function (Request $request) {
 // });
 
 Route::middleware(['auth:sanctum'])->group(function () {
-       Route::get('users',[UserController::class,'index']);
+    Route::get('dashboard',[DashboardController::class,'index']);
+    Route::get('users',[UserController::class,'index']);
     Route::get('sexes',[PublicController::class,'sexes']);
     Route::get('roles',[PublicController::class,'roles']);
     Route::get('cash-type',[PublicController::class,'cashTypes']);
