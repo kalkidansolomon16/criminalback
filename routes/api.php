@@ -119,7 +119,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('Prisioner_crime/{Prisioner_crime}',[Prisioner_crimeController::class,'destroy']);
 
 
-    Route::get('Prisioners_cashe',[prisioners_casheController::class,'index']);
+    Route::get('prisoner-cash',[prisioners_casheController::class,'index']);
+    Route::get('prisoner-cash-total',[prisioners_casheController::class,'total']);
     Route::post('Prisioners_cashe',[prisioners_casheController::class,'store']);
     Route::get('Prisioners_cashe/{Prisioners_cashe}',[prisioners_casheController::class,'show']);
     Route::put('Prisioners_cashe/{Prisioners_cashe}',[prisioners_casheController::class,'update']);
