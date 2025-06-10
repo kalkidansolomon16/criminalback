@@ -42,7 +42,7 @@ class prisioners_casheController extends Controller {
 
             return [
                 'prisoner_id' => $prisoner->id,
-                'name' => $prisoner->first_name,
+                'name' => $prisoner->first_name . ' ' . $prisoner->middle_name . ' ' . $prisoner->last_name,
                 'total_deposit' => $deposits,
                 'total_withdrawal' => $withdrawals,
                 'balance' => $deposits - $withdrawals,
