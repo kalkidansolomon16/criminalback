@@ -16,6 +16,7 @@ use App\Models\Nose;
 use App\Models\Prisioner;
 use App\Models\Prisioner_crime;
 use App\Models\Prisioner_property;
+use App\Models\Prisioners_cashe;
 use App\Models\PrisionHistory;
 use App\Models\PrisonerApperance;
 use App\Models\Religion;
@@ -57,7 +58,7 @@ class PrisonerSeeder extends Seeder
 
         try {
             // DB::beginTransaction();
-            for ($i = 0; $i < 10; $i++) {
+            for ($i = 0; $i < 115; $i++) {
                 
                 $p = new Prisioner();
                 
@@ -92,7 +93,7 @@ class PrisonerSeeder extends Seeder
                     $his->job = $this->randomJob();
                     $his->current_city_id = $cities->random();
                     $his->educational_level_id = $educationalLevel->random();
-                    $his->date_time_entered = now()->subDays(collect([10, 4, 3, 7, 8, 12, 8, 1, 0])->random());
+                    $his->date_time_entered = now()->subMonth(collect([10, 4, 3, 7, 8, 12, 8, 1, 0])->random());
                     $his->save();
                     
                     
@@ -135,6 +136,15 @@ class PrisonerSeeder extends Seeder
                         $property->save();
                     }
                     
+                    for ($j = 0; $j < 3; $j++) {
+                        $prisonerCash = new Prisioners_cashe();
+                        $prisonerCash->type = collect([Constants::ገቢ, Constants::ወጪ])->random();
+                        $prisonerCash->date = now()->subDays(collect([10, 4, 3, 7, 8, 12, 8, 1, 0])->random());
+                        $prisonerCash->amount = $prisonerCash->type == Constants::ገቢ ? mt_rand(5000, 9999) : mt_rand(50, 1000);
+                        $prisonerCash->prision_history_id = $his->id;
+                        $prisonerCash->save();
+                    }
+
                     for ($j = 0; $j < 2; $j++) {
                         $c = $crimes->random();
                         $crime = Prisioner_crime::where('prision_history_id', $his->id)->where('crime_id', $c)->first() ?? new Prisioner_crime();

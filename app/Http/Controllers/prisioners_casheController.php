@@ -24,7 +24,7 @@ class prisioners_casheController extends Controller {
 
     public function total() {
 
-        $prisoners = Prisioner::with('prisonHistories.prisonerCashes')->paginate(10);
+        $prisoners = Prisioner::with('prisonHistories.prisonerCashes')->paginate(15);
 
         $summary = $prisoners->map(function ($prisoner) {
             $deposits = 0;
