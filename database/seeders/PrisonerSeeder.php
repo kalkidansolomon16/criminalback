@@ -164,8 +164,8 @@ class PrisonerSeeder extends Seeder
 
     public function randomName($gender = 'male')
     {
-        $maleNames = collect(['natnael', 'kidus', 'mengistu', 'abebe']);
-        $femaleNames = collect(['tigist', 'kalkidan', 'seble',]);
+        $maleNames = collect(['natnael', 'kidus', 'mengistu', 'abebe','kirubel', 'girma', 'tesfaye', 'tadesse', 'alemayehu', 'biruk', 'yared', 'yohannes', 'mulugeta', 'tsegaye', 'seifu', 'kebede']);
+        $femaleNames = collect(['tiegist', 'kalkidan', 'seble', 'meron', 'saba', 'hanna', 'martha', 'genet', 'saron', 'selam', 'hana']);
         return $gender == 'male' ? $maleNames->random() : $femaleNames->random();
     }
 
