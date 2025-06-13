@@ -121,7 +121,12 @@ class PrisionersController extends Controller
             'birth_town_id' => 'required',
             'ethnic_group_id' => 'required',
             
-        ]);
+        ],
+        [
+            'first_name.required' => 'YEMEJERMIYA SIM YASGEBU',
+            'ethnic_group_id.required' => 'BIHER YIMRETU',
+        ]
+        );
 
         if($validation->fails()){
             return response()->json([
