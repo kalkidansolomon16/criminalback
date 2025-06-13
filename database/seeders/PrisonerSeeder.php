@@ -18,6 +18,7 @@ use App\Models\Prisioner_crime;
 use App\Models\Prisioner_property;
 use App\Models\Prisioners_cashe;
 use App\Models\PrisionHistory;
+use App\Models\Prisoner_attendance;
 use App\Models\PrisonerApperance;
 use App\Models\Religion;
 use App\Models\Teeth;
@@ -76,6 +77,26 @@ class PrisonerSeeder extends Seeder
                 $p->ethnic_group_id = $ethnicGroups->random();
 
                 $p->save();
+
+                $days = collect([1,2, 3, 4, 5, 6, 7,8]);
+
+                foreach($days as $day) {
+
+                    Prisoner_attendance::create([
+                        'date' => today()->subDay($day),
+                        'time' => Constants::MORNING,
+                        'status' => in_array($days->random(), [2, 6]) ? Constants::ABSENT : Constants::PRESENT,
+                        'prisioner_id' => $p->id,
+                    ]);
+
+                    Prisoner_attendance::create([
+                        'date' => today()->subDay($day),
+                        'time' => Constants::NIGHT,
+                        'status' => in_array($days->random(), [2, 6]) ? Constants::ABSENT : Constants::PRESENT,
+                        'prisioner_id' => $p->id,
+                    ]);
+                }
+                
 
                 for ($k=0; $k < 2; $k++) { 
                 
