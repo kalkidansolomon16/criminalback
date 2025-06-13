@@ -3,6 +3,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Prisioner extends Model
 {
@@ -101,8 +102,8 @@ class Prisioner extends Model
 
     }
     public function prisonerAttendances(): HasMany
-     {
-        return $this->hasMany(Prisoner_attendance::class, 'prisoner_id');
+    {
+        return $this->hasMany(Prisoner_attendance::class, 'prisioner_id');
 
     }
 }

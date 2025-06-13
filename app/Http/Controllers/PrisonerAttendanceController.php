@@ -7,14 +7,22 @@ use App\Models\Prisoner_attendance;
 use App\Http\Controllers\Controller;
 use App\Models\Prisioner;
 use App\Settings\Constants;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class PrisonerAttendanceController extends Controller
 {
 
     public function index() {
+        $date = Carbon::parse(request('date')) ?? today();
+        $time = request('time') ?? Constants::MORNING;
 
-        $attendances = Prisoner_attendance::all();
+        $attendances = Prisioner::query()
+            ->with(['prisonerAttendances' => function($query) use($date, $time) {
+                $query->whereDate('date', $date)->where('status', $time);
+            }])
+            ->paginate(10);
+
 
         return response()->json([
             'data' => $attendances
