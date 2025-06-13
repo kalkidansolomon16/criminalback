@@ -58,6 +58,7 @@ Route::middleware('auth:sanctum')->get('user', function (Request $request) {
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('dashboard',[DashboardController::class,'index']);
+    Route::get('single-user',[UserController::class,'singleUser']);
     Route::get('users',[UserController::class,'index']);
     Route::get('sexes',[PublicController::class,'sexes']);
     Route::get('roles',[PublicController::class,'roles']);

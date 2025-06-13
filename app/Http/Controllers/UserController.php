@@ -20,6 +20,14 @@ class UserController extends Controller
         ]);
     }
 
+    public function singleUser()
+    {
+        $user = User::find(request('user_id'));
+        return response()->json([
+            'user' => $user,
+            'message' => 'Success'
+        ]);
+    }
 
     public function store(Request $request)
     {
@@ -27,7 +35,7 @@ class UserController extends Controller
             'full_name' => 'required|max:255',
             'sex' => 'required',
             'age' => 'required',
-            'password' => 'required|min:8',
+            // 'password' => 'required|min:8',
             'user_name' => 'required',
             'address' => 'required',
             'phone_number' => 'required',
@@ -49,42 +57,47 @@ class UserController extends Controller
         'photo.sometimes' => 'ፎቶ ይምረጡ',
         'signature.sometimes' => 'ፊርማ ይምረጡ',
     ]);
+
         if($validation->fails()){
             return response()->json([
-                'status'=>422,
-                'message'=>$validation->messages()
-            ]);
+                'message' => $validation->messages()->first()
+            ], 422);
         }
-        else{
-            $user = new User();
-            $user->full_name = request('full_name');
-            $user->sex = request('sex');
-            $user->age = request('age');
-            $user->password = (Hash::make(request('password')));
-            $user->user_name = request('user_name');
-            $user->address = request('address');
-            $user->phone_number = request('phone_number');
-            $user->role = request('role');
-            if ($request->hasFile('photo')) {
-                $photo = $request->file('photo');
-                $photoName = 'ka_l' . time() . '_' . $photo->getClientOriginalName();
-                $photo->move(public_path('img'), $photoName);
-                $user->photo = 'img/' . $photoName;
-            }
-            if ($request->hasFile('signature')) {
-                $photo = $request->file('signature');
-                $photoName = 'ka_l' . time() . '_' . $photo->getClientOriginalName();
-                $photo->move(public_path('img'), $photoName);
-                $user->signature = 'img/' . $photoName;
-            }
+        $user = new User();
 
-            
-            $user->save();
-            return response()->json([
-                'users'=>$user,
-                'message'=>"user Successfully"
-            ]);
-    }
+        if(request('user_id')) {
+            $user = User::find(request('user_id'));
+        }
+
+        if(!request('password')) $user->password = Hash::make('12345678');
+        $user->full_name = request('full_name');
+        $user->sex = request('sex');
+        $user->age = request('age');
+        $user->password = (Hash::make(request('password')));
+        $user->user_name = request('user_name');
+        $user->address = request('address');
+        $user->phone_number = request('phone_number');
+        $user->role = request('role');
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo');
+            $photoName = 'ka_l' . time() . '_' . $photo->getClientOriginalName();
+            $photo->move(public_path('img'), $photoName);
+            $user->photo = 'img/' . $photoName;
+        }
+        if ($request->hasFile('signature')) {
+            $photo = $request->file('signature');
+            $photoName = 'ka_l' . time() . '_' . $photo->getClientOriginalName();
+            $photo->move(public_path('img'), $photoName);
+            $user->signature = 'img/' . $photoName;
+        }
+
+        
+        $user->save();
+        return response()->json([
+            'users'=>$user,
+            'message'=>"user Successfully"
+        ]);
+
     }
     public function show(string $id)
     {
