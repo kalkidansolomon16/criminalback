@@ -16,30 +16,31 @@ class CrimeSeeder extends Seeder
         // Optional: Clear the table before seeding
         // DB::table('crimes')->truncate();
         
-        $crimes = [
-            ['name' => 'Arson'],
-            ['name' => 'Assault'],
-            ['name' => 'Bribery'],
-            ['name' => 'Burglary'],
-            ['name' => 'Child Abuse'],
-            ['name' => 'Cybercrime'],
-            ['name' => 'Domestic Violence'],
-            ['name' => 'Drug Offenses'],
-            ['name' => 'Embezzlement'],
-            ['name' => 'Fraud'],
-            ['name' => 'Homicide'],
-            ['name' => 'Human Trafficking'],
-            ['name' => 'Kidnapping'],
-            ['name' => 'Money Laundering'],
-            ['name' => 'Murder'],
-            ['name' => 'Rape'],
-            ['name' => 'Robbery'],
-            ['name' => 'Sexual Assault'],
-            ['name' => 'Theft'],
-            ['name' => 'Vandalism'],
-            ['name' => 'Violent Crimes'],
-            ['name' => 'White Collar Crimes'],
-        ];
+$crimes = [
+    ['name' => 'እሳት ማቃጠል'],         // Arson
+    ['name' => 'መደበደብ'],           // Assault
+    ['name' => 'ስኬት መግዛት'],        // Bribery
+    ['name' => 'ሌብነት በመስኮት'],      // Burglary
+    ['name' => 'የሕፃናት ተጨማሪ ተግፎ'], // Child Abuse
+    ['name' => 'የድህረገፅ ወንጀል'],     // Cybercrime
+    ['name' => 'የቤተሰብ ጥቃት'],      // Domestic Violence
+    ['name' => 'የአሻችሽ ወንጀሎች'],     // Drug Offenses
+    ['name' => 'ማበዛበዝ'],          // Embezzlement
+    ['name' => 'ተታማኝነት ማሳበት'],     // Fraud
+    ['name' => 'ማግደል'],            // Homicide
+    ['name' => 'የሰው ንግድ'],        // Human Trafficking
+    ['name' => 'መፈናቀል'],          // Kidnapping
+    ['name' => 'የገንዘብ ማጠራቀሚያ'],   // Money Laundering
+    ['name' => 'ግድያ'],             // Murder
+    ['name' => 'በግፍ አሳደድ'],       // Rape
+    ['name' => 'መስረቅ'],            // Robbery
+    ['name' => 'የጾታ ጥቃት'],        // Sexual Assault
+    ['name' => 'ስርቆት'],            // Theft
+    ['name' => 'የንብረት ፈናቃቂ'],     // Vandalism
+    ['name' => 'የኃይል ወንጀሎች'],     // Violent Crimes
+    ['name' => 'የቢሮ ወንጀሎች'],      // White Collar Crimes
+];
+
 
         DB::table('crimes')->insert($crimes);
     }
