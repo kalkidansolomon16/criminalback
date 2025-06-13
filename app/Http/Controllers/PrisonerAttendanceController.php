@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Prisoner_attendance;
 use App\Http\Controllers\Controller;
+use App\Models\Prisioner;
+use App\Settings\Constants;
 use Illuminate\Support\Facades\Validator;
 
 class PrisonerAttendanceController extends Controller
@@ -18,14 +20,31 @@ class PrisonerAttendanceController extends Controller
             'data' => $attendances
         ]);
     }
-public function store(Request $request) {
-    foreach ($request->all() as $record) {
-        $validation = Validator::make($record, [
-            'date' => 'required',
-            'status' => 'required',
-            'time' => 'required',
-            'prisioner_id' => 'required',
+
+    public function prisonersForAttendance() {
+
+        $date = today();
+        $time = request('time') ?? Constants::MORNING;
+
+        $present = Prisoner_attendance::whereDate('date', $date)->where('time', $time)->where('status', Constants::PRESENT)->select('prisioner_id')->get()->pluck('prisioner_id');
+        $absent = Prisoner_attendance::whereDate('date', $date)->where('time', $time)->where('status', Constants::ABSENT)->select('prisioner_id')->get()->pluck('prisioner_id');
+
+        return response()->json([
+            'data' => [
+                'present' => $present,
+                'absent' => $absent,
+                'today' => today()->format('d-m-Y'),
+            ]
         ]);
+    }
+    
+    
+    public function store(Request $request) {
+        $validation = Validator::make($request->all(), [
+            'time' => 'required',
+        ]);
+
+        request('date', today());
 
         if ($validation->fails()) {
             return response()->json([
@@ -33,18 +52,28 @@ public function store(Request $request) {
             ], 422);
         }
 
-        Prisoner_attendance::create([
-            'date' => $record['date'],
-            'status' => $record['status'],
-            'time' => $record['time'],
-            'prisioner_id' => $record['prisioner_id'],
-        ]);
-    }
+        foreach (request('present') ?? [] as $present) {
+            Prisoner_attendance::create([
+                'date' => today(),
+                'status' => Constants::PRESENT,
+                'time' => $request['time'],
+                'prisioner_id' => $present,
+            ]);
+        }
 
-    return response()->json([
-        'message' => 'Attendance successfully created for all records.',
-    ], 201);
-}
+        foreach (request('absent') ?? [] as $absent) {
+            Prisoner_attendance::create([
+                'date' => today(),
+                'status' => Constants::ABSENT,
+                'time' => $request['time'],
+                'prisioner_id' => $absent,
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Attendance successfully created for all records.',
+        ], 201);
+    }
 
     public function show(Prisoner_attendance $attendance) {
         

@@ -74,6 +74,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //attendance
     Route::get('attendance',[PrisonerAttendanceController::class,'index']);
+    Route::get('get-attendance',[PrisonerAttendanceController::class,'prisonersForAttendance']);
     Route::post('attendance',[PrisonerAttendanceController::class,'store']);
     Route::put('attendance/{attendance}',[PrisonerAttendanceController::class,'update']);
     Route::delete('attendance/{attendance}',[PrisonerAttendanceController::class,'destroy']);

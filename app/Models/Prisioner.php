@@ -100,9 +100,9 @@ class Prisioner extends Model
         return $this->hasMany(PrisionHistory::class);
 
     }
-    public function prisonerAttendance(): BelongsTo
+    public function prisonerAttendances(): HasMany
      {
-        return $this->belongsTo(Prisoner_attendance::class, 'prisoner_attendance_id');
+        return $this->hasMany(Prisoner_attendance::class, 'prisoner_id');
 
     }
 }
