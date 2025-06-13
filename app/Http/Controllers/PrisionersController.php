@@ -125,6 +125,13 @@ class PrisionersController extends Controller
         [
             'first_name.required' => 'የመጀመሪያ ስም ያስገቡ',
             'ethnic_group_id.required' => 'ብሔር ይምረጡ',
+            'middle_name.required' => 'የአባት ስም ያስገቡ',
+            'last_name.required' => 'የአያት ስም ያስገቡ',
+            'date_of_birth.required' => 'የልደት ቀን ያስገቡ',
+            'mother_name.required' => 'የእናት ስም ያስገቡ',
+            'sex.required' => 'ፆታ ይምረጡ',
+            'birth_district.required' => 'የተወለዱበትን ክልል ያስገቡ',
+            'birth_town_id.required' => 'የተወለዱበትን ከተማ ይምረጡ',
         ]
         );
 
@@ -194,7 +201,21 @@ class PrisionersController extends Controller
 			'educational_level_id' => 'required',
 			'date_time_entered' => 'required',
             
-        ]);
+        ],
+    [
+        'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
+        'phone_number.required' => 'የስልክ ቁጥር ያስገቡ',
+        'closest_respondent.required' => 'የቅርብ ተጠሪ ስም ያስገቡ',
+        'closest_respondent_district.required' => 'የቅርብ ተጠሪ ክልል ያስገቡ',
+        'religion_id.required' => 'ሃይማኖት ይምረጡ',
+        'mobile_number.required' => 'የሞባይል ቁጥር ያስገቡ',
+        'closest_respondent_town_id.required' => 'የቅርብ ተጠሪ ከተማ ይምረጡ',
+        'current_district.required' => 'የአሁኑ ክልል ያስገቡ',
+        'job.required' => 'ስራ ይምረጡ',
+        'current_city_id.required' => 'የአሁኑ ከተማ ይምረጡ',
+        'educational_level_id.required' => 'የትምህርት ደረጃ ይምረጡ',
+        'date_time_entered.required' => 'እስረኛዉ የገባበት ቀን ያስገቡ',
+    ]);
 
         if($validation->fails()){
             return response()->json([
@@ -257,7 +278,23 @@ class PrisionersController extends Controller
             'extra_description' => 'required',
             'citizenship' => 'required',
             
-        ]);
+        ],
+        [
+            'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
+            'hair_type_id.required' => 'የፀጉር አይነት ይምረጡ',
+            'nose_id.required' => 'የአፍንጫ አይነት ይምረጡ',
+            'eye_id.required' => 'የዓይን አይነት ይምረጡ',
+            'teeth_id.required' => 'የጥርስ አይነት ይምረጡ',
+            'lip_id.required' => 'የከንፈር አይነት ይምረጡ',
+            'ear_id.required' => 'የጆሮ አይነት ይምረጡ',
+            'height.required' => 'ቁመት ያስገቡ',
+            'face.required' => 'የፊት አይነት ያስገቡ',
+            'forehead.required' => 'የግንባር አይነት ያስገቡ',
+            'unique_appearance.required' => 'ልዩ ገጽታ ያስገቡ',
+            'extra_description.required' => 'ተጨማሪ መግለጫ ያስገቡ',
+            'citizenship.required' => 'ዜግነት ያስገቡ',
+        ]
+        );
 
         if($validation->fails()){
             return response()->json([
@@ -302,7 +339,16 @@ class PrisionersController extends Controller
             'date' => 'required',
             'doctor_address' => 'required',
             'medical_expense' => 'required',
-        ]);
+        ],
+    [
+        'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
+        'disease_type_id.required' => 'የሕመም አይነት ይምረጡ',
+        'hospital_name.required' => 'የሆስፒታል ስም ያስገቡ',
+        'doctor_name.required' => 'የሐኪም ስም ያስገቡ',
+        'date.required' => 'የታከመበትን ቀን ያስገቡ',
+        'doctor_address.required' => 'የሐኪም አድራሻ ያስገቡ',
+        'medical_expense.required' => 'የሕክምና ወጪ ያስገቡ',
+    ]);
 
         if($validation->fails()){
             return response()->json([
@@ -338,7 +384,13 @@ class PrisionersController extends Controller
             'prison_history_id' => 'required',
             'amount' => 'required|integer|min:0|max:100000',
             'type' => 'required',
-        ]);
+        ],
+        [
+            'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
+            'amount.required' => 'መጠን ያስገቡ',
+            'type.required' => 'አይነት ይምረጡ',
+        ]
+        );
 
         if($validation->fails()){
             return response()->json([
@@ -386,6 +438,15 @@ class PrisionersController extends Controller
             'verdict_description'=>'required',
             'status'=>'required',
             'criminal_status'=>'required',
+        ],
+        [
+            'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
+            'court_id.required' => 'የፍርድ ቤት መለያ ይምረጡ',
+            'updated_verdict_court.required' => 'አዲሱ ዉሳኔ የሰጠው ፍርድ ቤት ይምረጡ',
+            'appointment_date.required' => 'የተቀጠረበትን ቀን ያስገቡ',
+            'verdict_description.required' => 'የዉሳኔ መግለጫ ያስገቡ',
+            'status.required' => 'የዉሳኔ ሁኔታ ይምረጡ',
+            'criminal_status.required' => 'የወንጀል ሁኔታ ይምረጡ',
         ]);
 
         if($validation->fails()){
@@ -423,6 +484,10 @@ class PrisionersController extends Controller
         $validation = Validator::make($request->all(),[
             'prison_history_id' => 'required',
             'properties' => 'required',
+        ],
+        [
+            'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
+            'properties.required' => 'እቃዎች ይምረጡ',
         ]);
 
         if($validation->fails()){
@@ -459,6 +524,10 @@ class PrisionersController extends Controller
         $validation = Validator::make($request->all(),[
             'prison_history_id' => 'required',
             'all_crimes' => 'required',
+        ],
+        [
+            'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
+            'all_crimes.required' => 'የወንጀል መረጃ ይምረጡ',
         ]);
 
         if($validation->fails()){
@@ -589,6 +658,19 @@ class PrisionersController extends Controller
             'birth_district' => 'required',
             'birth_town_id' => 'required',
             'ethnic_group_id' => 'required',
+        ],
+        [
+            'prisioner_unique_number.required' => 'የእስረኛ መለያ ያስገቡ',
+            'prision_unique_number.required' => 'የእስር ቤት መለያ ያስገቡ',
+            'first_name.required' => 'የመጀመሪያ ስም ያስገቡ',
+            'middle_name.required' => 'የአባት ስም ያስገቡ',
+            'last_name.required' => 'የአያት ስም ያስገቡ',
+            'date_of_birth.required' => 'የልደት ቀን ያስገቡ',
+            'mother_name.required' => 'የእናት ስም ያስገቡ',
+            'sex.required' => 'ፆታ ይምረጡ',
+            'birth_district.required' => 'የተወለዱበትን ክልል ያስገቡ',
+            'birth_town_id.required' => 'የተወለዱበትን ከተማ ይምረጡ',    
+            'ethnic_group_id.required' => 'ብሔር ይምረጡ',
         ]);
         if($validation->fails()){
             return response()->json([

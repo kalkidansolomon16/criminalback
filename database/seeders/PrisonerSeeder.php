@@ -164,8 +164,19 @@ class PrisonerSeeder extends Seeder
 
     public function randomName($gender = 'male')
     {
-        $maleNames = collect(['natnael', 'kidus', 'mengistu', 'abebe','kirubel', 'girma', 'tesfaye', 'tadesse', 'alemayehu', 'biruk', 'yared', 'yohannes', 'mulugeta', 'tsegaye', 'seifu', 'kebede']);
-        $femaleNames = collect(['tiegist', 'kalkidan', 'seble', 'meron', 'saba', 'hanna', 'martha', 'genet', 'saron', 'selam', 'hana']);
+$maleNames = collect([
+    'ናትናኤል', 'ቅዱስ', 'መንግስቱ', 'አበበ', 'ኪሩቤል', 'ግርማ', 'ተስፋዬ', 'ታደሰ', 'አለማየሁ', 'ብሩክ',
+    'ያሬድ', 'ዮሐንስ', 'ሙሉጌታ', 'ፀጋዬ', 'ሰይፉ', 'ከበደ', 'ሰላምነህ', 'ማርኮን', 'ወልደማርያም', 'ዘአማኑኤል',
+    'ኤርሚያስ', 'መባ', 'ሎኡል', 'ሙሀመድ', 'በለጠ', 'ሳሙኤል', 'ታምራት', 'ደስታ', 'ከበደ', 'ሄኖክ',
+    'ማርሄር', 'አሀመድ', 'በዛብህ', 'አረጋዊ', 'ሐቅሉ', 'ደበበ', 'ሀብታሙ', 'ሙሉነህ', 'ሃሰን', 'ሐናኤል',
+    'ሰላምና', 'ሙባረክ', 'እንድሪስ', 'ግዛው', 'ዮናስ', 'ሙሉሃብ', 'እምባዬ', 'ሁሴን', 'መሳይ'
+]);
+
+$femaleNames = collect([
+    'ትዕግስት', 'ቃልኪዳን', 'ሰብለ', 'ሜሮን', 'ሳባ', 'ሀና', 'ማርታ', 'ገነት', 'ሳሮን', 'ሰላም', 
+     'ኤልሳቤጥ', 'ህሊና', 'ደስታ', 'ምህረት', 'መልካም', 'ጸጋ', 'ማህሌት'
+]);
+
         return $gender == 'male' ? $maleNames->random() : $femaleNames->random();
     }
 
