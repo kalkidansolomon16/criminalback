@@ -21,6 +21,7 @@ class PrisonerAttendanceController extends Controller
             ->with(['prisonerAttendances' => function($query) use($date, $time) {
                 $query->whereDate('date', $date)->where('status', $time);
             }])
+            ->orderByDesc('id')
             ->paginate(10);
 
 
@@ -79,7 +80,7 @@ class PrisonerAttendanceController extends Controller
         }
 
         return response()->json([
-            'message' => 'Attendance successfully created for all records.',
+            'message' => 'አቴንዳንስ ተመዝግቧል',
         ], 201);
     }
 

@@ -12,7 +12,7 @@ class prisioners_casheController extends Controller {
 
     public function index() {
         
-        $prisonerCashes = Prisioners_cashe::with(['prisonerHistory.prisoner'])->paginate(10);
+        $prisonerCashes = Prisioners_cashe::with(['prisonerHistory.prisoner'])->orderByDesc('id')->paginate(10);
 
         return response()->json([
             'data' => $prisonerCashes,

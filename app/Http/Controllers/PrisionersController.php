@@ -277,7 +277,7 @@ class PrisionersController extends Controller
             'unique_appearance' => 'required',
             'extra_description' => 'required',
             'citizenship' => 'required',
-            'photo' => 'file|required|image|max:2048'
+            'photo' => 'image|max:2048'
         ],
         [
             'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
@@ -424,7 +424,7 @@ class PrisionersController extends Controller
         if($request->type == Constants::ወጪ) {
             if(($deposit - $withdraw - $request->amount) < 0) {
                 return response()->json([
-                    'message' => 'Not Enough Balance',
+                    'message' => 'በቂ ገንዘብ የሎትም',
                 ], 422);
             }
         }
