@@ -123,8 +123,8 @@ class PrisionersController extends Controller
             
         ],
         [
-            'first_name.required' => 'YEMEJERMIYA SIM YASGEBU',
-            'ethnic_group_id.required' => 'BIHER YIMRETU',
+            'first_name.required' => 'የመጀመሪያ ስም ያስገቡ',
+            'ethnic_group_id.required' => 'ብሔር ይምረጡ',
         ]
         );
 
