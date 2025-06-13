@@ -21,7 +21,11 @@ class TownController extends Controller {
         $request->validate([
             'name' => 'required|string|max:255',
             'city_id' => 'required',
-        ]);
+        ],
+    [
+        'name.required' => 'የከተማ ስም ያስገቡ',
+        'city_id.required' => 'ከተማ ይምረጡ'
+    ]);
 
         $town = new Town();
         $town->name = $request->name;
@@ -45,7 +49,11 @@ class TownController extends Controller {
         $request->validate([
             'name' => 'required|string|max:255',
             'city_id' => 'required',
-        ]);
+        ],
+    [
+        'name.required' => 'የከተማ ስም ያስገቡ',
+        'city_id.required' => 'ከተማ ይምረጡ'
+    ]);
 
         $town->name = $request->name;
         $town->city_id = $request->city_id;

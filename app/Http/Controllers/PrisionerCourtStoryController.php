@@ -56,7 +56,16 @@ class PrisionerCourtStoryController extends Controller
             'status'=>'required',
             'criminal_status'=>'required',
             
-        ]);
+        ],
+    [
+            'prision_history_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+            'court_id.required' => 'የፍርድ ቤት መረጃ ያስገቡ',
+            'updated_verdict_court.required' => 'የተሻሻለ ፍርድ ቤት መረጃ ያስገቡ',
+            'appointment_date.required' => 'የቀን መረጃ ያስገቡ',
+            'verdict_description.required' => 'የፍርድ መግለጫ ያስገቡ',
+            'status.required' => 'አሁን ያሉበት ሁኔታ ያስገቡ',
+            'criminal_status.required' => 'የፍቱን እንደነበር መረጃ ያስገቡ'
+    ]);
         if($validation->fails()){
             return response()->json([
                 'status'=>422,
@@ -139,7 +148,16 @@ class PrisionerCourtStoryController extends Controller
             'status'=>'required',
             'criminal_status'=>'required',
             
-        ]);
+        ],
+    [
+            'prision_history_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+            'court_id.required' => 'የፍርድ ቤት መረጃ ያስገቡ',
+            'updated_verdict_court.required' => 'የተሻሻለ ፍርድ ቤት መረጃ ያስገቡ',
+            'appointment_date.required' => 'የቀን መረጃ ያስገቡ',
+            'verdict_description.required' => 'የፍርድ መግለጫ ያስገቡ',
+            'status.required' => 'አሁን ያሉበት ሁኔታ ያስገቡ',
+            'criminal_status.required' => 'የፍቱን እንደነበር መረጃ ያስገቡ'
+    ]);
         if($validation->fails()){
             return response()->json([
                 'status'=>422,

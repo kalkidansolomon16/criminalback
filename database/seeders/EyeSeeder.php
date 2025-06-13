@@ -15,7 +15,9 @@ class EyeSeeder extends Seeder
     {
         $eye = [
             [
-                'name'=>'ሰማያዊ'
+                'name'=>'ሰማያዊ',
+                'name' => 'ቡኒ',
+                'name' => 'ጥቁር',
             ],
 
         ];

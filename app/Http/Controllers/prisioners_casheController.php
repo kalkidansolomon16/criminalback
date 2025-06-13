@@ -64,7 +64,13 @@ class prisioners_casheController extends Controller {
             'amount' => 'required',
             'type' => 'required',
             'prision_history_id' => 'required'
-        ]);
+        ],
+    [
+            'date.required' => 'ቀን ያስገቡ',
+            'amount.required' => 'መጠን ያስገቡ',
+            'type.required' => 'አይነት ያስገቡ',
+            'prision_history_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+    ]);
 
         $prisioners_cashe = new Prisioners_cashe();
         $prisioners_cashe->date = $request->date;
@@ -93,7 +99,13 @@ class prisioners_casheController extends Controller {
             'amount' => 'required',
             'type' => 'required',
             'prision_history_id' => 'required'
-        ]);
+        ],
+    [
+            'date.required' => 'ቀን ያስገቡ',
+            'amount.required' => 'መጠን ያስገቡ',
+            'type.required' => 'አይነት ያስገቡ',
+            'prision_history_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+    ]);
 
         $prisioners_cashe->date = $request->date;
         $prisioners_cashe->amount = $request->amount;

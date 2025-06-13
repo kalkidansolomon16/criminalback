@@ -35,7 +35,20 @@ class UserController extends Controller
             'role' => 'required',
             'photo' => 'sometimes',
             'signature' => 'sometimes',
-        ]);
+
+     ],
+    [
+        'full_name.required' => 'ሙሉ ስም ያስገቡ',      
+        'sex.required' => 'ጾታ ይምረጡ',
+        'age.required' => 'እድሜ ያስገቡ', 
+        'password.required' => 'የይለፍ ቃል ያስገቡ',
+        'user_name.required' => 'የተጠቃሚ ስም ያስገቡ',
+        'address.required' => 'አድራሻ ያስገቡ',
+        'phone_number.required' => 'ስልክ ቁጥር ያስገቡ',
+        'role.required' => 'ሚና ይምረጡ',
+        'photo.sometimes' => 'ፎቶ ይምረጡ',
+        'signature.sometimes' => 'ፊርማ ይምረጡ',
+    ]);
         if($validation->fails()){
             return response()->json([
                 'status'=>422,
@@ -120,7 +133,17 @@ class UserController extends Controller
             // 'criminal_id' => 'required',
             'role_id' => 'required',
             
-        ]);
+        ],
+    [
+        'full_name.required' => 'ሙሉ ስም ያስገቡ',
+        'sex_id.required' => 'ጾታ ይምረጡ',
+        'age.required' => 'እድሜ ያስገቡ',
+        'password.required' => 'የይለፍ ቃል ያስገቡ',
+        'user_name.required' => 'የተጠቃሚ ስም ያስገቡ',
+        'address.required' => 'አድራሻ ያስገቡ',
+        'phone_number.required' => 'ስልክ ቁጥር ያስገቡ',
+        'role_id.required' => 'ሚና ይምረጡ',
+    ]);
         if($validation->fails()){
             return response()->json([
                 'status'=>422,

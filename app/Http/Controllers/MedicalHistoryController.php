@@ -45,7 +45,17 @@ class MedicalHistoryController extends Controller
             'doctor_address'=>'required',
             'medical_expense'=>'required',
             
-        ]);
+        ],
+    [
+            'user_id.required' => 'ሰራተኛ መረጃ ያስገቡ',
+            'prision_history_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+            'disease_type_id.required' => 'የበሽታ አይነት ይምረጡ',
+            'hospital_name.required' => 'የሆስፒታል ስም ያስገቡ',
+            'doctor_name.required' => 'የዶክተር ስም ያስገቡ',
+            'date.required' => 'ቀን ያስገቡ',
+            'doctor_address.required' => 'የዶክተር አድራሻ ያስገቡ',
+            'medical_expense.required' => 'የሕክምና ወጪ ያስገቡ',
+    ]);
         if($validation->fails()){
         return response()->json([
         'status'=>422,
@@ -140,7 +150,18 @@ class MedicalHistoryController extends Controller
             'doctor_address'=>'required',
             'medical_expense'=>'required',
             'guards'=>'required'
-        ]);
+        ],
+    [
+            'user_id.required' => 'ሰራተኛ መረጃ ያስገቡ',
+            'prision_history_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+            'disease_type_id.required' => 'የበሽታ አይነት ይምረጡ',
+            'hospital_name.required' => 'የሆስፒታል ስም ያስገቡ',
+            'doctor_name.required' => 'የዶክተር ስም ያስገቡ',
+            'date.required' => 'ቀን ያስገቡ',
+            'doctor_address.required' => 'የዶክተር አድራሻ ያስገቡ',
+            'medical_expense.required' => 'የሕክምና ወጪ ያስገቡ',
+            'guards.required' => 'መከታተያ መረጃ ያስገቡ'
+    ]);
         if($validation->fails()){
         return response()->json([
         'status'=>422,

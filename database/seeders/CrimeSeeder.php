@@ -18,27 +18,20 @@ class CrimeSeeder extends Seeder
         
 $crimes = [
     ['name' => 'እሳት ማቃጠል'],         // Arson
-    ['name' => 'መደበደብ'],           // Assault
+    ['name' => 'መደብደብ'],           // Assault
     ['name' => 'ስኬት መግዛት'],        // Bribery
-    ['name' => 'ሌብነት በመስኮት'],      // Burglary
-    ['name' => 'የሕፃናት ተጨማሪ ተግፎ'], // Child Abuse
+    ['name' => 'የሕፃናት ብዝበዛ'], // Child Abuse
     ['name' => 'የድህረገፅ ወንጀል'],     // Cybercrime
-    ['name' => 'የቤተሰብ ጥቃት'],      // Domestic Violence
-    ['name' => 'የአሻችሽ ወንጀሎች'],     // Drug Offenses
-    ['name' => 'ማበዛበዝ'],          // Embezzlement
-    ['name' => 'ተታማኝነት ማሳበት'],     // Fraud
-    ['name' => 'ማግደል'],            // Homicide
+    ['name' => 'የሀሺሽ ንግድ'],     // Drug Offenses
+    ['name' => 'ጉቦ'],          // Embezzlement
+    ['name' => 'ማጭበርበር'],     // Fraud
     ['name' => 'የሰው ንግድ'],        // Human Trafficking
-    ['name' => 'መፈናቀል'],          // Kidnapping
-    ['name' => 'የገንዘብ ማጠራቀሚያ'],   // Money Laundering
+    ['name' => 'ማፈናቀል'],          // Kidnapping
     ['name' => 'ግድያ'],             // Murder
-    ['name' => 'በግፍ አሳደድ'],       // Rape
-    ['name' => 'መስረቅ'],            // Robbery
+    ['name' => 'አስገድዶ መድፈር'],       // Rape
     ['name' => 'የጾታ ጥቃት'],        // Sexual Assault
     ['name' => 'ስርቆት'],            // Theft
-    ['name' => 'የንብረት ፈናቃቂ'],     // Vandalism
-    ['name' => 'የኃይል ወንጀሎች'],     // Violent Crimes
-    ['name' => 'የቢሮ ወንጀሎች'],      // White Collar Crimes
+
 ];
 
 

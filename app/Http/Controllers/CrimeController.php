@@ -23,6 +23,9 @@ use Illuminate\Http\Request;
             
                     $request->validate([
                         'name' => 'required|string|max:255',
+                    ],
+                    [
+                        'name.required' => 'ስም ያስገቡ', // Custom error message for name
                     ]);
             
                     $crime = new Crime();
@@ -45,6 +48,9 @@ use Illuminate\Http\Request;
             
                     $request->validate([
                         'name' => 'required|string|max:255',
+                    ],
+                    [
+                        'name.required' => 'ስም ያስገቡ', // Custom error message for name
                     ]);
             
                     $crime->name = $request->name;

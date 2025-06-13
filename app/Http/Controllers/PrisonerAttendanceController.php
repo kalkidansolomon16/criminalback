@@ -51,6 +51,9 @@ class PrisonerAttendanceController extends Controller
     public function store(Request $request) {
         $validation = Validator::make($request->all(), [
             'time' => 'required',
+        ],
+        [
+            'time.required' => 'ሰዓት ያስገቡ',
         ]);
 
         request('date', today());
@@ -98,7 +101,13 @@ class PrisonerAttendanceController extends Controller
             'date' => 'required/date',
             'time' => 'required',
             'prisioner_id' => 'required',
-        ]);
+        ],
+    [
+            'status.required' => 'ሁኔታ ያስገቡ',
+            'date.required' => 'ቀን ያስገቡ',
+            'time.required' => 'ሰዓት ያስገቡ',
+            'prisioner_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+    ]);
 
         $attendance->status = $request->status;
         $attendance->date = $request->date;

@@ -62,7 +62,29 @@ class PrisionHistoryController extends Controller
             //'release_reason' => 'required',
             'date_of_mercy_release' => 'required',
             'user_id' => 'required'
-        ]);
+        ],
+    [
+            'prisioner_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+            //'photo.required' => 'ፎቶ ያስገቡ',
+            'prision_cell_id.required' => 'የእስረኛ ክፍል ይምረጡ',
+            'criminal_type_id.required' => 'የወንጀል አይነት ይምረጡ',
+            'current_city_id.required' => 'የአሁኑ ከተማ ይምረጡ',
+            'educational_level_id.required' => 'የትምህርት ደረጃ ይምረጡ',
+            'religion_id.required' => 'እምነት ይምረጡ',
+            'closest_respondent.required' => 'የቅርብ ተጠሪ ያስገቡ',
+            'closest_respondent_town_id.required' => 'የቅርብ ተጠሪ ከተማ ይምረጡ',
+            'current_district.required' => 'የአሁኑ ክፍል ይምረጡ',
+            'closest_respondent_district.required' => 'የቅርብ ተጠሪ ክፍል ይምረጡ',
+            'job.required' => 'ስራ ያስገቡ',
+            'phone_number.required' => 'ስራ መጠን ያስገቡ',
+            'mobile_number.required' => 'ስልክ ቁጥር ያስገቡ',
+            'date_time_entered.required' => 'የገባበት ቀን ያስገቡ',
+            'end_date_of_arrest.required' => 'ፍርድ የሚያልቅበት ቀን ያስገቡ',
+            'date_of_release.required' => 'የሚፈታበት ቀን ያስገቡ',
+            //'release_reason.required' => 'Release Reason is required',
+            'date_of_mercy_release.required' => 'በምህረት ምክንያት የሚፈታበት ቀን ያስገቡ',
+            'user_id.required' => 'የተጠቃሚ መረጃ ያስገቡ'
+    ]);
     
         $prisionHistory = new PrisionHistory();
         $prisionHistory->prisioner_id = $request->prisioner_id;
@@ -154,7 +176,28 @@ class PrisionHistoryController extends Controller
             'release_reason' => 'required',
             'date_of_mercy_release' => 'required',
             'user_id' => 'required'
-        ]);
+        ],
+    [
+        'prisioner_id.required' => 'የእስረኛ ስም ይምረጡ',
+        'prision_cell_id.required' => 'የእስረኛ ክፍል ይምረጡ',
+        'criminal_type_id.required' => 'የእስረኛ አይነት ይምረጡ',
+        'current_city_id.required' => 'የአሁኑ ከተማ ይምረጡ',
+        'educational_level_id.required' => 'የትምህርት ደረጃ ይምረጡ',
+        'religion_id.required' => 'እምነት ይምረጡ',
+        'closest_respondent.required' => 'የቅርብ ተጠሪ ያስገቡ',
+        'closest_respondent_town_id.required' => 'የቅርብ ተጠሪ ከተማ ይምረጡ',
+        'current_district.required' => 'የአሁኑ ክፍል ይምረጡ',
+        'closest_respondent_district.required' => 'የቅርብ ተጠሪ ክፍል ይምረጡ',
+        'job.required' => 'ስራ ያስገቡ',
+        'phone_number.required' => 'ስልክ ቁጥር ያስገቡ',
+        'mobile_number.required' => 'ስልክ ቁጥር ያስገቡ',
+        'date_time_entered.required' => 'የገባበት ቀን ያስገቡ',
+        'end_date_of_arrest.required' => 'ፍርድ የሚያልቅበት ቀን ያስገቡ',
+        'date_of_release.required' => 'የሚፈታበት ቀን ያስገቡ',
+        'release_reason.required' => 'የማስፈን ምክንያት ያስገቡ',
+        'date_of_mercy_release.required' => 'በምህረት ምክንያት የሚፈታበት ቀን ያስገቡ',
+        'user_id.required' => 'የተጠቃሚ መረጃ ያስገቡ'
+    ]);
         $prisionHistory = PrisionHistory::findOrFail($id);
         $prisionHistory->prisioner_id = $request->prisioner_id;
        // $prisionHistory->photo = $request->photo;

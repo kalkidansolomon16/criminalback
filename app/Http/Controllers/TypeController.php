@@ -26,7 +26,10 @@ class TypeController extends Controller
             
                     $request->validate([
                         'type' => 'required|string|max:255',
-                    ]);
+                    ],
+                [
+                    'type.required' => 'የአይነት ያስገቡ',
+                ]);
             
                     $type = new Type();
                     $type->type = $request->type;
@@ -48,7 +51,10 @@ class TypeController extends Controller
             
                     $request->validate([
                         'type' => 'required|string|max:255',
-                    ]);
+                    ],
+                [
+                    'type.required' => 'የአይነት ያስገቡ',
+                ]);
             
                     $type->type = $request->type;
                     $type->save();

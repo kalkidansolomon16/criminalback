@@ -15,7 +15,9 @@ class NoseSeeder extends Seeder
     {
         $nose = [
             [
-                'name'=>'ቀጥ ያለ'
+                'name'=>'ቀጥ ያለ',
+                'name' =>'ጎራዳ',
+                'name' => 'ሰልካካ'
             ],
 
         ];

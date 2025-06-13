@@ -22,6 +22,13 @@ class CriminalCashController extends Controller
             'deposit_date' => 'required',
             'withdrawal_date' => 'required',
             'user_id' => 'required'
+        ],
+        [
+            'criminal_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+            'amount.required' => 'መጠን ያስገቡ',
+            'deposit_date.required' => 'የተቀበለበት ቀን ያስገቡ',
+            'withdrawal_date.required' => 'የተመለሰበት ቀን ያስገቡ',
+            'user_id.required' => 'ሰራተኛ መረጃ ያስገቡ',
         ]);
         $criminal_cash = Criminal_cash::create($fields);
         return [
@@ -45,7 +52,14 @@ class CriminalCashController extends Controller
             'deposit_date' => 'required',
             'withdrawal_date' => 'required',
             'user_id' => 'required'
-        ]);
+        ],
+    [
+            'criminal_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+            'amount.required' => 'መጠን ያስገቡ',
+            'deposit_date.required' => 'የተቀበለበት ቀን ያስገቡ',
+            'withdrawal_date.required' => 'የተመለሰበት ቀን ያስገቡ',
+            'user_id.required' => 'ሰራተኛ መረጃ ያስገቡ',
+    ]);
         $criminal_cash->update($fields);
         return $criminal_cash;
     }

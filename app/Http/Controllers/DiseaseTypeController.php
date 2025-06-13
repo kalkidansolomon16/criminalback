@@ -20,6 +20,9 @@ class DiseaseTypeController extends Controller {
 
         $request->validate([
             'name' => 'required|string|max:255',
+        ],
+        [
+            'name.required' => 'ስም ያስገቡ', // Custom error message for name
         ]);
 
         $diseaseType = new DiseaseType();
@@ -42,6 +45,9 @@ class DiseaseTypeController extends Controller {
 
         $request->validate([
             'name' => 'required|string|max:255',
+        ],
+        [
+            'name.required' => 'ስም ያስገቡ', // Custom error message for name
         ]);
 
         $diseaseType->name = $request->name;

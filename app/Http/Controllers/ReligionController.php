@@ -21,7 +21,11 @@ class ReligionController extends Controller {
         $request->validate([
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:255',
-        ]);
+        ],
+    [
+            'name.required' => 'የሃይማኖት ስም ያስገቡ',
+            'code.required' => 'ኮድ ያስገቡ',
+    ]);
 
         $religion = new Religion();
         $religion->name = $request->name;
@@ -44,7 +48,10 @@ class ReligionController extends Controller {
 
         $request->validate([
             'name' => 'required|string|max:255',
-        ]);
+        ],
+    [
+            'name.required' => 'የሃይማኖት ስም ያስገቡ',
+    ]);
 
         $religion->name = $request->name;
         $religion->code = $request->code;

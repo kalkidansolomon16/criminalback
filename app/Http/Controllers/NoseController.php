@@ -21,6 +21,9 @@ class NoseController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
+        ],
+    [
+            'name.required' => 'አፍንጫ ያስገቡ', // Custom error message for name
         ]);
 
         $nose = new Nose();
@@ -43,6 +46,9 @@ class NoseController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
+        ],
+    [
+            'name.required' => 'አፍንጫ ያስገቡ', // Custom error message for name
         ]);
 
         $nose->name = $request->name;

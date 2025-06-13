@@ -21,6 +21,10 @@ class CityController extends Controller {
         $request->validate([
             'name' => 'required|string|max:255',
             'region_id' => 'required',
+        ],
+        [
+            'name.required' => 'ስም ያስገቡ', // Custom error message for name
+            'region_id.required' => 'ክልል መረጃ ያስገቡ', // Custom error message for region_id
         ]);
 
         $city = new City();
@@ -45,6 +49,10 @@ class CityController extends Controller {
         $request->validate([
             'name' => 'required|string|max:255',
             'region_id' => 'required',
+        ],
+        [
+            'name.required' => 'ስም ያስገቡ', // Custom error message for name
+            'region_id.required' => 'ክልል መረጃ ያስገቡ', // Custom error message for region_id
         ]);
 
         $city->name = $request->name;
