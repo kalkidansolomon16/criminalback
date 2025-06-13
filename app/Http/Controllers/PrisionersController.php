@@ -80,7 +80,7 @@ class PrisionersController extends Controller
             });
         }
 
-        $prisoners = $prisoners->paginate(10);
+        $prisoners = $prisoners->orderByDesc('id')->paginate(10);
          
         if($prisoners){
             return response()->json([
@@ -277,7 +277,7 @@ class PrisionersController extends Controller
             'unique_appearance' => 'required',
             'extra_description' => 'required',
             'citizenship' => 'required',
-            
+            'photo' => 'file|required|image|max:2048'
         ],
         [
             'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
@@ -293,6 +293,9 @@ class PrisionersController extends Controller
             'unique_appearance.required' => 'ልዩ ገጽታ ያስገቡ',
             'extra_description.required' => 'ተጨማሪ መግለጫ ያስገቡ',
             'citizenship.required' => 'ዜግነት ያስገቡ',
+            'photo.required' => 'ፎቶ ያስገቡ',
+            'photo.image' => 'ፎቶ ምስል ብቻ መሆን አለበት',
+            'photo.max' => 'ፎቶ ከ 2 ሜባ በላይ መሆን የለበትም ',
         ]
         );
 
@@ -323,6 +326,15 @@ class PrisionersController extends Controller
         $prisonAppearance->extra_description = $request->extra_description;
         $prisonAppearance->citizenship = $request->citizenship;
         $prisonAppearance->prision_history_id = $request->prison_history_id;
+
+         if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads'), $filename);
+            $prisonHistory->photo = 'uploads/'.$filename;
+            $prisonHistory->save();
+        }
+        
         $prisonAppearance->save();
 
         return response()->json([
