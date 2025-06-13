@@ -38,6 +38,12 @@ class CriminalPropertyController extends Controller
             'type'=>'required',
             'amount'=>'required',
             'user_id'=>'required'
+        ],
+        [
+            'criminal_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+            'type.required' => 'አይነት ይምረጡ',
+            'amount.required' => 'መጠን ያስገቡ',
+            'user_id.required' => 'ሰራተኛ መረጃ ያስገቡ',
         ]);
         if($validation->fails()){
         return response()->json([
@@ -113,6 +119,12 @@ return response()->json([
             'type'=>'required',
             'amount'=>'required',
             'user_id'=>'required'
+            ],
+            [
+                'criminal_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+                'type.required' => 'አይነት ይምረጡ',
+                'amount.required' => 'መጠን ያስገቡ',
+                'user_id.required' => 'ሰራተኛ መረጃ ያስገቡ',
             ]);
             if($validation->fails()){
             return response()->json([

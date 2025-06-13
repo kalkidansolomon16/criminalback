@@ -15,7 +15,9 @@ class LipSeeder extends Seeder
     {
         $lip = [
             [
-                'name'=>'ቀጥ ያለ'
+                'name'=>'ሥስ',
+                'name' => 'ትልቅ',
+                'name' => 'ትንሽ',
             ],
 
         ];

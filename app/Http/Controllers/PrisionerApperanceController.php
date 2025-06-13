@@ -72,7 +72,21 @@ class PrisionerApperanceController extends Controller
             'unique_appearance'=>'required',
             'citizenship'=>'required',
             
-        ]);
+        ],
+    [
+            'prision_history_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+            'hair_type_id.required' => 'የፀጉር አይነት መረጃ ያስገቡ',
+            'height.required' => 'ከፍታ መረጃ ያስገቡ',
+            'face.required' => 'ፊት መረጃ ያስገቡ',
+            'forehead.required' => 'ጉልበት መረጃ ያስገቡ',
+            'nose.required' => 'አፍ መረጃ ያስገቡ',
+            'eye_color.required' => 'ዓይን ቀለም መረጃ ያስገቡ',
+            'teeth.required' => 'ጥርስ መረጃ ያስገቡ',
+            'lip.required' => 'አፍ መረጃ ያስገቡ',
+            'ear.required' => 'አፍንጫ መረጃ ያስገቡ',
+            'unique_appearance.required' => 'የተለየ መታወቂያ መረጃ ያስገቡ',
+            'citizenship.required' => 'የነፃነት መረጃ ያስገቡ'
+    ]);
         if($validation->fails()){
             return response()->json([
                 'status'=>422,
@@ -163,7 +177,21 @@ class PrisionerApperanceController extends Controller
             'ear' => 'required',
             'unique_appearance' => 'required',
             'citizenship' => 'required',
-        ]);
+        ],
+    [
+            'prision_history_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+            'hair_type_id.required' => 'የፀጉር አይነት መረጃ ያስገቡ',
+            'height.required' => 'ከፍታ መረጃ ያስገቡ',
+            'face.required' => 'ፊት መረጃ ያስገቡ',
+            'forehead.required' => 'ጉልበት መረጃ ያስገቡ',
+            'nose.required' => 'አፍ መረጃ ያስገቡ',
+            'eye_color.required' => 'ዓይን ቀለም መረጃ ያስገቡ',
+            'teeth.required' => 'ጥርስ መረጃ ያስገቡ',
+            'lip.required' => 'አፍ መረጃ ያስገቡ',
+            'ear.required' => 'አፍንጫ መረጃ ያስገቡ',
+            'unique_appearance.required' => 'የተለየ መታወቂያ መረጃ ያስገቡ',
+            'citizenship.required' => 'የነፃነት መረጃ ያስገቡ'
+    ]);
     
         if ($validation->fails()) {
             return response()->json([

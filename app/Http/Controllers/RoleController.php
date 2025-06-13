@@ -48,7 +48,10 @@ class RoleController extends Controller
     {
         $validation = Validator::make($request->all(),[
          'name'=>'required'
-        ]);
+        ],
+    [
+            'name.required' => 'ስም ያስገቡ', // Custom error message for name
+    ]);
         if($validation->fails()){
         return response()->json([
         'status'=>422,
@@ -97,7 +100,10 @@ class RoleController extends Controller
     {
         $validation = Validator::make($request->all(),[
         'name'=>'required'
-        ]);
+        ],
+    [
+            'name.required' => 'ስም ያስገቡ', // Custom error message for name
+    ]);
         if($validation->fails()){
         return response()->json([
         'status'=>422,

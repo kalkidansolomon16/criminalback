@@ -23,6 +23,9 @@ class HairTypeController extends Controller{
 
         $request->validate([
             'name' => 'required|string|max:255',
+        ],
+        [
+            'name.required' => 'ስም ያስገቡ', // Custom error message for name
         ]);
 
         $hair = new HairType();
@@ -45,6 +48,9 @@ class HairTypeController extends Controller{
 
         $request->validate([
             'name' => 'required|string|max:255',
+        ],
+        [
+            'name.required' => 'ስም ያስገቡ', // Custom error message for name
         ]);
 
         $hair->name = $request->name;

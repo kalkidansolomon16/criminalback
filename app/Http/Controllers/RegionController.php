@@ -20,6 +20,9 @@ class RegionController extends Controller {
 
         $request->validate([
             'name' => 'required|string|max:255',
+        ],
+        [
+            'name.required' => 'የክልል ስም ያስገቡ',
         ]);
 
         $region = new Region();
@@ -42,6 +45,9 @@ class RegionController extends Controller {
 
         $request->validate([
             'name' => 'required|string|max:255',
+        ],
+        [
+            'name.required' => 'የክልል ስም ያስገቡ',
         ]);
 
         $region->name = $request->name;

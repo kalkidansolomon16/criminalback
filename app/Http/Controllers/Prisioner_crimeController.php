@@ -29,7 +29,13 @@ class Prisioner_crimeController extends Controller {
             'crime_id' => 'required',
             'crime_description' => 'required',
             'status' => 'required'
-        ]);
+        ],
+    [
+            'prision_history_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+            'crime_id.required' => 'የወንጀል መረጃ ያስገቡ',
+            'crime_description.required' => 'የወንጀል መግለጫ ያስገቡ',
+            'status.required' => 'አሁን ያሉበት ሁኔታ ያስገቡ'
+    ]);
 
         $prisionerCrime = new Prisioner_crime();
         $prisionerCrime->prision_history_id = $request->prision_history_id;
@@ -57,7 +63,13 @@ class Prisioner_crimeController extends Controller {
             'crime_id' => 'required',
             'crime_description' => 'required',
             'status' => 'required'
-        ]);
+        ],
+    [
+            'prision_history_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+            'crime_id.required' => 'የወንጀል መረጃ ያስገቡ',
+            'crime_description.required' => 'የወንጀል መግለጫ ያስገቡ',
+            'status.required' => 'አሁን ያሉበት ሁኔታ ያስገቡ'
+    ]);
 
         $prisionerCrime->prision_history_id = $request->prision_history_id;
         $prisionerCrime->crime_id = $request->crime_id;

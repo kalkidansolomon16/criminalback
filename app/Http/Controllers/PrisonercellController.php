@@ -21,6 +21,9 @@ class prisonerCellController extends Controller {
                 
                         $request->validate([
                             'name' => 'required|string|max:255',
+                        ],
+                        [
+                            'name.required' => ' ክፍል ስም ያስገቡ',
                         ]);
                 
                         $prisonerCell = new Prision_cell();
@@ -43,6 +46,9 @@ class prisonerCellController extends Controller {
                 
                         $request->validate([
                             'name' => 'required|string|max:255',
+                        ],
+                        [
+                            'name.required' => 'ክፍል ስም ያስገቡ',
                         ]);
                 
                         $prisonerCell->name = $request->name;

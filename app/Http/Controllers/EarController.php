@@ -22,7 +22,10 @@ class EarController extends Controller
         
                 $request->validate([
                     'name' => 'required|string|max:255',
-                ]);
+                ],
+            [
+                    'name.required' => 'ስም ያስገቡ', // Custom error message for name
+            ]);
         
                 $ear = new Ear();
                 $ear->name = $request->name;
@@ -44,6 +47,9 @@ class EarController extends Controller
         
                 $request->validate([
                     'name' => 'required|string|max:255',
+                ],
+            [
+                    'name.required' => 'ስም ያስገቡ', // Custom error message for name
                 ]);
         
                 $ear->name = $request->name;

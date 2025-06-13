@@ -15,7 +15,10 @@ class TeethSeeder extends Seeder
     {
         $teeth = [
             [
-                'name'=>'ነጭ'
+                'name'=>'ነጭ',
+                'name'=>'የበለዘ',
+                'name'=>'የተሸረፈ',
+                'name'=>'ፍንጪት',
             ],
 
         ];

@@ -23,6 +23,9 @@ class LipController extends Controller
     
             $request->validate([
                 'name' => 'required|string|max:255',
+            ],
+        [
+                'name.required' => 'ስም ያስገቡ', // Custom error message for name
             ]);
     
             $lip = new Lip();
@@ -45,6 +48,9 @@ class LipController extends Controller
     
             $request->validate([
                 'name' => 'required|string|max:255',
+            ],
+        [
+                'name.required' => 'ስም ያስገቡ', // Custom error message for name
             ]);
     
             $lip->name = $request->name;

@@ -24,6 +24,9 @@ use Illuminate\Support\Facades\Validator;
 
         $request->validate([
             'name' => 'required|string|max:255',
+        ],
+    [
+            'name.required' => 'ጥርስ ያስገቡ',
         ]);
 
         $teeth = new Teeth();
@@ -46,6 +49,9 @@ use Illuminate\Support\Facades\Validator;
 
         $request->validate([
             'name' => 'required|string|max:255',
+        ],
+    [
+            'name.required' => 'ጥርስ ያስገቡ',
         ]);
 
         $teeth->name = $request->name;

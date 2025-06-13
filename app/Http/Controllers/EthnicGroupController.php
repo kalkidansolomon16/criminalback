@@ -23,7 +23,10 @@ use Illuminate\Http\Request;
     
             $request->validate([
                 'name' => 'required|string|max:255',
-            ]);
+            ],
+        [
+                'name.required' => 'ስም ያስገቡ', // Custom error message for name
+        ]);
     
             $ethnic = new EthnicGroup();
             $ethnic->name = $request->name;
@@ -45,6 +48,9 @@ use Illuminate\Http\Request;
     
             $request->validate([
                 'name' => 'required|string|max:255',
+            ],
+        [
+                'name.required' => 'ስም ያስገቡ', // Custom error message for name
             ]);
     
             $ethnic->name = $request->name;

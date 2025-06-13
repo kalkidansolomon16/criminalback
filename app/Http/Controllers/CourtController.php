@@ -26,7 +26,10 @@ use Illuminate\Support\Facades\Validator;
         
                 $request->validate([
                     'name' => 'required|string|max:255',
-                ]);
+                ],
+            [
+                    'name.required' => 'ስም ያስገቡ', // Custom error message for name
+            ]);
         
                 $court = new Court();
                 $court->name = $request->name;
@@ -48,6 +51,9 @@ use Illuminate\Support\Facades\Validator;
         
                 $request->validate([
                     'name' => 'required|string|max:255',
+                ],
+            [
+                    'name.required' => 'ስም ያስገቡ', // Custom error message for name
                 ]);
         
                 $court->name = $request->name;

@@ -15,7 +15,8 @@ class EarSeeder extends Seeder
     {
         $ear = [
             [
-                'name'=>'ቀጥ ያለ'
+                'name'=>'ትንሽ',
+                "name" => 'ትልቅ',
             ],
 
         ];

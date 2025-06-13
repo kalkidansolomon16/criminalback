@@ -14,9 +14,9 @@ class CriminalTypeSeeder extends Seeder
     {
         $criminal_types = 
             [
-                ['name' => 'ጊዜ ቀጠጠሮ'], // gize qetero
+                ['name' => 'ጊዜ ቀጠሮ'], // gize qetero
                 ['name' => 'መደበኛ ቀጠሮ'], // medebegna qetero
-                ['name' => 'ፍርደኛኛ'], // firdegna
+                ['name' => 'ፍርደኛ'], // firdegna
             
         ];
 

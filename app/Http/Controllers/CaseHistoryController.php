@@ -45,6 +45,9 @@ class CaseHistoryController extends Controller
     {
         $validation = Validator::make($request->all(),[
             'criminal_id'=>'required'
+        ],
+        [
+            'criminal_id.required' => 'የእስረኛ መረጃ ያስገቡ',
         ]);
         if($validation->fails()){
         return response()->json([
@@ -113,7 +116,10 @@ return response()->json([
     {
         $validation = Validator::make($request->all(),[
             'criminal_id'=>'required'
-            ]);
+            ],
+        [
+            'criminal_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+        ]);
             if($validation->fails()){
             return response()->json([
             'status'=>422,
