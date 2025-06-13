@@ -479,6 +479,46 @@ class PrisionersController extends Controller
         ]);
     }
 
+    public function releasePrisoner(Request $request) {
+        $validation = Validator::make($request->all(),[
+            'prison_history_id' => 'required',
+            'release_reason'=>'required',
+            'reason'=>'required',
+        ],
+        [
+            'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
+            'release_reason.required' => 'የመፍቻ ምክንያት ይግለጹ',
+            'reason.required' => 'የመፍቻ ምክንያት ይምረጡ',
+        ]);
+
+        if($validation->fails()){
+            return response()->json([
+                'message' => $validation->messages()->first()
+            ], 422);
+        }
+
+        $prisonHistory = PrisionHistory::find($request->prison_history_id);
+        if(!$prisonHistory) {
+            return response()->json([
+                'message' => 'Prison History not found!',
+            ], 422);
+        }
+
+        $prisonHistory->date_of_release = now();
+        $prisonHistory->release_reason = request('release_reason');
+
+        if(request('reason') == 1) {
+            $prisonHistory->date_of_mercy_release = now();
+        } else {
+            $prisonHistory->end_date_of_arrest = now();
+        }
+
+        $prisonHistory->save();
+
+        return response()->json([
+            'message' => "Prisioner released Successfully",
+        ]);
+    }
 
     public function storeProperties(Request $request) {
         $validation = Validator::make($request->all(),[
