@@ -59,10 +59,10 @@ class Prisioner_crimeController extends Controller {
     public function update(Request $request, Prisioner_crime $prisionerCrime) {
 
         $request->validate([
-            'prision_history_id' => 'required',
-            'crime_id' => 'required',
-            'crime_description' => 'required',
-            'status' => 'required'
+    'prision_history_id' => 'required|exists:prison_histories,id',
+    'crime_id' => 'required|exists:crimes,id',
+    'crime_description' => 'required|string|max:1000',
+    'status' => 'required|string|max:255',
         ],
     [
             'prision_history_id.required' => 'የእስረኛ መረጃ ያስገቡ',

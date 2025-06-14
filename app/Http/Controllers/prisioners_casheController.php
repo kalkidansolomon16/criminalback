@@ -95,10 +95,10 @@ class prisioners_casheController extends Controller {
     public function update(Request $request, Prisioners_cashe $prisioners_cashe) {
 
         $request->validate([
-            'date' => 'required',
-            'amount' => 'required',
-            'type' => 'required',
-            'prision_history_id' => 'required'
+    'date' => 'required|date',
+    'amount' => 'required|numeric|min:0',
+    'type' => 'required|string|max:255',
+    'prision_history_id' => 'required|exists:prison_histories,id',
         ],
     [
             'date.required' => 'ቀን ያስገቡ',

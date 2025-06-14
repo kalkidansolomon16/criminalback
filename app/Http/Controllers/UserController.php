@@ -32,17 +32,17 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(),[
-            'full_name' => 'required|max:255',
-            'sex' => 'required',
-            'age' => 'required',
-            // 'password' => 'required|min:8',
-            'user_name' => 'required',
-            'address' => 'required',
-            'phone_number' => 'required',
-            // 'criminal_id' => 'required',
-            'role' => 'required',
-            'photo' => 'sometimes',
-            'signature' => 'sometimes',
+            'full_name'     => 'required|string|max:255',
+            'sex'           => 'required|in:male,female',
+            'age'           => 'required|integer|min:0|max:120',
+            'password'      => 'required|string|min:8|confirmed',
+            'user_name'     => 'required|string|max:255|unique:users,user_name',
+            'address'       => 'required|string|max:255',
+            'phone_number'  => 'required|string|regex:/^[0-9+\-\s]{7,15}$/',
+            'role'          => 'required|string',
+            'photo'         => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'signature'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+
 
      ],
     [
@@ -136,15 +136,16 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validation = Validator::make($request->all(),[
-            'full_name' => 'required|max:255',
-            'sex_id' => 'required',
-            'age' => 'required',
-            'password' => 'required|min:8',
-            'user_name' => 'required|user_name|unique:users',
-            'address' => 'required',
-            'phone_number' => 'required',
-            // 'criminal_id' => 'required',
-            'role_id' => 'required',
+            'full_name'     => 'required|string|max:255',
+            'sex'           => 'required|in:male,female,other',
+            'age'           => 'required|integer|min:0|max:120',
+            'password'      => 'nullable|string|min:8|confirmed',
+            'user_name'     => 'required|string|max:255|unique:users,user_name,' . $user->id,
+            'address'       => 'required|string|max:255',
+            'phone_number'  => 'required|string|regex:/^[0-9+\-\s]{7,15}$/',
+            'role'          => 'required|string',
+            'photo'         => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'signature'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             
         ],
     [

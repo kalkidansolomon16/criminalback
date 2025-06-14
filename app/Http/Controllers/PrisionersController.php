@@ -111,15 +111,15 @@ use Illuminate\Support\Facades\Validator;
         public function storeBasicInformation(Request $request)
         {
             $validation = Validator::make($request->all(),[
-                'first_name' => 'required',
-                'middle_name' => 'required',
-                'last_name' => 'required',
-                'date_of_birth' => 'required',
-                'mother_name' => 'required',
-                'sex' => 'required',
-                'birth_district' => 'required',
-                'birth_town_id' => 'required',
-                'ethnic_group_id' => 'required',
+    'first_name' => 'required|string|max:255',
+    'middle_name' => 'required|string|max:255',
+    'last_name' => 'required|string|max:255',
+    'date_of_birth' => 'required|date',
+    'mother_name' => 'required|string|max:255',
+    'sex' => 'required',
+    'birth_district' => 'required|string|max:255',
+    'birth_town_id' => 'required|exists:towns,id',
+    'ethnic_group_id' => 'required|exists:ethnic_groups,id',
                 
             ],
             [
@@ -188,18 +188,18 @@ use Illuminate\Support\Facades\Validator;
 
         public function storePersonalInfo(Request $request) {
             $validation = Validator::make($request->all(),[
-                'prison_history_id' => 'required',
-                'phone_number' => 'required',
-                'closest_respondent' => 'required',
-                'closest_respondent_district' => 'required',
-                'religion_id' => 'required',
-                'mobile_number' => 'required',
-                'closest_respondent_town_id' => 'required',
-                'current_district' => 'required',
-                'job' => 'required',
-                'current_city_id' => 'required',
-                'educational_level_id' => 'required',
-                'date_time_entered' => 'required',
+    'prison_history_id' => 'required',
+    'phone_number' => 'required|string|max:20',
+    'closest_respondent' => 'required|string|max:255',
+    'closest_respondent_district' => 'required|string|max:255',
+    'religion_id' => 'required|exists:religions,id',
+    'mobile_number' => 'required|string|max:20',
+    'closest_respondent_town_id' => 'required|exists:towns,id',
+    'current_district' => 'required|string|max:255',
+    'job' => 'required|string|max:255',
+    'current_city_id' => 'required|exists:cities,id',
+    'educational_level_id' => 'required|exists:educational_levels,id',
+    'date_time_entered' => 'required|date',
                 
             ],
         [
@@ -264,20 +264,20 @@ use Illuminate\Support\Facades\Validator;
 
     public function storeApperance(Request $request) {
         $validation = Validator::make($request->all(),[
-            'prison_history_id' => 'required',
-            'hair_type_id' => 'required',
-            'nose_id' => 'required',
-            'eye_id' => 'required',
-            'teeth_id' => 'required',
-            'lip_id' => 'required',
-            'ear_id' => 'required',
-            'height' => 'required',
-            'face' => 'required',
-            'forehead' => 'required',
-            'unique_appearance' => 'required',
-            'extra_description' => 'required',
-            'citizenship' => 'required',
-            'photo' => 'image|max:2048'
+    'prison_history_id' => 'required|integer|exists:prision_histories,id',
+    'hair_type_id' => 'required|integer|exists:hair_types,id',
+    'nose_id' => 'required|integer|exists:noses,id',
+    'eye_id' => 'required|integer|exists:eyes,id',
+    'teeth_id' => 'required',
+    'lip_id' => 'required|integer|exists:lips,id',
+    'ear_id' => 'required|integer|exists:ears,id',
+    'height' => 'required|numeric',  // height in cm, adjust min/max as needed
+    'face' => 'required|string|max:255',
+    'forehead' => 'required|string|max:255',
+    'unique_appearance' => 'required|string|max:500',
+    'extra_description' => 'required|string|max:1000',
+    'citizenship' => 'required|string|max:255',
+    'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ],
         [
             'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
@@ -344,13 +344,13 @@ use Illuminate\Support\Facades\Validator;
 
         public function storeMedicalHistory(Request $request) {
             $validation = Validator::make($request->all(),[
-                'prison_history_id' => 'required',
-                'disease_type_id' => 'required',
-                'hospital_name' => 'required',
-                'doctor_name' => 'required',
-                'date' => 'required',
-                'doctor_address' => 'required',
-                'medical_expense' => 'required',
+    'prison_history_id' => 'required|integer|exists:prison_histories,id',
+    'disease_type_id' => 'required|integer|exists:disease_types,id',
+    'hospital_name' => 'required|string|max:255',
+    'doctor_name' => 'required|string|max:255',
+    'date' => 'required|date',
+    'doctor_address' => 'required|string|max:500',
+    'medical_expense' => 'required|numeric|min:0',
             ],
         [
             'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
@@ -443,13 +443,13 @@ use Illuminate\Support\Facades\Validator;
 
         public function storeCourtHistory(Request $request) {
             $validation = Validator::make($request->all(),[
-                'prison_history_id' => 'required',
-                'court_id'=>'required',
-                'updated_verdict_court'=>'required',
-                'appointment_date'=>'required',
-                'verdict_description'=>'required',
-                'status'=>'required',
-                'criminal_status'=>'required',
+            'prison_history_id' => 'required|exists:prison_histories,id',
+            'court_id' => 'required|exists:courts,id',
+            'updated_verdict_court' => 'required|string|max:255',
+            'appointment_date' => 'required|date',
+            'verdict_description' => 'required|string|max:1000',
+            'status' => 'required|string|max:255',
+            'criminal_status' => 'required|string|max:255',
             ],
             [
                 'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
