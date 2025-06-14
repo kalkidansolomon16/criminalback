@@ -35,8 +35,17 @@ class DashboardController extends Controller {
 			->orderByRaw("MIN(date_time_entered) DESC")
 			->get();
 		
+		$thisMonth = $monthlyArrests->pluck('month');
+		$ret = [];
+		foreach($thisMonth as $a) {
+			if(is_null($a)) {
+				$ret[] = '-';
+			} else {
+				$ret[] = $a;
+			}
+		}
 		$return['monthly_arrests'] = [
-			'keyss' => $monthlyArrests->pluck('month'),
+			'keyss' => $ret,
 			'valuess' => $monthlyArrests->pluck('total_arrests'),
 		];
 
