@@ -140,13 +140,13 @@ class PrisionerCourtStoryController extends Controller
     public function update(Request $request, string $id)
     {
         $validation = Validator::make($request->all(),[
-            'prision_history_id'=>'required',
-            'court_id'=>'required',
-            'updated_verdict_court'=>'required',
-            'appointment_date'=>'required',
-            'verdict_description'=>'required',
-            'status'=>'required',
-            'criminal_status'=>'required',
+    'prision_history_id' => 'required|exists:prison_histories,id',
+    'court_id' => 'required|exists:courts,id',
+    'updated_verdict_court' => 'required|string|max:255',
+    'appointment_date' => 'required|date',
+    'verdict_description' => 'required|string|max:1000',
+    'status' => 'required|string|max:255',
+    'criminal_status' => 'required|string|max:255',
             
         ],
     [

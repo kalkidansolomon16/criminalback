@@ -65,8 +65,6 @@ class PrisionerPropertyController extends Controller
             'type_id'=>'required',
             'amount'=>'required',
             'description'=>'required',
-           
-            
         ]);
         if($validation->fails()){
             return response()->json([

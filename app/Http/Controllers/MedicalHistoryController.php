@@ -141,15 +141,15 @@ class MedicalHistoryController extends Controller
     public function update(Request $request, string $id)
     {
         $validation = Validator::make($request->all(),[
-            'user_id'=>'required',
-            'prision_history_id'=>'required',
-            'disease_type_id'=>'required',
-            'hospital_name'=>'required',
-            'doctor_name'=>'required',
-            'date'=>'required',
-            'doctor_address'=>'required',
-            'medical_expense'=>'required',
-            'guards'=>'required'
+            'user_id' => 'required|exists:users,id',
+            'prision_history_id' => 'required|exists:prison_histories,id',
+            'disease_type_id' => 'required|exists:disease_types,id',
+            'hospital_name' => 'required|string|max:255',
+            'doctor_name' => 'required|string|max:255',
+            'date' => 'required|date',
+            'doctor_address' => 'required|string|max:255',
+            'medical_expense' => 'required|numeric|min:0',
+            'guards' => 'required|integer|min:0',
         ],
     [
             'user_id.required' => 'ሰራተኛ መረጃ ያስገቡ',

@@ -96,18 +96,20 @@ class PrisonerAttendanceController extends Controller
 
     public function update(Request $request, Prisoner_attendance $attendance) {
 
-        $request->validate([
-            'status' => 'required',
-            'date' => 'required/date',
-            'time' => 'required',
-            'prisioner_id' => 'required',
-        ],
-    [
-            'status.required' => 'ሁኔታ ያስገቡ',
-            'date.required' => 'ቀን ያስገቡ',
-            'time.required' => 'ሰዓት ያስገቡ',
-            'prisioner_id.required' => 'የእስረኛ መረጃ ያስገቡ',
-    ]);
+$request->validate([
+    'status' => 'required|string|max:255',
+    'date' => 'required|date',
+    'time' => 'required|string|max:255',
+    'prisoner_id' => 'required|exists:prisoners,id',
+], [
+    'status.required' => 'ሁኔታ ያስገቡ',
+    'date.required' => 'ቀን ያስገቡ',
+    'date.date' => 'ቀን ትክክለኛ ቀን መሆን አለበት',
+    'time.required' => 'ሰዓት ያስገቡ',
+    'prisoner_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+    'prisoner_id.exists' => 'የተመረጠው እስረኛ አልተገኘም',
+]);
+
 
         $attendance->status = $request->status;
         $attendance->date = $request->date;
