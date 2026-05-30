@@ -7,7 +7,6 @@ use App\Models\Region;
 use App\Models\Town;
 use App\Models\User;
 use App\Settings\Constants;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,107 +15,128 @@ class RegionsSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run():void
-   {
+    public function run(): void
+    {
+        $this->seedUsers();
+        $this->seedRegions();
+    }
 
-        $user = new User();
-        $user->full_name = 'Kalkidan Solomon';
-        $user->sex = Constants::ሴት;
-        $user->age = 33;
-        $user->password = Hash::make('123456789');
-        $user->user_name = 'kal';
-        $user->address = '';
-        $user->phone_number = '0987654321';
-        $user->role = Constants::አስተዳዳሪ;
-        $user->photo = '';
-        $user->signature = '';
-        $user->save();
+    private function seedUsers(): void
+    {
+        $adminAttributes = [
+            'full_name' => 'Administrator',
+            'sex' => Constants::ሴት,
+            'age' => 33,
+            'password' => Hash::make('password'),
+            'address' => '',
+            'phone_number' => '0987654321',
+            'role' => Constants::አስተዳዳሪ,
+            'photo' => '',
+            'signature' => '',
+        ];
 
-        $doc = new User();
-        $doc->full_name = 'Tigist Girma';
-        $doc->sex = Constants::ሴት;
-        $doc->age = 23;
-        $doc->password = Hash::make('123456789');
-        $doc->user_name = 'tg';
-        $doc->address = '';
-        $doc->phone_number = '0987654322';
-        $doc->role = Constants::ሀኪም;
-        $doc->photo = '';
-        $doc->signature = '';
-        $doc->save();
+        $admin = User::where('user_name', 'admin@criminal.com')->first();
+        $legacyAdmin = User::where('user_name', 'kal')->first();
 
-        $police = new User();
-        $police->full_name = 'Seble Wongel';
-        $police->sex = Constants::ሴት;
-        $police->age = 24;
-        $police->password = Hash::make('123456789');
-        $police->user_name = 'seble';
-        $police->address = '';
-        $police->phone_number = '0987654324';
-        $police->role = Constants::ፖሊስ;
-        $police->photo = '';
-        $police->signature = '';
-        $police->save();
+        if ($legacyAdmin && $admin && $legacyAdmin->id !== $admin->id) {
+            $legacyAdmin->delete();
+        } elseif ($legacyAdmin && ! $admin) {
+            $legacyAdmin->update(array_merge($adminAttributes, ['user_name' => 'admin@criminal.com']));
+            $admin = $legacyAdmin->fresh();
+        }
 
-        $guard = new User();
-        $guard->full_name = 'Tamrat Abebe';
-        $guard->sex = Constants::ወንድ;
-        $guard->age = 24;
-        $guard->password = Hash::make('123456789');
-        $guard->user_name = 'girma';
-        $guard->address = '';
-        $guard->phone_number = '0987654323';
-        $guard->role = Constants::ጥበቃ;
-        $guard->photo = '';
-        $guard->signature = '';
-        $guard->save();
+        User::updateOrCreate(
+            ['user_name' => 'admin@criminal.com'],
+            $adminAttributes
+        );
 
-        $regions = 
+        User::updateOrCreate(
+            ['user_name' => 'tg'],
             [
-                ["id" => 1, "name" => "አዲስ አበባ"],
-                ["id" => 2, "name" => "አፋር"],
-                [
-                    "id" => 3, 
-                    "name" => "አምሐራ", 
-                    'cities' => [
-                        ['name' => 'ባህር ዳር'],
-                        ['name' => 'ጎንደር'],
-                        [
-                            'name' => 'ደሴ', 
-                            'towns' => [
-                                ['name' => 'Buabua wha'],
-                                ['name' => 'Piyasa'],
-                            ] /// do the same for the others
+                'full_name' => 'Tigist Girma',
+                'sex' => Constants::ሴት,
+                'age' => 23,
+                'password' => Hash::make('123456789'),
+                'address' => '',
+                'phone_number' => '0987654322',
+                'role' => Constants::ሀኪም,
+                'photo' => '',
+                'signature' => '',
+            ]
+        );
+
+        User::updateOrCreate(
+            ['user_name' => 'seble'],
+            [
+                'full_name' => 'Seble Wongel',
+                'sex' => Constants::ሴት,
+                'age' => 24,
+                'password' => Hash::make('123456789'),
+                'address' => '',
+                'phone_number' => '0987654324',
+                'role' => Constants::ፖሊስ,
+                'photo' => '',
+                'signature' => '',
+            ]
+        );
+
+        User::updateOrCreate(
+            ['user_name' => 'girma'],
+            [
+                'full_name' => 'Tamrat Abebe',
+                'sex' => Constants::ወንድ,
+                'age' => 24,
+                'password' => Hash::make('123456789'),
+                'address' => '',
+                'phone_number' => '0987654323',
+                'role' => Constants::ጥበቃ,
+                'photo' => '',
+                'signature' => '',
+            ]
+        );
+    }
+
+    private function seedRegions(): void
+    {
+        $regions = [
+            ['name' => 'አዲስ አበባ'],
+            ['name' => 'አፋር'],
+            [
+                'name' => 'አምሐራ',
+                'cities' => [
+                    ['name' => 'ባህር ዳር'],
+                    ['name' => 'ጎንደር'],
+                    [
+                        'name' => 'ደሴ',
+                        'towns' => [
+                            ['name' => 'Buabua wha'],
+                            ['name' => 'Piyasa'],
                         ],
                     ],
                 ],
-                ["id" => 4, "name" => "ኦሮሚያ"],
-                ["id" => 5, "name" => "ሶማሊ"],
-                ["id" => 6, "name" => "ትግራይ"],
-                ["id" => 7, "name" => "SNNPR"],
-                ["id" => 8, "name" => "በኒሻንጉል-ጉሙዝ"],
-                ["id" => 9, "name" => "ገምቤላ"],
-                ["id" => 10, "name" => "ዳይሬ ዳዋ"],
-                ["id" => 11, "name" => "ሐረሪ"]
-            
-           ];
+            ],
+            ['name' => 'ኦሮሚያ'],
+            ['name' => 'ሶማሊ'],
+            ['name' => 'ትግራይ'],
+            ['name' => 'SNNPR'],
+            ['name' => 'በኒሻንጉል-ጉሙዝ'],
+            ['name' => 'ገምቤላ'],
+            ['name' => 'ዳይሬ ዳዋ'],
+            ['name' => 'ሐረሪ'],
+        ];
 
-        foreach($regions as $region) {
-            $r = new Region();
-            $r->name = $region['name'];
-            $r->save();
+        foreach ($regions as $region) {
+            $r = Region::firstOrCreate(['name' => $region['name']]);
 
-            foreach($region['cities'] ?? [] as $city) {
-                $c = new City();
-                $c->name = $city['name'];
-                $c->region_id = $r->id;
-                $c->save();
+            foreach ($region['cities'] ?? [] as $city) {
+                $c = City::firstOrCreate(
+                    ['name' => $city['name'], 'region_id' => $r->id]
+                );
 
-                foreach($city['towns'] ?? [] as $town) {
-                    $t = new Town();
-                    $t->name = $town['name'] ?? '';
-                    $t->city_id = $c->id;
-                    $t->save(); // this seeder works
+                foreach ($city['towns'] ?? [] as $town) {
+                    Town::firstOrCreate(
+                        ['name' => $town['name'] ?? '', 'city_id' => $c->id]
+                    );
                 }
             }
         }

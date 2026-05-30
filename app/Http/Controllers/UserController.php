@@ -33,9 +33,9 @@ class UserController extends Controller
     {
         $validation = Validator::make($request->all(),[
             'full_name'     => 'required|string|max:255',
-            'sex'           => 'required|in:male,female',
+            'sex'           => 'required',
             'age'           => 'required|integer|min:0|max:120',
-            'password'      => 'required|string|min:8|confirmed',
+            'password'      => 'required|string|min:8',
             'user_name'     => 'required|string|max:255|unique:users,user_name',
             'address'       => 'required|string|max:255',
             'phone_number'  => 'required|string|regex:/^[0-9+\-\s]{7,15}$/',
@@ -137,10 +137,10 @@ class UserController extends Controller
     {
         $validation = Validator::make($request->all(),[
             'full_name'     => 'required|string|max:255',
-            'sex'           => 'required|in:male,female,other',
+            'sex'           => 'required',
             'age'           => 'required|integer|min:0|max:120',
             'password'      => 'nullable|string|min:8|confirmed',
-            'user_name'     => 'required|string|max:255|unique:users,user_name,' . $user->id,
+            'user_name'     => 'required|string|max:255|unique',
             'address'       => 'required|string|max:255',
             'phone_number'  => 'required|string|regex:/^[0-9+\-\s]{7,15}$/',
             'role'          => 'required|string',
