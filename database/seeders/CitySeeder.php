@@ -20,9 +20,7 @@ class CitySeeder extends Seeder
                 ['name' => 'መቐሌ'], // Mekelle
                 ['name' => 'አዳማ'], // Adama
                 ['name' => 'አዋሳ'], // Awassa
-                ['name' => 'ባህር ዳር'], // Bahir Dar
-                ['name' => 'ጎንደር'], // Gonder
-                ['name' => 'ደሴ'], // Dessie
+
                 ['name' => 'ጅምማ'], // Jimma
                 ['name' => 'ጅጅጋ'], // Jijiga
                 ['name' => 'ሻሻማኔ'], // Shashamane
@@ -89,6 +87,6 @@ class CitySeeder extends Seeder
             
         ];
 
-        DB::table('cities')->insert($cities);
+        // DB::table('cities')->insert($cities);
     }
 }

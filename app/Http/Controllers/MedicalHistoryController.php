@@ -16,18 +16,19 @@ class MedicalHistoryController extends Controller
      */
     public function index()
     {
-        $medicalHostory = MedicalHistory::all();
-        if($medicalHostory){
-
+        $medicalHistory = MedicalHistory::with(['prisonerHistory.prisoner','diseaseType'])->paginate(10);
+    
+        if ($medicalHistory->isNotEmpty()) {
             return response()->json([
-                'medicalHistory'=>$medicalHostory,
-                'message'=>'Success'
+                'data' => $medicalHistory,
+                'status' => 200,
+                'message' => 'Success'
             ]);
-        }
-        else{
+        } else {
             return response()->json([
-                'status'=>422,
-                'message'=>'Medical History Not Found'
+                'medical_info' => [],
+                'status' => 422,
+                'message' => 'Medical History Not Found'
             ]);
         }
     }
@@ -36,7 +37,7 @@ class MedicalHistoryController extends Controller
     {
         $validation = Validator::make($request->all(),[
             'user_id'=>'required',
-            'criminal_id'=>'required',
+            'prision_history_id'=>'required',
             'disease_type_id'=>'required',
             'hospital_name'=>'required',
             'doctor_name'=>'required',
@@ -44,7 +45,17 @@ class MedicalHistoryController extends Controller
             'doctor_address'=>'required',
             'medical_expense'=>'required',
             
-        ]);
+        ],
+    [
+            'user_id.required' => 'ሰራተኛ መረጃ ያስገቡ',
+            'prision_history_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+            'disease_type_id.required' => 'የበሽታ አይነት ይምረጡ',
+            'hospital_name.required' => 'የሆስፒታል ስም ያስገቡ',
+            'doctor_name.required' => 'የዶክተር ስም ያስገቡ',
+            'date.required' => 'ቀን ያስገቡ',
+            'doctor_address.required' => 'የዶክተር አድራሻ ያስገቡ',
+            'medical_expense.required' => 'የሕክምና ወጪ ያስገቡ',
+    ]);
         if($validation->fails()){
         return response()->json([
         'status'=>422,
@@ -55,7 +66,7 @@ class MedicalHistoryController extends Controller
     // Create a new MedicalHistory instance
     $medicalHistory = new MedicalHistory();
     $medicalHistory->user_id = $request->user_id;
-    $medicalHistory->criminal_id = $request->criminal_id;
+    $medicalHistory->prision_history_id = $request->prision_history_id;
     $medicalHistory->disease_type_id = $request->disease_type_id;
     $medicalHistory->hospital_name = $request->hospital_name;
     $medicalHistory->doctor_name = $request->doctor_name;
@@ -67,14 +78,14 @@ class MedicalHistoryController extends Controller
     // Save the Medical History first
     $medicalHistory->save();
 
-    $guards = explode(',',$request->input('guard_id'));
-    foreach($guards as $guard){
-$criminalGuard = new CriminalGuard();
-$criminalGuard->criminal_id =  $medicalHistory->criminal_id;
-$criminalGuard->guard_id =  $guard;
-$criminalGuard->save();
+//     $guards = explode(',',$request->input('guard_id'));
+//     foreach($guards as $guard){
+// $criminalGuard = new CriminalGuard();
+// $criminalGuard->prision_history_id =  $medicalHistory->prision_history_id;
+// $criminalGuard->guard_id =  $guard;
+// $criminalGuard->save();
 
-    }
+//     }
 
     // Attach guards to the medical history
     // Assuming guards are being sent as an array from the front-end
@@ -130,16 +141,27 @@ $criminalGuard->save();
     public function update(Request $request, string $id)
     {
         $validation = Validator::make($request->all(),[
-            'user_id'=>'required',
-            'criminal_id'=>'required',
-            'disease_type_id'=>'required',
-            'hospital_name'=>'required',
-            'doctor_name'=>'required',
-            'date'=>'required',
-            'doctor_address'=>'required',
-            'medical_expense'=>'required',
-            'guards'=>'required'
-        ]);
+            'user_id' => 'required|exists:users,id',
+            'prision_history_id' => 'required|exists:prison_histories,id',
+            'disease_type_id' => 'required|exists:disease_types,id',
+            'hospital_name' => 'required|string|max:255',
+            'doctor_name' => 'required|string|max:255',
+            'date' => 'required|date',
+            'doctor_address' => 'required|string|max:255',
+            'medical_expense' => 'required|numeric|min:0',
+            'guards' => 'required|integer|min:0',
+        ],
+    [
+            'user_id.required' => 'ሰራተኛ መረጃ ያስገቡ',
+            'prision_history_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+            'disease_type_id.required' => 'የበሽታ አይነት ይምረጡ',
+            'hospital_name.required' => 'የሆስፒታል ስም ያስገቡ',
+            'doctor_name.required' => 'የዶክተር ስም ያስገቡ',
+            'date.required' => 'ቀን ያስገቡ',
+            'doctor_address.required' => 'የዶክተር አድራሻ ያስገቡ',
+            'medical_expense.required' => 'የሕክምና ወጪ ያስገቡ',
+            'guards.required' => 'መከታተያ መረጃ ያስገቡ'
+    ]);
         if($validation->fails()){
         return response()->json([
         'status'=>422,
@@ -149,7 +171,7 @@ $criminalGuard->save();
         else{
 $medicalHostory = new MedicalHistory();
 $medicalHostory->user_id = request('user_id');
-$medicalHostory->criminal_id = request('criminal_id');
+$medicalHostory->prision_history_id = request('prision_history_id');
 $medicalHostory->disease_type_id = request('disease_type_id');
 $medicalHostory->hospital_name = request('hospital_name');
 $medicalHostory->doctor_name = request('doctor_name');

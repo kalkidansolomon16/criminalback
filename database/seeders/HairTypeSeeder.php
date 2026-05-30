@@ -28,11 +28,11 @@ class HairTypeSeeder extends Seeder
                 ],
                 [
                     "id"=>4,
-                    "name"=>"ጥቁርጥቁር"
+                    "name"=>"ጥቁር"
                 ],
                 [
                     "id"=>5,
-                    "name"=>"ቡኒቡኒ"
+                    "name"=>"ቡኒ"
                 ],
                 [
                     "id"=>6,

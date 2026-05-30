@@ -13,11 +13,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        passthru('php artisan migrate:fresh');
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            RegionsSeeder::class,
+            CourtSeeder::class,
+            DiseaseTypeSeeder::class,
+            EarSeeder::class,
+            EducationalLevelsSeeder::class,
+            CrimeSeeder::class,
+            EthnicGroupSeeder::class,
+            HairTypeSeeder::class,
+            LipSeeder::class,
+            EyeSeeder::class,
+            NoseSeeder::class,
+            prisonercellSeeder::class,
+            TeethSeeder::class,
+            TypeSeeder::class,
+            ReligionSeeder::class,
+            EducationalLevelsSeeder::class,
+            PrisonerSeeder::class,
         ]);
     }
 }

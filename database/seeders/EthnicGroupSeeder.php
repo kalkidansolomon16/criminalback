@@ -14,7 +14,7 @@ class EthnicGroupSeeder extends Seeder
     public function run(): void
     {
         $ethnic_groups = [
-            ['name' => 'አፋር'],
+    ['name' => 'አፋር'],
     ['name' => 'አጋው-አዊ'],
     ['name' => 'አጋው-ሃምይራ'],
     ['name' => 'አላባ'],

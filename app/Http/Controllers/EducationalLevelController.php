@@ -10,43 +10,62 @@ use Illuminate\Support\Facades\Validator;
 
 class EducationalLevelController extends Controller
 {
-    public function index()
-    {
-        $educations = EducationalLevel::all(); // Fixed typo from $towm to $education
-        return response()->json([
-            'message' => 'Success',
-            'data' => $educations
-        ]);
-    }
 
-    public function store(Request $request)
-    {
-        $fields = $request->validate([
-            'name' => 'required|string|max:255', // Added validation for string and max length
-        ]);
-
-        $education = EducationalLevel::create($fields);
-        return response()->json($education, 201); // Return the created education with a 201 status
-    }
-
-    public function show(EducationalLevel $education)
-    {
-        return response()->json($education); // Return the education as a JSON response
-    }
-
-    public function update(Request $request, EducationalLevel $education)
-    {
-        $fields = $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
-
-        $education->update($fields);
-        return response()->json($education); // Return the updated education
-    }
-
-    public function destroy(EducationalLevel $education)
-    {
-        $education->delete();
-        return response()->json(['message' => 'education deleted successfully!']); // Corrected message
-    }
-}
+                public function index() {
+            
+                    $educations = EducationalLevel::all();
+            
+                    return response()->json([
+                        'data' => $educations
+                    ]);
+                }
+            
+                public function store(Request $request) {
+            
+                    $request->validate([
+                        'name' => 'required|string|max:255',
+                    ],
+                [
+                        'name.required' => 'ስም ያስገቡ', // Custom error message for name
+                    ]);
+            
+                    $education = new EducationalLevel();
+                    $education->name = $request->name;
+                    $education->save();
+            
+                    return response()->json([
+                        'message' => 'education Successfully Created',
+                    ], 201);
+                }
+            
+                public function show(EducationalLevel $education) {
+                    
+                    return response()->json([
+                        'data' => $education
+                    ]); 
+                }
+            
+                public function update(Request $request, EducationalLevel $education) {
+            
+                    $request->validate([
+                        'name' => 'required|string|max:255',
+                    ],
+                [
+                        'name.required' => 'ስም ያስገቡ', // Custom error message for name
+                    ]);
+            
+                    $education->name = $request->name;
+                    $education->save();
+            
+                    return response()->json([
+                        'message' => 'education Updated Successfully',
+                    ]);
+                }
+            
+                public function destroy(EducationalLevel $education) {
+                    $education->delete();
+                    return response()->json(['message' => 'education deleted successfully!']);
+                }
+            }
+            
+    

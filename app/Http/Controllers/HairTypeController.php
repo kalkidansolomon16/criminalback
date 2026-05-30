@@ -7,54 +7,62 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
-class HairTypeController extends Controller
-{
-    public function index()
-    {
-        $hair = HairType::all();
-        if($hair){
-            return response()->json([
-                'message'=>'Sucess',
-                'data'=>$hair
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>404,
-                'message'=>'Hair type not found'
-            ]);
-        }
-    }
+class HairTypeController extends Controller{
 
-    public function store(Request $request)
-    {
-        $fields = $request->validate([
-            'name' =>'required',
+
+    public function index() {
+
+        $hairTypes = HairType::all();
+
+        return response()->json([
+            'data' => $hairTypes
         ]);
-        $type =HairType::create($fields);
-        return $type;
     }
 
+    public function store(Request $request) {
 
-    public function show(HairType $type)
-    {
-        return $type;
-    }
-
-
-    public function update(Request $request, HairType $type)
-    {
-        $fields = $request->validate([
-            'name' =>'required',
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ],
+        [
+            'name.required' => 'ስም ያስገቡ', // Custom error message for name
         ]);
-        $type->update($fields);
-        return $type;
+
+        $hair = new HairType();
+        $hair->name = $request->name;
+        $hair->save();
+
+        return response()->json([
+            'message' => 'hair Successfully Created',
+        ], 201);
     }
 
+    public function show(HairType $hair) {
+        
+        return response()->json([
+            'data' => $hair
+        ]); 
+    }
 
-    public function destroy(HairType $type)
-    {
-        $type->delete();
-        return ['message' =>'type deleted successully!'];
+    public function update(Request $request, HairType $hair) {
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ],
+        [
+            'name.required' => 'ስም ያስገቡ', // Custom error message for name
+        ]);
+
+        $hair->name = $request->name;
+        $hair->save();
+
+        return response()->json([
+            'message' => 'hair Updated Successfully',
+        ]);
+    }
+
+    public function destroy(HairType $hair) {
+        $hair->delete();
+        return response()->json(['message' => 'hair deleted successfully!']);
     }
 }

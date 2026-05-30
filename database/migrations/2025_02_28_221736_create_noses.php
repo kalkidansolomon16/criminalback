@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('case_histories', function (Blueprint $table) {
+        Schema::create('noses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('criminal_id')->references('id')->on('criminals')->onDelete('cascade');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('case_histories');
+        Schema::dropIfExists('noses');
     }
 };

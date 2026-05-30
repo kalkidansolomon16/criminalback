@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('date');
             $table->json('file');
             $table->unsignedBigInteger('criminal_id');
-            $table->foreign('criminal_id')->references('id')->on('criminals')->onDelete('cascade');
+            $table->foreignId('prision_history_id')->references('id')->on('prision_histories')->onDelete('cascade');
        
             $table->timestamps();
         });

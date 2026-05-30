@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('criminal_guards', function (Blueprint $table) {
             $table->id();
             $table->foreignId('guard_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('criminal_id')->references('id')->on('criminals')->onDelete('cascade');
+            $table->foreignId('prision_history_id')->references('id')->on('prision_histories')->onDelete('cascade');
             $table->timestamps();
         });
     }

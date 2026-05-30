@@ -2,49 +2,68 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Religion;
 use Illuminate\Http\Request;
 
-class ReligionController extends Controller
-{
-    public function index()
-    {
-        $religions = Religion::all(); // Fixed typo from $towm to $religion
+class ReligionController extends Controller {
+
+    public function index() {
+
+        $religions = Religion::all();
+
         return response()->json([
-            'message' => 'Success',
             'data' => $religions
         ]);
     }
 
-    public function store(Request $request)
-    {
-        $fields = $request->validate([
-            'name' => 'required|string|max:255', // Added validation for string and max length
-        ]);
+    public function store(Request $request) {
 
-        $religion = Religion::create($fields);
-        return response()->json($religion, 201); // Return the created religion with a 201 status
-    }
-
-    public function show(Religion $religion)
-    {
-        return response()->json($religion); // Return the religion as a JSON response
-    }
-
-    public function update(Request $request, Religion $religion)
-    {
-        $fields = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
-        ]);
+            'code' => 'required|string|max:255',
+        ],
+    [
+            'name.required' => 'የሃይማኖት ስም ያስገቡ',
+            'code.required' => 'ኮድ ያስገቡ',
+    ]);
 
-        $religion->update($fields);
-        return response()->json($religion); // Return the updated religion
+        $religion = new Religion();
+        $religion->name = $request->name;
+        $religion->code = $request->code;
+        $religion->save();
+
+        return response()->json([
+            'message' => 'Religion Successfully Created',
+        ], 201);
     }
 
-    public function destroy(Religion $religion)
-    {
+    public function show(Religion $religion) {
+        
+        return response()->json([
+            'data' => $religion
+        ]); 
+    }
+
+    public function update(Request $request, Religion $religion) {
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ],
+    [
+            'name.required' => 'የሃይማኖት ስም ያስገቡ',
+    ]);
+
+        $religion->name = $request->name;
+        $religion->code = $request->code;
+        $religion->save();
+
+        return response()->json([
+            'message' => 'Religion Updated Successfully',
+        ]);
+    }
+
+    public function destroy(Religion $religion) {
         $religion->delete();
-        return response()->json(['message' => 'religion deleted successfully!']); // Corrected message
+        return response()->json(['message' => 'Religion deleted successfully!']);
     }
 }

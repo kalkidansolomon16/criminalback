@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EthnicGroup extends Model
 {
-    //
+    protected $fillable = [
+        'name',
+    ];
 }

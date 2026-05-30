@@ -6,55 +6,65 @@ use App\Http\Controllers\Controller;
 use App\Models\Crime;
 use Illuminate\Http\Request;
 
-class CrimeController extends Controller
-{
-    public function index()
-    {
-        $crime = Crime::all();
-        if($crime){
-            return response()->json([
-                'message'=>'Sucess',
-                'data'=>$crime
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>404,
-                'message'=>'Hair type not found'
-            ]);
-        }
-    }
 
-
-    public function store(Request $request)
-    {
-        $fields = $request->validate([
-            'name' =>'required',
-        ]);
-        $Crime =Crime::create($fields);
-        return $Crime;
-    }
-
-
-    public function show(Crime $Crime)
-    {
-        return $Crime;
-    }
-
-
-    public function update(Request $request, Crime $Crime)
-    {
-        $fields = $request->validate([
-            'name' =>'required',
-        ]);
-        $Crime->update($fields);
-        return $Crime;
-    }
-
-
-    public function destroy(Crime $Crime)
-    {
-        $Crime->delete();
-        return ['message' =>'Crime deleted successully!'];
-    }
-}
+            class CrimeController extends Controller{
+            
+            
+                public function index() {
+            
+                    $crimes = Crime::all();
+            
+                    return response()->json([
+                        'data' => $crimes
+                    ]);
+                }
+            
+                public function store(Request $request) {
+            
+                    $request->validate([
+                        'name' => 'required|string|max:255',
+                    ],
+                    [
+                        'name.required' => 'ስም ያስገቡ', // Custom error message for name
+                    ]);
+            
+                    $crime = new Crime();
+                    $crime->name = $request->name;
+                    $crime->save();
+            
+                    return response()->json([
+                        'message' => 'crime Successfully Created',
+                    ], 201);
+                }
+            
+                public function show(Crime $crime) {
+                    
+                    return response()->json([
+                        'data' => $crime
+                    ]); 
+                }
+            
+                public function update(Request $request, Crime $crime) {
+            
+                    $request->validate([
+                        'name' => 'required|string|max:255',
+                    ],
+                    [
+                        'name.required' => 'ስም ያስገቡ', // Custom error message for name
+                    ]);
+            
+                    $crime->name = $request->name;
+                    $crime->save();
+            
+                    return response()->json([
+                        'message' => 'crime Updated Successfully',
+                    ]);
+                }
+            
+                public function destroy(Crime $crime) {
+                    $crime->delete();
+                    return response()->json(['message' => 'crime deleted successfully!']);
+                }
+            }
+            
+    

@@ -9,142 +9,64 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Validator;
 
-class CourtController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $court = Court::all();
-        if($court){
-            return response()->json([
-                'court'=>$court,
-                'message'=>'Success'
+    
+        class CourtController extends Controller{
+        
+        
+            public function index() {
+        
+                $courts = Court::all();
+        
+                return response()->json([
+                    'data' => $courts
+                ]);
+            }
+        
+            public function store(Request $request) {
+        
+                $request->validate([
+                    'name' => 'required|string|max:255',
+                ],
+            [
+                    'name.required' => 'ስም ያስገቡ', // Custom error message for name
             ]);
-        }
-        else{
-            return response()->json([
-                'status'=>404,
-                'message'=>'court not found'
-            ]);
-        }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $validation = Validator::make($request->all(),[
-            'name'=>'required'
-        ]);
-        if($validation->fails()){
-            return response()->json([
-                'status'=>422,
-                'message'=>$validation->messages()
-            ]);
-        }
-        else{
-            $court = Court::new();
-            $court->name = request('name');
-            $court->save();
-            return response()->json([
-                'message'=>"court added Successfully"
-            ]);
+        
+                $court = new Court();
+                $court->name = $request->name;
+                $court->save();
+        
+                return response()->json([
+                    'message' => 'court Successfully Created',
+                ], 201);
+            }
+        
+            public function show(Court $court) {
+                
+                return response()->json([
+                    'data' => $court
+                ]); 
+            }
+        
+            public function update(Request $request, Court $court) {
+        
+                $request->validate([
+                    'name' => 'required|string|max:255',
+                ],
+            [
+                    'name.required' => 'ስም ያስገቡ', // Custom error message for name
+                ]);
+        
+                $court->name = $request->name;
+                $court->save();
+        
+                return response()->json([
+                    'message' => 'court Updated Successfully',
+                ]);
+            }
+        
+            public function destroy(Court $court) {
+                $court->delete();
+                return response()->json(['message' => 'court deleted successfully!']);
+            }
         }
         
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $court = Court::find($id);
-        if($court){
-            return response()->json([
-                'court'=>$court,
-                'message'=>'Success'
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>422,
-                'message'=>'courtal  Not Found'
-            ]);
-        }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $court = Court::find($id);
-        if($court){
-            return response()->json([
-                'courtalLevel'=>$court,
-                'message'=>'Success'
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>422,
-                'message'=>'court not found'
-
-            ]);
-        }
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        $validation = Validator::make($request->all(),[
-            'name'=>'required',
-        ]);
-        if($validation->fails()){
-            return response()->json([
-                'status'=>422,
-                'message'=>$validation->messages()
-            ]);
-        }
-        else{
-            $court = Court::new();
-            $court->name = request('name');
-            $court->update();
-            return response()->json([
-                'message'=>"court added Successfully"
-            ]); 
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        $court = Court::find($id);
-        if($court){
-            $court->delete();
-            return response()->json([
-                'message'=>'court Deleted Successfully'
-            ]);
-        }
-        else{
-            return response()->json([
-                'message'=>'courtal  with this id not foud'
-            ]);
-        }
-    }
-}

@@ -20,8 +20,11 @@ class SexController extends Controller
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'name' => 'required|string|max:255', // Added validation for string and max length
-        ]);
+            'name' => 'required|string|max:255', 
+        ],
+    [
+            'name.required' => 'ጾታ ያስገቡ', // Custom error message for name
+    ]);
 
         $gender = Sex::create($fields);
         return response()->json($gender, 201); // Return the created gender with a 201 status
@@ -36,6 +39,9 @@ class SexController extends Controller
     {
         $fields = $request->validate([
             'name' => 'required|string|max:255',
+        ],
+    [
+            'name.required' => 'ጾታ ያስገቡ', // Custom error message for name
         ]);
 
         $gender->update($fields);

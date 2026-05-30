@@ -1,0 +1,801 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Prisioner;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\MedicalHistory;
+use App\Models\Prisioner_court_story;
+use App\Models\Prisioner_crime;
+use App\Models\Prisioner_property;
+use App\Models\Prisioners_cashe;
+use App\Models\PrisonerApperance;
+use App\Models\PrisionHistory;
+use App\Settings\Constants;
+use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+
+class PrisionersController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
+    {
+        $prisoners = Prisioner::with([
+            'birthRegion',
+            'birthTown',
+            'birthCity',
+            'currentRegion',
+            'currentTown',
+            'currentCity',
+            'educationalLevel',
+            'ethnicGroup',
+            'religion',
+            'closestRespondentRegion',
+            'closestRespondentTown',
+            'closestRespondentCity',
+            'crime',
+            'criminalType',
+            'arrestCourt',
+            'verdictCourt',
+            'updatedVerdictCourt',
+            'user'
+        ]);
+
+        if ($request->filled('sex')) {
+            $prisoners->where('sex', $request->sex);
+        }
+
+        if ($request->filled('first_name')) {
+            $prisoners = $prisoners->where('first_name', 'LIKE', '%' . request('first_name') . '%');
+        }
+
+        if ($request->filled('middle_name')) {
+            $prisoners = $prisoners->where('middle_name', 'LIKE', '%' . request('middle_name') . '%');
+        }
+
+        if ($request->filled('last_name')) {
+            $prisoners = $prisoners->where('last_name', 'LIKE', '%' . request('last_name') . '%');
+        }
+
+        if ($request->filled('mother_name')) {
+            $prisoners = $prisoners->where('mother_name', 'LIKE', '%' . request('mother_name') . '%');
+        }
+
+
+        if ($request->filled('crime_id')) {
+            $prisoners = $prisoners->whereHas('prisonHistories.prisioner_crimes', function ($query) {
+                $query->where('crime_id', request('crime_id'));
+            });
+        }
+
+        if ($request->filled('religion_id')) {
+            $prisoners = $prisoners->whereHas('prisonHistories.religion', function ($query) {
+                $query->where('religion_id', request('religion_id'));
+            });
+        }
+
+        $prisoners = $prisoners->orderByDesc('id')->paginate(10);
+
+        if ($prisoners) {
+            return response()->json([
+                'Prisioner' => $prisoners,
+                'message' => 'Success'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Prisioner not found'
+            ]);
+        }
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function storeBasicInformation(Request $request)
+    {
+        $validation = Validator::make(
+            $request->all(),
+            [
+                'first_name' => 'required|string|max:255',
+                'middle_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'date_of_birth' => 'required|date',
+                'mother_name' => 'required|string|max:255',
+                'sex' => 'required',
+                'birth_district' => 'required|string|max:255',
+                'birth_town_id' => 'required|exists:towns,id',
+                'ethnic_group_id' => 'required|exists:ethnic_groups,id',
+
+            ],
+            [
+                'first_name.required' => 'የመጀመሪያ ስም ያስገቡ',
+                'ethnic_group_id.required' => 'ብሔር ይምረጡ',
+                'middle_name.required' => 'የአባት ስም ያስገቡ',
+                'last_name.required' => 'የአያት ስም ያስገቡ',
+                'date_of_birth.required' => 'የልደት ቀን ያስገቡ',
+                'mother_name.required' => 'የእናት ስም ያስገቡ',
+                'sex.required' => 'ፆታ ይምረጡ',
+                'birth_district.required' => 'የተወለዱበትን ክልል ያስገቡ',
+                'birth_town_id.required' => 'የተወለዱበትን ከተማ ይምረጡ',
+            ]
+        );
+
+        if ($validation->fails()) {
+            return response()->json([
+                'message' => $validation->messages()->first()
+            ], 422);
+        }
+
+        $Prisioner = new Prisioner();
+        if (request('prison_history_id')) {
+            $his = PrisionHistory::find(request('prison_history_id'));
+            if ($his) {
+                $Prisioner = Prisioner::find($his->prisioner_id);
+            }
+        }
+
+
+
+        try {
+            DB::beginTransaction();
+            $Prisioner->prisioner_unique_number = mt_rand(1, 9999999); // the System can assign a unique number
+            $Prisioner->prision_unique_number = mt_rand(1, 9999999);
+
+            $Prisioner->first_name = request('first_name');
+            $Prisioner->middle_name = request('middle_name');
+            $Prisioner->last_name = request('last_name');
+            $Prisioner->date_of_birth = request('date_of_birth');
+            $Prisioner->mother_name = request('mother_name');
+            $Prisioner->sex = request('sex');
+            $Prisioner->birth_district = request('birth_district');
+            $Prisioner->birth_town_id = request('birth_town_id');
+            $Prisioner->ethnic_group_id = request('ethnic_group_id');
+            $Prisioner->save();
+
+            $prisonHistory = new PrisionHistory();
+            $prisonHistory->prisioner_id = $Prisioner->id;
+            $prisonHistory->user_id = Auth::id();
+            $prisonHistory->save();
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 422);
+        }
+
+        return response()->json([
+            'message' => "Prisioner added Successfully",
+            'prison_history_id' => $prisonHistory->id,
+            'prisoner' => $Prisioner->id,
+        ]);
+    }
+
+    public function storePersonalInfo(Request $request)
+    {
+        $validation = Validator::make(
+            $request->all(),
+            [
+                'prison_history_id' => 'required',
+                'phone_number' => 'required|string|max:20',
+                'closest_respondent' => 'required|string|max:255',
+                'closest_respondent_district' => 'required|string|max:255',
+                'religion_id' => 'required|exists:religions,id',
+                'mobile_number' => 'required|string|max:20',
+                'closest_respondent_town_id' => 'required|exists:towns,id',
+                'current_district' => 'required|string|max:255',
+                'job' => 'required|string|max:255',
+                'current_city_id' => 'required|exists:cities,id',
+                'educational_level_id' => 'required|exists:educational_levels,id',
+                'date_time_entered' => 'required|date',
+
+            ],
+            [
+                'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
+                'phone_number.required' => 'የስልክ ቁጥር ያስገቡ',
+                'closest_respondent.required' => 'የቅርብ ተጠሪ ስም ያስገቡ',
+                'closest_respondent_district.required' => 'የቅርብ ተጠሪ ክልል ያስገቡ',
+                'religion_id.required' => 'ሃይማኖት ይምረጡ',
+                'mobile_number.required' => 'የሞባይል ቁጥር ያስገቡ',
+                'closest_respondent_town_id.required' => 'የቅርብ ተጠሪ ከተማ ይምረጡ',
+                'current_district.required' => 'የአሁኑ ክልል ያስገቡ',
+                'job.required' => 'ስራ ይምረጡ',
+                'current_city_id.required' => 'የአሁኑ ከተማ ይምረጡ',
+                'educational_level_id.required' => 'የትምህርት ደረጃ ይምረጡ',
+                'date_time_entered.required' => 'እስረኛዉ የገባበት ቀን ያስገቡ',
+            ]
+        );
+
+        if ($validation->fails()) {
+            return response()->json([
+                'message' => $validation->messages()->first()
+            ], 422);
+        }
+
+        $prisonHistory = PrisionHistory::find($request->prison_history_id);
+        if (!$prisonHistory) {
+            return response()->json([
+                'message' => 'Prison History not found!',
+            ], 422);
+        } else {
+            // $prisonHistory->prision_cell_id = $request->prision_cell_id;
+            // $prisonHistory->criminal_type_id = $request->criminal_type_id;
+            $prisonHistory->phone_number = $request->phone_number;
+            $prisonHistory->closest_respondent = $request->closest_respondent;
+            $prisonHistory->closest_respondent_district = $request->closest_respondent_district;
+            $prisonHistory->religion_id = $request->religion_id;
+            $prisonHistory->mobile_number = $request->mobile_number;
+            $prisonHistory->closest_respondent_town_id = $request->closest_respondent_town_id;
+            $prisonHistory->current_district = $request->current_district;
+            $prisonHistory->job = $request->job;
+            $prisonHistory->current_city_id = $request->current_city_id;
+            $prisonHistory->educational_level_id = $request->educational_level_id;
+            $prisonHistory->date_time_entered = $request->date_time_entered;
+            // $prisonHistory->end_date_of_arrest = $request->end_date_of_arrest;
+            // $prisonHistory->date_of_release = $request->date_of_release;
+            // $prisonHistory->release_reason = $request->release_reason;
+            // $prisonHistory->date_of_mercy_release = $request->date_of_mercy_release;
+            // if ($request->hasFile('photo')) {
+            //     $photo = $request->file('photo');
+            //     $photoName = 'ka_l' . time() . '_' . $photo->getClientOriginalName();
+            //     $photo->move(public_path('img'), $photoName);
+            //     $prisonHistory->photo = 'img/' . $photoName;
+            // }
+            $prisonHistory->save();
+
+            return response()->json([
+                'message' => "Prisioner Personal Informations Saved Successfully",
+            ]);
+        }
+    }
+
+    public function storeApperance(Request $request)
+    {
+        $validation = Validator::make(
+            $request->all(),
+            [
+                'prison_history_id' => 'required|integer|exists:prision_histories,id',
+                'hair_type_id' => 'required|integer|exists:hair_types,id',
+                'nose_id' => 'required|integer|exists:noses,id',
+                'eye_id' => 'required|integer|exists:eyes,id',
+                'teeth_id' => 'required',
+                'lip_id' => 'required|integer|exists:lips,id',
+                'ear_id' => 'required|integer|exists:ears,id',
+                'height' => 'required|numeric',  // height in cm, adjust min/max as needed
+                'face' => 'required|string|max:255',
+                'forehead' => 'required|string|max:255',
+                'unique_appearance' => 'required|string|max:500',
+                'extra_description' => 'required|string|max:1000',
+                'citizenship' => 'required|string|max:255',
+                'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ],
+            [
+                'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
+                'hair_type_id.required' => 'የፀጉር አይነት ይምረጡ',
+                'nose_id.required' => 'የአፍንጫ አይነት ይምረጡ',
+                'eye_id.required' => 'የዓይን አይነት ይምረጡ',
+                'teeth_id.required' => 'የጥርስ አይነት ይምረጡ',
+                'lip_id.required' => 'የከንፈር አይነት ይምረጡ',
+                'ear_id.required' => 'የጆሮ አይነት ይምረጡ',
+                'height.required' => 'ቁመት ያስገቡ',
+                'face.required' => 'የፊት አይነት ያስገቡ',
+                'forehead.required' => 'የግንባር አይነት ያስገቡ',
+                'unique_appearance.required' => 'ልዩ ገጽታ ያስገቡ',
+                'extra_description.required' => 'ተጨማሪ መግለጫ ያስገቡ',
+                'citizenship.required' => 'ዜግነት ያስገቡ',
+                'photo.required' => 'ፎቶ ያስገቡ',
+                'photo.image' => 'ፎቶ ምስል ብቻ መሆን አለበት',
+                'photo.max' => 'ፎቶ ከ 2 ሜባ በላይ መሆን የለበትም ',
+            ]
+        );
+
+        if ($validation->fails()) {
+            return response()->json([
+                'message' => $validation->messages()->first()
+            ], 422);
+        }
+
+        $prisonHistory = PrisionHistory::find($request->prison_history_id);
+        if (!$prisonHistory) {
+            return response()->json([
+                'message' => 'Prison History not found!',
+            ], 422);
+        }
+
+        $prisonAppearance = PrisonerApperance::where('prision_history_id', $prisonHistory->id)->first() ?? new PrisonerApperance();
+        $prisonAppearance->hair_type_id = $request->hair_type_id;
+        $prisonAppearance->nose_id = $request->nose_id;
+        $prisonAppearance->eye_id = $request->eye_id;
+        $prisonAppearance->teeth_id = $request->teeth_id;
+        $prisonAppearance->lip_id = $request->lip_id;
+        $prisonAppearance->ear_id = $request->ear_id;
+        $prisonAppearance->height = $request->height;
+        $prisonAppearance->face = $request->face;
+        $prisonAppearance->forehead = $request->forehead;
+        $prisonAppearance->unique_appearance = $request->unique_appearance;
+        $prisonAppearance->extra_description = $request->extra_description;
+        $prisonAppearance->citizenship = $request->citizenship;
+        $prisonAppearance->prision_history_id = $request->prison_history_id;
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads'), $filename);
+            $prisonHistory->photo = 'uploads/' . $filename;
+            $prisonHistory->save();
+        }
+
+        $prisonAppearance->save();
+
+        return response()->json([
+            'message' => "Prisioner Apperance Added Successfully",
+        ]);
+    }
+
+    public function storeMedicalHistory(Request $request)
+    {
+        $validation = Validator::make(
+            $request->all(),
+            [
+                'prison_history_id' => 'required|integer|exists:prison_histories,id',
+                'disease_type_id' => 'required|integer|exists:disease_types,id',
+                'hospital_name' => 'required|string|max:255',
+                'doctor_name' => 'required|string|max:255',
+                'date' => 'required|date',
+                'doctor_address' => 'required|string|max:500',
+                'medical_expense' => 'required|numeric|min:0',
+            ],
+            [
+                'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
+                'disease_type_id.required' => 'የሕመም አይነት ይምረጡ',
+                'hospital_name.required' => 'የሆስፒታል ስም ያስገቡ',
+                'doctor_name.required' => 'የሐኪም ስም ያስገቡ',
+                'date.required' => 'የታከመበትን ቀን ያስገቡ',
+                'doctor_address.required' => 'የሐኪም አድራሻ ያስገቡ',
+                'medical_expense.required' => 'የሕክምና ወጪ ያስገቡ',
+            ]
+        );
+
+        if ($validation->fails()) {
+            return response()->json([
+                'message' => $validation->messages()->first()
+            ], 422);
+        }
+
+        $prisonHistory = PrisionHistory::find($request->prison_history_id);
+        if (!$prisonHistory) {
+            return response()->json([
+                'message' => 'Prison History not found!',
+            ], 422);
+        }
+
+        $medicalHistory = new MedicalHistory();
+        $medicalHistory->disease_type_id = $request->disease_type_id;
+        $medicalHistory->hospital_name = $request->hospital_name;
+        $medicalHistory->doctor_name = $request->doctor_name;
+        $medicalHistory->date = $request->date;
+        $medicalHistory->doctor_address = $request->doctor_address;
+        $medicalHistory->medical_expense = $request->medical_expense;
+        $medicalHistory->prision_history_id = $request->prison_history_id;
+        $medicalHistory->user_id = Auth::id();
+        $medicalHistory->save();
+
+        return response()->json([
+            'message' => "Prisioner medical history Added Successfully",
+        ]);
+    }
+
+    public function storeCashHistory(Request $request)
+    {
+        $validation = Validator::make(
+            $request->all(),
+            [
+                'prison_history_id' => 'required',
+                'amount' => 'required|integer|min:0|max:100000',
+                'type' => 'required',
+            ],
+            [
+                'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
+                'amount.required' => 'መጠን ያስገቡ',
+                'type.required' => 'አይነት ይምረጡ',
+            ]
+        );
+
+        if ($validation->fails()) {
+            return response()->json([
+                'message' => $validation->messages()->first()
+            ], 422);
+        }
+
+        $prisonHistory = PrisionHistory::find($request->prison_history_id);
+        if (!$prisonHistory) {
+            return response()->json([
+                'message' => 'Prison History not found!',
+            ], 422);
+        }
+
+        $total = 0;
+        $deposit = Prisioners_cashe::where('prision_history_id', $request->prison_history_id)->where('type', Constants::ገቢ)->sum('amount');
+        $withdraw = Prisioners_cashe::where('prision_history_id', $request->prison_history_id)->where('type', Constants::ወጪ)->sum('amount');
+
+        if ($request->type == Constants::ወጪ) {
+            if (($deposit - $withdraw - $request->amount) < 0) {
+                return response()->json([
+                    'message' => 'በቂ ገንዘብ የሎትም',
+                ], 422);
+            }
+        }
+
+        $prisonerCash = new Prisioners_cashe();
+        $prisonerCash->type = $request->type;
+        $prisonerCash->date = now();
+        $prisonerCash->amount = $request->amount;
+        $prisonerCash->prision_history_id = $request->prison_history_id;
+        $prisonerCash->save();
+
+        return response()->json([
+            'message' => "Prisioner Cash Stored Successfully",
+        ]);
+    }
+
+    public function storeCourtHistory(Request $request)
+    {
+        $validation = Validator::make(
+            $request->all(),
+            [
+                'prison_history_id' => 'required|exists:prison_histories,id',
+                'court_id' => 'required|exists:courts,id',
+                'updated_verdict_court' => 'required|string|max:255',
+                'appointment_date' => 'required|date',
+                'verdict_description' => 'required|string|max:1000',
+                'status' => 'required|string|max:255',
+                'criminal_status' => 'required|string|max:255',
+            ],
+            [
+                'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
+                'court_id.required' => 'የፍርድ ቤት መለያ ይምረጡ',
+                'updated_verdict_court.required' => 'አዲሱ ዉሳኔ የሰጠው ፍርድ ቤት ይምረጡ',
+                'appointment_date.required' => 'የተቀጠረበትን ቀን ያስገቡ',
+                'verdict_description.required' => 'የዉሳኔ መግለጫ ያስገቡ',
+                'status.required' => 'የዉሳኔ ሁኔታ ይምረጡ',
+                'criminal_status.required' => 'የወንጀል ሁኔታ ይምረጡ',
+            ]
+        );
+
+        if ($validation->fails()) {
+            return response()->json([
+                'message' => $validation->messages()->first()
+            ], 422);
+        }
+
+        $prisonHistory = PrisionHistory::find($request->prison_history_id);
+        if (!$prisonHistory) {
+            return response()->json([
+                'message' => 'Prison History not found!',
+            ], 422);
+        }
+
+        $courtHistory = new Prisioner_court_story();
+        $courtHistory->prision_history_id = request('prison_history_id');
+        $courtHistory->court_id = request('court_id');
+        $courtHistory->updated_verdict_court = request('updated_verdict_court');
+        $courtHistory->appointment_date = request('appointment_date');
+        $courtHistory->verdict_date = request('verdict_date');
+        $courtHistory->verdict_description = request('verdict_description');
+        $courtHistory->updated_verdict = request('updated_verdict');
+        $courtHistory->status = request('status');
+        $courtHistory->criminal_status = request('criminal_status');
+        $courtHistory->save();
+
+        return response()->json([
+            'message' => "Prisioner court history Added Successfully",
+        ]);
+    }
+
+    public function releasePrisoner(Request $request)
+    {
+        $validation = Validator::make(
+            $request->all(),
+            [
+                'prison_history_id' => 'required',
+                'release_reason' => 'required',
+                'reason' => 'required',
+            ],
+            [
+                'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
+                'release_reason.required' => 'የመፍቻ ምክንያት ይግለጹ',
+                'reason.required' => 'የመፍቻ ምክንያት ይምረጡ',
+            ]
+        );
+
+        if ($validation->fails()) {
+            return response()->json([
+                'message' => $validation->messages()->first()
+            ], 422);
+        }
+
+        $prisonHistory = PrisionHistory::find($request->prison_history_id);
+        if (!$prisonHistory) {
+            return response()->json([
+                'message' => 'Prison History not found!',
+            ], 422);
+        }
+
+        $prisonHistory->date_of_release = now();
+        $prisonHistory->release_reason = request('release_reason');
+
+        if (request('reason') == 1) {
+            $prisonHistory->date_of_mercy_release = now();
+        } else {
+            $prisonHistory->end_date_of_arrest = now();
+        }
+
+        $prisonHistory->save();
+
+        return response()->json([
+            'message' => "Prisioner released Successfully",
+        ]);
+    }
+
+    public function storeProperties(Request $request)
+    {
+        $validation = Validator::make(
+            $request->all(),
+            [
+                'prison_history_id' => 'required',
+                'properties' => 'required',
+            ],
+            [
+                'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
+                'properties.required' => 'እቃዎች ይምረጡ',
+            ]
+        );
+
+        if ($validation->fails()) {
+            return response()->json([
+                'message' => $validation->messages()->first()
+            ], 422);
+        }
+
+        $prisonHistory = PrisionHistory::find($request->prison_history_id);
+        if (!$prisonHistory) {
+            return response()->json([
+                'message' => 'Prison History not found!',
+            ], 422);
+        }
+
+        $properties = $request->properties;
+
+        foreach ($properties as $property) {
+            $p = Prisioner_property::where('prision_history_id', $request->prison_history_id)->where('type_id', $property['type_id'])->first() ?? new Prisioner_property();
+            $p->prision_history_id = $request->prison_history_id;
+            $p->type_id = $property['type_id'];
+            $p->amount = $property['amount'];
+            $p->description = $property['description'];
+            $p->date_received = now();
+            $p->save();
+        }
+
+        return response()->json([
+            'message' => "Prisioner Properties Saved",
+        ]);
+    }
+
+    public function storeCrimes(Request $request)
+    {
+        $validation = Validator::make(
+            $request->all(),
+            [
+                'prison_history_id' => 'required',
+                'all_crimes' => 'required',
+            ],
+            [
+                'prison_history_id.required' => 'የእስረኛ መለያ ይምረጡ',
+                'all_crimes.required' => 'የወንጀል መረጃ ይምረጡ',
+            ]
+        );
+
+        if ($validation->fails()) {
+            return response()->json([
+                'message' => $validation->messages()->first()
+            ], 422);
+        }
+
+        $prisonHistory = PrisionHistory::find($request->prison_history_id);
+        if (!$prisonHistory) {
+            return response()->json([
+                'message' => 'Prison History not found!',
+            ], 422);
+        }
+
+        $allCrimes = $request->all_crimes;
+
+        foreach ($allCrimes as $crime) {
+            $c = Prisioner_crime::where('prision_history_id', $request->prison_history_id)->where('crime_id', $crime['crime_id'])->first() ?? new Prisioner_crime();
+            $c->prision_history_id = $request->prison_history_id;
+            $c->crime_id = $crime['crime_id'];
+            $c->crime_description = $crime['crime_description'];
+            $c->status = Constants::ACCUSED;
+            $c->save();
+        }
+
+        return response()->json([
+            'message' => "Prisioner Crimes Saved",
+        ]);
+    }
+
+
+    public function createNewStoryOnExistingPrisoner()
+    {
+
+        $prisoner = request('prisoner_id');
+        $prisonHistory = new PrisionHistory();
+        $prisonHistory->prisioner_id = $prisoner;
+        $prisonHistory->user_id = Auth::id();
+        $prisonHistory->save();
+
+        return response()->json([
+            'message' => "Prisioner history added",
+            'prison_history_id' => $prisonHistory->id,
+            'prisoner' => $prisoner,
+        ]);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function showPrisonerInformation($id)
+    {
+        $Prisioner = Prisioner::with([
+            'birthRegion',
+            'birthTown',
+            'currentRegion',
+            'currentTown',
+            'currentCity',
+            'ethnicGroup',
+            'user',
+            'prisonHistories.religion',
+            'prisonHistories.educationalLevel',
+            'prisonHistories.currentCity',
+            'prisonHistories.closestRespondentTown',
+            'prisonHistories.prisonerApperance.hair',
+            'prisonHistories.prisonerApperance.eye',
+            'prisonHistories.prisonerApperance.lip',
+            'prisonHistories.prisonerApperance.ear',
+            'prisonHistories.prisonerApperance.nose',
+            'prisonHistories.prisonerApperance.teeth',
+            'prisonHistories.prisioner_crimes.crime',
+            'prisonHistories.medicalHistories.diseaseType',
+            'prisonHistories.prisonerCourtHistories.court',
+            'prisonHistories.prisonerCourtHistories.updatedCourt',
+            'prisonHistories.prisonerCashes',
+
+        ])->find($id);
+
+        if ($Prisioner) {
+            return response()->json([
+                'data' => $Prisioner,
+                'message' => 'Success'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 422,
+                'message' => 'Prisioner Not Found'
+            ]);
+        }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        $Prisioner = Prisioner::find($id);
+        if ($Prisioner) {
+            return response()->json([
+                'Prisioner' => $Prisioner,
+                'message' => 'Success'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 422,
+                'message' => 'Prisioner status not found'
+
+            ]);
+        }
+    }
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $validation = Validator::make(
+            $request->all(),
+            [
+                'prisioner_unique_number' => 'required',
+                'prision_unique_number' => 'required',
+                'first_name' => 'required',
+                'middle_name' => 'required',
+                'last_name' => 'required',
+                'date_of_birth' => 'required',
+                'mother_name' => 'required',
+                'sex' => 'required',
+                'birth_district' => 'required',
+                'birth_town_id' => 'required',
+                'ethnic_group_id' => 'required',
+            ],
+            [
+                'prisioner_unique_number.required' => 'የእስረኛ መለያ ያስገቡ',
+                'prision_unique_number.required' => 'የእስር ቤት መለያ ያስገቡ',
+                'first_name.required' => 'የመጀመሪያ ስም ያስገቡ',
+                'middle_name.required' => 'የአባት ስም ያስገቡ',
+                'last_name.required' => 'የአያት ስም ያስገቡ',
+                'date_of_birth.required' => 'የልደት ቀን ያስገቡ',
+                'mother_name.required' => 'የእናት ስም ያስገቡ',
+                'sex.required' => 'ፆታ ይምረጡ',
+                'birth_district.required' => 'የተወለዱበትን ክልል ያስገቡ',
+                'birth_town_id.required' => 'የተወለዱበትን ከተማ ይምረጡ',
+                'ethnic_group_id.required' => 'ብሔር ይምረጡ',
+            ]
+        );
+        if ($validation->fails()) {
+            return response()->json([
+                'status' => 422,
+                'message' => $validation->messages()
+            ]);
+        } else {
+            $Prisioner = new Prisioner();
+            $Prisioner->prisioner_unique_number = request('prisioner_unique_number');
+            $Prisioner->prision_unique_number = request('prision_unique_number');
+            $Prisioner->first_name = request('first_name');
+            $Prisioner->middle_name = request('middle_name');
+            $Prisioner->last_name = request('last_name');
+            $Prisioner->date_of_birth = request('date_of_birth');
+            $Prisioner->last_name = request('last_name');
+            $Prisioner->date_of_birth = request('date_of_birth');
+            $Prisioner->mother_name = request('mother_name');
+            $Prisioner->sex = request('sex');
+            // $Prisioner->birth_place = request('birth_place');
+            $Prisioner->birth_district = request('birth_district');
+            $Prisioner->birth_town_id = request('birth_town_id');
+            $Prisioner->ethnic_group_id = request('ethnic_group_id');
+            $Prisioner->update();
+            return response()->json([
+                'message' => "Prisioner updated Successfully"
+            ]);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $Prisioner = Prisioner::find($id);
+        if ($Prisioner) {
+            $Prisioner->delete();
+            return response()->json([
+                'message' => 'Prisioner  Deleted Successfully'
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Prisioner with this id not foud'
+            ]);
+        }
+    }
+}

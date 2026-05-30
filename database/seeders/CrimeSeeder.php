@@ -16,30 +16,24 @@ class CrimeSeeder extends Seeder
         // Optional: Clear the table before seeding
         // DB::table('crimes')->truncate();
         
-        $crimes = [
-            ['name' => 'Arson'],
-            ['name' => 'Assault'],
-            ['name' => 'Bribery'],
-            ['name' => 'Burglary'],
-            ['name' => 'Child Abuse'],
-            ['name' => 'Cybercrime'],
-            ['name' => 'Domestic Violence'],
-            ['name' => 'Drug Offenses'],
-            ['name' => 'Embezzlement'],
-            ['name' => 'Fraud'],
-            ['name' => 'Homicide'],
-            ['name' => 'Human Trafficking'],
-            ['name' => 'Kidnapping'],
-            ['name' => 'Money Laundering'],
-            ['name' => 'Murder'],
-            ['name' => 'Rape'],
-            ['name' => 'Robbery'],
-            ['name' => 'Sexual Assault'],
-            ['name' => 'Theft'],
-            ['name' => 'Vandalism'],
-            ['name' => 'Violent Crimes'],
-            ['name' => 'White Collar Crimes'],
-        ];
+$crimes = [
+    ['name' => 'እሳት ማቃጠል'],         // Arson
+    ['name' => 'መደብደብ'],           // Assault
+    ['name' => 'ስኬት መግዛት'],        // Bribery
+    ['name' => 'የሕፃናት ብዝበዛ'], // Child Abuse
+    ['name' => 'የድህረገፅ ወንጀል'],     // Cybercrime
+    ['name' => 'የሀሺሽ ንግድ'],     // Drug Offenses
+    ['name' => 'ጉቦ'],          // Embezzlement
+    ['name' => 'ማጭበርበር'],     // Fraud
+    ['name' => 'የሰው ንግድ'],        // Human Trafficking
+    ['name' => 'ማፈናቀል'],          // Kidnapping
+    ['name' => 'ግድያ'],             // Murder
+    ['name' => 'አስገድዶ መድፈር'],       // Rape
+    ['name' => 'የጾታ ጥቃት'],        // Sexual Assault
+    ['name' => 'ስርቆት'],            // Theft
+
+];
+
 
         DB::table('crimes')->insert($crimes);
     }

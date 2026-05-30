@@ -58,6 +58,19 @@ class criminalInformationInformationController extends Controller
             'Unique_appearance'=>'required',
             
             
+        ],
+        [
+            'criminal_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+            'height.required' => 'ከፍታ ያስገቡ',
+            'Hair_id.required' => 'የፀጉር መረጃ ያስገቡ',
+            'face.required' => 'የፊት መረጃ ያስገቡ',
+            'Forehead .required' => 'የግራ አንፃር መረጃ ያስገቡ',
+            'nose.required' => 'አፍ መረጃ ያስገቡ',
+            'Eye_color.required' => 'የዓይን ቀለም መረጃ ያስገቡ',
+            'teeth.required' => 'የጥርስ መረጃ ያስገቡ',
+            'lip.required' => 'የአፍ መረጃ ያስገቡ',
+            'ear.required' => 'የአፍ መረጃ ያስገቡ',
+            'Unique_appearance.required' => 'የተለያዩ መታወቂያ መረጃ ያስገቡ',
         ]);
         if($validation->fails()){
             return response()->json([
@@ -146,6 +159,19 @@ class criminalInformationInformationController extends Controller
             'lip'=>'required',
             'ear'=>'required',
             'Unique_appearance'=>'required',
+        ],
+        [
+            'criminal_id.required' => 'የእስረኛ መረጃ ያስገቡ',
+            'height.required' => 'ከፍታ ያስገቡ',
+            'Hair_id.required' => 'የፀጉር መረጃ ያስገቡ',
+            'face.required' => 'የፊት መረጃ ያስገቡ',
+            'Forehead .required' => 'የግራ አንፃር መረጃ ያስገቡ',
+            'nose.required' => 'አፍ መረጃ ያስገቡ',
+            'Eye_color.required' => 'የዓይን ቀለም መረጃ ያስገቡ',
+            'teeth.required' => 'የጥርስ መረጃ ያስገቡ',
+            'lip.required' => 'የአፍ መረጃ ያስገቡ',
+            'ear.required' => 'የአፍ መረጃ ያስገቡ',
+            'Unique_appearance.required' => 'የተለያዩ መታወቂያ መረጃ ያስገቡ',
         ]);
         if($validation->fails()){
             return response()->json([
