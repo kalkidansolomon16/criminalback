@@ -18,7 +18,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'username' => 'required',
             'password' => 'required',
-           
+
         ]);
 
         if ($validator->fails()) {
@@ -26,7 +26,7 @@ class AuthController extends Controller
                 'message' => $validator->errors()->first(),
             ], 422);
         }
-     
+
         $user = User::where('user_name', $request->username)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
@@ -45,11 +45,11 @@ class AuthController extends Controller
             'user_id'=>$user_id,
             'role'=>$role
         ], 200);
-      
+
     }
 
     public function logout(Request $request)
-    {   
+    {
         $user = Auth::user();
 
         $user->tokens()->delete();
